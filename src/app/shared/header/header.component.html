@@ -1,0 +1,22 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <span>Bhakari</span>
+
+  <ul>
+    <li *ngFor="let menu of menus" class="dropdown">{{ menu.menu_item_name_display }} <fa-icon class="dropdownicon" [icon]="faChevronDown"></fa-icon>
+    
+      <ul class="sub-menu">
+        <li>binod</li>
+        <li>kiashor</li>
+        <li>binod</li>
+        <li>rajesh</li>
+      </ul>
+    </li>
+    
+  </ul>
+<span class="spacer"></span>
+
+  <div class="header-right">
+    <input type="text" placeholder="search">
+    <mat-icon>search</mat-icon>
+  </div>
+</mat-toolbar>
