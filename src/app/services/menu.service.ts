@@ -22,6 +22,10 @@ export class MenuService {
     return this.http.get<Submenu[]>(this.baseApiUrl+'/Submenuitem/Submenuitembymenuitem/'+menuid);
   }
 
+  getAllSubMenuAndMenu():Observable<any>{
+    return this.http.get(this.baseApiUrl+'/Menuitem/menu-with-submenu');
+  }
+
 
   
 }

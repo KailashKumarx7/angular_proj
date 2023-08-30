@@ -1,12 +1,12 @@
-.spacer{
+.spacer {
     flex: 1 1 auto;
 }
 
-ul{
+ul {
     list-style: none;
 }
 
-ul li{
+ul li {
     margin-top: 1rem;
     display: inline-block;
     text-decoration: none;
@@ -14,17 +14,18 @@ ul li{
     line-height: 2;
 }
 
-ul li .dropdown{
+ul li .dropdown {
     position: relative;
 }
 
-ul li.dropdown fa-icon{
+ul li.dropdown fa-icon {
     padding-right: 15px;
 }
 
-ul li:not(:last-child){
+ul li:not(:last-child) {
     margin-right: 40px;
 }
+
 .sub-menu {
     position: absolute;
     top: 100%;
@@ -36,17 +37,28 @@ ul li:not(:last-child){
     box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.5);
     z-index: 1;
     display: none;
-  }
-  
-  .dropdown:hover .sub-menu {
+}
+
+.dropdown:hover .sub-menu {
     display: block;
-  }
-  
-  .sub-menu li {
+}
+
+.sub-menu li {
     padding: 6px 24px;
+}
+
+
+.custom {
+    height: 400px !important;
+}
+
+.search{
+    min-width: 20rem;
+}
+
+.custom-search {
+    width: 100%; /* Set the desired width */
+    max-width: 600px; /* Set a maximum width if needed */
+    margin: 0 auto; /* Center the search field horizontally */
   }
   
-
-
-
-

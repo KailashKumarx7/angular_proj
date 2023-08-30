@@ -27,7 +27,11 @@ export class HeaderComponent {
 
   ngOnInit():void{
     this.menuService.getMenu().subscribe((data)=>{
-      this.menus=data;
+      
+    });
+    this.menuService.getAllSubMenuAndMenu().subscribe((data)=>{
+      console.log(data);
+      this.menus = data;
     })
     
   }
@@ -35,6 +39,11 @@ export class HeaderComponent {
   showdropdown(){
 this.showhide=true;
 this.cdr.detectChanges();
+  }
+
+
+  menuClick(itemNO:any){
+   console.log("this is item",itemNO);
   }
 
 
