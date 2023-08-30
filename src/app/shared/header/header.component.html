@@ -1,27 +1,33 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
   <span>Bhakari</span>
-  <span class="spacer"></span>
-  <div class="menu-container" fxLayout="row" fxLayoutGap="8px">
-    <ng-container *ngFor="let menu of menus">
-      <button class="clickable" (click)="menuClick(menu.item_no)" [matMenuTriggerFor]="menuDropdown" mat-button>
-        {{ menu.menu_item_name_display }}
-      </button>
-      <mat-menu class="mat-menu custom-height" #menuDropdown="matMenu" xPosition="after">
-        <div class="custom">
-          <button mat-menu-item *ngFor="let submenu of menu.submenuitems">{{ submenu.name_display }}</button>
-        </div>
-      </mat-menu>
-    </ng-container>
+  <ng-container *ngIf="islogedin">
+    <span class="spacer"></span>
+    <div class="menu-container" fxLayout="row" fxLayoutGap="8px">
+      <ng-container *ngFor="let menu of menus">
+        <button class="clickable" (click)="menuClick(menu.item_no)" [matMenuTriggerFor]="menuDropdown" mat-button>
+          {{ menu.menu_item_name_display }}
+        </button>
+        <mat-menu class="mat-menu custom-height" #menuDropdown="matMenu" xPosition="after">
+          <div class="custom">
+            <button mat-menu-item *ngFor="let submenu of menu.submenuitems">{{ submenu.name_display }}</button>
+          </div>
+        </mat-menu>
+      </ng-container>
+    </div>
+    <span class="spacer"></span>
+  
+  <div class="d-flex custom-search mr-3">
+    <input class="form-control me-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search">
+    <button mat-raised-button color="warn">Search</button>
   </div>
-  <span class="spacer"></span>
-
-<div class="d-flex custom-search mr-3">
-  <input class="form-control me-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search">
-  <button mat-raised-button color="warn">Search</button>
-</div>
+  </ng-container>
+  
 
 <span class="spacer one"></span>
-  <div>
-    <button mat-raised-button color="accent">Signup</button>
+  <div *ngIf="!islogedin">
+    <button routerLink="signup" mat-raised-button class="mx-4"color="accent">Signup</button>
+    <button routerLink="login" mat-raised-button color="warn">Sign in</button>
   </div>
+
+
 </mat-toolbar>

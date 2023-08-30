@@ -9,13 +9,20 @@ import { BodyComponent } from './shared/body/body.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
+import { DefaultPageComponent } from './components/default-page/default-page.component';
+import { LoginComponent } from './components/login/login.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     BodyComponent,
-    HeaderComponent
+    HeaderComponent,
+    DefaultPageComponent,
+    LoginComponent,
+    SignupComponent
 
   ],
   imports: [
@@ -24,7 +31,9 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     MaterialModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

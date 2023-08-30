@@ -3,6 +3,8 @@ import { Menu } from 'src/app/model/menu';
 import { MenuService } from 'src/app/services/menu.service';
 import { faSearch,faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { Submenu } from 'src/app/model/submenu';
+import { SharedService } from 'src/app/services/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,15 +14,27 @@ import { Submenu } from 'src/app/model/submenu';
 export class HeaderComponent {
 
 
+
+  islogedin:boolean = false;
   showhide:boolean =false;
-  isMenuClicked:boolean = false;
+
   searchicon=faSearch;
   faChevronDown=faChevronDown;
   menus:Menu[] =[];
   subMenu:Submenu[]=[];
 
+  private subscription: Subscription;
 
-  constructor(private menuService:MenuService,private cdr:ChangeDetectorRef){
+
+  constructor(
+    private menuService:MenuService,
+    private cdr:ChangeDetectorRef,
+    private sharedService: SharedService
+    ){
+
+      this.subscription = this.sharedService.getLoggedInStatus().subscribe(status => {
+        this.islogedin = status;
+      });
 
   }
 
@@ -50,12 +64,13 @@ this.cdr.detectChanges();
   menuClicked(menu:Menu){
     console.log(menu.item_no)
     this.menuService.getSubmenu(menu.item_no).subscribe((data)=>{
-      this.isMenuClicked = true;
-      console.log(data);
-
       this.subMenu=data;
-
       this.cdr.detectChanges();
     })
+  }
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe(); // Unsubscribe to avoid memory leaks
   }
 }

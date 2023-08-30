@@ -7,6 +7,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTreeNestedDataSource, MatTreeModule} from '@angular/material/tree';
 import {MatMenuModule} from'@angular/material/menu';
 import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatCardModule} from '@angular/material/card';
+import {MatCheckboxModule} from '@angular/material/checkbox'
 
 
 
@@ -19,7 +21,9 @@ import {MatFormFieldModule} from '@angular/material/form-field'
         MatIconModule,
         MatTreeModule,
         MatMenuModule,
-        MatFormFieldModule
+        MatFormFieldModule,
+        MatCardModule,
+        MatCheckboxModule
 
   ]
 })
