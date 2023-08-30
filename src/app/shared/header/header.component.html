@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
   <span>Bhakari</span>
-
+  <span class="spacer"></span>
   <div class="menu-container" fxLayout="row" fxLayoutGap="8px">
     <ng-container *ngFor="let menu of menus">
       <button class="clickable" (click)="menuClick(menu.item_no)" [matMenuTriggerFor]="menuDropdown" mat-button>
@@ -20,9 +20,7 @@
   <button mat-raised-button color="warn">Search</button>
 </div>
 
-<span class="spacer"></span>
-
-
+<span class="spacer one"></span>
   <div>
     <button mat-raised-button color="accent">Signup</button>
   </div>
