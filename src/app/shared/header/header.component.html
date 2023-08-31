@@ -23,11 +23,32 @@
   </ng-container>
   
 
-<span class="spacer one"></span>
+
   <div *ngIf="!islogedin">
     <button routerLink="signup" mat-raised-button class="mx-4"color="accent">Signup</button>
     <button routerLink="login" mat-raised-button color="warn">Sign in</button>
   </div>
+  <div *ngIf="islogedin" class="head-user-avatar-container">
+    <div class="head-user-avatar" [cdkMenuTriggerFor]="userOverlay">
+        <img src="../../../assets/images/myphoto.jpeg" class="user-avatar" >
+        <div class="circle-indicator pluse">  
+        </div>
+    </div>
+</div>
 
 
 </mat-toolbar>
+
+<ng-template #userOverlay>
+  <div class="overlay overlay-user overlay-fall" cdkMenu>
+      <ul>
+        <li *ngFor="let item of userItems" cdkMenuItem [tabindex]="-1">
+          <a>
+            <fa-icon [icon]="item.icon" class="fa-icon"></fa-icon>
+            <span>{{item.label}}</span>
+          </a>
+        </li>
+        
+      </ul>
+  </div>
+</ng-template>

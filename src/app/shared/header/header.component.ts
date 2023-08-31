@@ -5,17 +5,37 @@ import { faSearch,faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { Submenu } from 'src/app/model/submenu';
 import { SharedService } from 'src/app/services/shared.service';
 import { Subscription } from 'rxjs';
+import { faCloudDownload, faCloudUpload, faCog, faPowerOff, faTrash, faUser, faUserLock} from '@fortawesome/free-solid-svg-icons';
 
+export const userItems = [
+  {
+      icon: faUser,
+      label:'Profile'
+  },
+  {
+      icon: faCog,
+      label:'Settings'
+  },
+  {
+      icon: faUserLock,
+      label:'Lock screen'
+  },
+  {
+      icon: faPowerOff,
+      label:'Logout'
+  },
+]
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
 
 
+  userItems = userItems;
 
-  islogedin:boolean = false;
+  islogedin:boolean = true;
   showhide:boolean =false;
 
   searchicon=faSearch;
@@ -23,7 +43,8 @@ export class HeaderComponent {
   menus:Menu[] =[];
   subMenu:Submenu[]=[];
 
-  private subscription: Subscription;
+  // private subscription: Subscription;
+userOverlay: any;
 
 
   constructor(
@@ -32,9 +53,9 @@ export class HeaderComponent {
     private sharedService: SharedService
     ){
 
-      this.subscription = this.sharedService.getLoggedInStatus().subscribe(status => {
-        this.islogedin = status;
-      });
+      // this.subscription = this.sharedService.getLoggedInStatus().subscribe(status => {
+      //   this.islogedin = status;
+      // });
 
   }
 
@@ -70,7 +91,7 @@ this.cdr.detectChanges();
   }
 
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe(); // Unsubscribe to avoid memory leaks
-  }
+  // ngOnDestroy(): void {
+  //   this.subscription.unsubscribe(); // Unsubscribe to avoid memory leaks
+  // }
 }

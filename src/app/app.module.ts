@@ -13,6 +13,8 @@ import { DefaultPageComponent } from './components/default-page/default-page.com
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { OverlayModule } from "@angular/cdk/overlay";
+import { CdkMenuModule } from "@angular/cdk/menu";
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    OverlayModule,
+    CdkMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
