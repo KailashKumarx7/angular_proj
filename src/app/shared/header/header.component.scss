@@ -2,9 +2,15 @@
     flex: 1 1 auto;
 }
 
+.menu-icon{
+    display: none;
+}
+
 ul {
     list-style: none;
 }
+
+
 
 ul li {
     margin-top: 1rem;
@@ -146,6 +152,30 @@ ul li:not(:last-child) {
     animation: fall 300ms ease-in-out forwards;
     transform-origin: top center;
 }
+
+
+
+
+@media (max-width: 900px) {
+    .mat-toolbar .logo,
+    .mat-toolbar .spacer,
+    .mat-toolbar .menu-container {
+      display: none;
+    }
+
+    .menu-icon{
+        display: block;
+    }
+
+
+
+    .mat-menu-panel {
+        position: static !important;
+        transform: none !important;
+        left: 0;
+      }
+  }
+  
 
 
   

@@ -6,6 +6,7 @@ import { Submenu } from 'src/app/model/submenu';
 import { SharedService } from 'src/app/services/shared.service';
 import { Subscription } from 'rxjs';
 import { faCloudDownload, faCloudUpload, faCog, faPowerOff, faTrash, faUser, faUserLock} from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 export const userItems = [
   {
@@ -35,32 +36,41 @@ export class HeaderComponent {
 
   userItems = userItems;
 
-  islogedin:boolean = true;
+  islogedin:boolean = false;
   showhide:boolean =false;
 
   searchicon=faSearch;
   faChevronDown=faChevronDown;
   menus:Menu[] =[];
   subMenu:Submenu[]=[];
+  
 
-  // private subscription: Subscription;
+  private subscription: Subscription;
 userOverlay: any;
 
 
   constructor(
     private menuService:MenuService,
     private cdr:ChangeDetectorRef,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private router:Router
     ){
 
-      // this.subscription = this.sharedService.getLoggedInStatus().subscribe(status => {
-      //   this.islogedin = status;
-      // });
+      this.subscription = this.sharedService.getLoggedInStatus().subscribe(status => {
+        this.islogedin = status;
+      });
 
   }
 
 
   ngOnInit():void{
+
+    var islog = localStorage.getItem('isloged');
+    if(islog){
+      this.islogedin = true;
+    }else{
+    this.router.navigate([''])
+    }
     this.menuService.getMenu().subscribe((data)=>{
       
     });
@@ -91,7 +101,7 @@ this.cdr.detectChanges();
   }
 
 
-  // ngOnDestroy(): void {
-  //   this.subscription.unsubscribe(); // Unsubscribe to avoid memory leaks
-  // }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe(); // Unsubscribe to avoid memory leaks
+  }
 }

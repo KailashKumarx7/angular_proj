@@ -1,5 +1,23 @@
 <mat-toolbar color="primary" class="mat-elevation-z6">
-  <span>Bhakari</span>
+  <button mat-icon-button class="menu-icon" [matMenuTriggerFor]="menuDropdown" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div class="main-menus">
+    <mat-menu #menuDropdown="matMenu">
+      <ng-container class="main-menus" *ngFor="let menu of menus">
+        <button mat-menu-item [matMenuTriggerFor]="submenu"  (click)="menuClick(menu.item_no)">
+          {{ menu.menu_item_name_display }}
+
+        </button>
+        <mat-menu class="main-menus" xPosition="after" #submenu="matMenu">
+          <button mat-menu-item *ngFor="let subm of menu.submenuitems">{{subm.name_display}}</button>
+        </mat-menu>
+      </ng-container>
+    </mat-menu>
+  </div>
+
+  <span class="logo">Bhakari</span>
+  <span class="spacer"></span>
   <ng-container *ngIf="islogedin">
     <span class="spacer"></span>
     <div class="menu-container" fxLayout="row" fxLayoutGap="8px">

@@ -15,6 +15,8 @@ import { SignupComponent } from './components/signup/signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule } from "@angular/cdk/overlay";
 import { CdkMenuModule } from "@angular/cdk/menu";
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { CdkMenuModule } from "@angular/cdk/menu";
     HeaderComponent,
     DefaultPageComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    DashboardComponent
 
   ],
   imports: [
@@ -37,7 +40,8 @@ import { CdkMenuModule } from "@angular/cdk/menu";
     ReactiveFormsModule,
     FormsModule,
     OverlayModule,
-    CdkMenuModule
+    CdkMenuModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
