@@ -45,8 +45,8 @@ export class HeaderComponent {
   subMenu:Submenu[]=[];
   
 
-  private subscription: Subscription;
-userOverlay: any;
+    private subscription: Subscription;
+    userOverlay: any;
 
 
   constructor(
@@ -71,19 +71,15 @@ userOverlay: any;
     }else{
     this.router.navigate([''])
     }
-    this.menuService.getMenu().subscribe((data)=>{
-      
-    });
     this.menuService.getAllSubMenuAndMenu().subscribe((data)=>{
-      console.log(data);
       this.menus = data;
     })
     
   }
 
   showdropdown(){
-this.showhide=true;
-this.cdr.detectChanges();
+    this.showhide=true;
+    this.cdr.detectChanges();
   }
 
 

@@ -17,6 +17,7 @@ import { OverlayModule } from "@angular/cdk/overlay";
 import { CdkMenuModule } from "@angular/cdk/menu";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
+import { MenuaccessComponent } from './components/menuaccess/menuaccess.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RouterModule } from '@angular/router';
     DefaultPageComponent,
     LoginComponent,
     SignupComponent,
-    DashboardComponent
+    DashboardComponent,
+    MenuaccessComponent
 
   ],
   imports: [

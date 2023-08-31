@@ -4,6 +4,7 @@ import { DefaultPageComponent } from './components/default-page/default-page.com
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MenuaccessComponent } from './components/menuaccess/menuaccess.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'default',pathMatch:'full'},
@@ -18,6 +19,9 @@ const routes: Routes = [
   },
   {
     path:'dashboard',component:DashboardComponent
+  },
+  {
+    path:'menuacc',component:MenuaccessComponent
   }
 ];
 

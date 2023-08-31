@@ -25,12 +25,14 @@
         <button class="clickable" (click)="menuClick(menu.item_no)" [matMenuTriggerFor]="menuDropdown" mat-button>
           {{ menu.menu_item_name_display }}
         </button>
+        
         <mat-menu class="mat-menu custom-height" #menuDropdown="matMenu" xPosition="after">
           <div class="custom">
             <button mat-menu-item *ngFor="let submenu of menu.submenuitems">{{ submenu.name_display }}</button>
           </div>
         </mat-menu>
       </ng-container>
+      <button mat-button routerLink="menuacc" >Menu</button>
     </div>
     <span class="spacer"></span>
   

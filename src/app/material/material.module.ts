@@ -8,7 +8,9 @@ import {MatTreeNestedDataSource, MatTreeModule} from '@angular/material/tree';
 import {MatMenuModule} from'@angular/material/menu';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatCardModule} from '@angular/material/card';
-import {MatCheckboxModule} from '@angular/material/checkbox'
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatAutocompleteModule} from '@angular/material/autocomplete'
+import {MatListModule} from '@angular/material/list'
 
 
 
@@ -23,7 +25,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox'
         MatMenuModule,
         MatFormFieldModule,
         MatCardModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatAutocompleteModule,
+        MatListModule
 
   ]
 })
