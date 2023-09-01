@@ -18,6 +18,7 @@ import { CdkMenuModule } from "@angular/cdk/menu";
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { MenuaccessComponent } from './components/menuaccess/menuaccess.component';
+import { AccountEntryComponent } from './components/account-entry/account-entry.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { MenuaccessComponent } from './components/menuaccess/menuaccess.componen
     LoginComponent,
     SignupComponent,
     DashboardComponent,
-    MenuaccessComponent
+    MenuaccessComponent,
+    AccountEntryComponent
 
   ],
   imports: [

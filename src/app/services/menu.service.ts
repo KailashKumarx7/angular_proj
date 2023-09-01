@@ -4,6 +4,7 @@ import { Menu } from '../model/menu';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Submenu } from '../model/submenu';
+import { SubmenuUrl } from '../model/models';
 
 
 @Injectable({
@@ -24,6 +25,10 @@ export class MenuService {
 
   getAllSubMenuAndMenu():Observable<any>{
     return this.http.get(this.baseApiUrl+'/Menuitem/menu-with-submenu');
+  }
+
+  postSubmenu(submenu:SubmenuUrl):Observable<any>{
+    return this.http.post(this.baseApiUrl+'/Submenuitem',submenu);
   }
 
 

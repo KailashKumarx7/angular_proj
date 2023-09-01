@@ -2,28 +2,28 @@
     <h2>New SubMenu</h2>
     <div class="row">
         <div class="col-lg-2 col-md-4 col-sm-4">
-            <mat-list *ngFor="let menu of menus" role="list">
-                <mat-list-item role="listitem"><button mat-button>{{menu.menu_item_name_display}}</button></mat-list-item>
+            <mat-list *ngFor="let menu of menus$ | async" role="list">
+                <mat-list-item role="listitem"><button (click)="selectMenu(menu)" mat-button>{{menu.menu_item_name_display}}</button></mat-list-item>
 
             </mat-list>
         </div>
 
         <div class="col-lg-10 col-md-6 col-sm-6 ">
-                <form  (ngSubmit)="onSubmit()">
+                <form *ngIf="menuSelected" #myForm="ngForm" (ngSubmit)="onSubmit()">
                     <div class="row form-content">
                         <div class="row form-row g-3 align-items-center">
                             <div class="col-auto col-lg-1 col-md-6 col-sm-12">
                                 <label  class="col-form-label">Name</label>
                             </div>
                             <div class="col-auto col-lg-2 col-md-6 col-sm-12">
-                                <input [(ngModel)]="form.name" type="text" id="" class="form-control"
+                                <input [(ngModel)]="form.name" name="name" type="text" id="form1" class="form-control"
                                     aria-describedby="passwordHelpInline">
                             </div>
                             <div class="col-auto col-lg-2 col-md-6 col-sm-12">
                                 <label  class="col-form-label">Menu Command Name</label>
                             </div>
                             <div class="col-auto col-lg-2 col-md-6 col-sm-12">
-                                <input [(ngModel)]="form.menu_command_name" type="text" class="form-control"
+                                <input [(ngModel)]="form.menu_command_name" name="menu_command_name" type="text" id="form2" class="form-control"
                                     aria-describedby="passwordHelpInline">
                             </div>
                             
@@ -31,7 +31,7 @@
                                 <label  class="col-form-label">Menu Function</label>
                             </div>
                             <div class="col-auto col-lg-2 col-md-6 col-sm-12">
-                                <input [(ngModel)]="form.menu_function" type="text" id="" class="form-control"
+                                <input [(ngModel)]="form.menu_function" type="text" name="menu_function" id="form3" class="form-control"
                                     aria-describedby="passwordHelpInline">
                             </div>
                            
@@ -42,14 +42,14 @@
                                 <label  class="col-form-label">Url</label>
                             </div>
                             <div class="col-auto col-lg-2 col-md-6 col-sm-12">
-                                <input [(ngModel)]="form.url" type="text" id="" class="form-control"
+                                <input [(ngModel)]="form.url" name="url" type="text" id="form4" class="form-control"
                                     aria-describedby="passwordHelpInline">
                             </div>
                             <div class="col-auto col-lg-2 col-md-6 col-sm-12">
                                 <label  class="col-form-label">Menu Fast Way</label>
                             </div>
                             <div class="col-auto col-lg-2 col-md-6 col-sm-12">
-                                <input [(ngModel)]="form.menu_fast_way" type="text" id="" class="form-control"
+                                <input [(ngModel)]="form.menu_fast_way" name="menu_fast_way" type="text" id="form5" class="form-control"
                                     aria-describedby="passwordHelpInline">
                             </div>
                             

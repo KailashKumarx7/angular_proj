@@ -10,7 +10,7 @@
 
         </button>
         <mat-menu class="main-menus" xPosition="after" #submenu="matMenu">
-          <button mat-menu-item *ngFor="let subm of menu.submenuitems">{{subm.name_display}}</button>
+          <button [routerLink]="subm.url" mat-menu-item *ngFor="let subm of menu.submenuitems">{{subm.name}}</button>
         </mat-menu>
       </ng-container>
     </mat-menu>
@@ -28,7 +28,7 @@
         
         <mat-menu class="mat-menu custom-height" #menuDropdown="matMenu" xPosition="after">
           <div class="custom">
-            <button mat-menu-item *ngFor="let submenu of menu.submenuitems">{{ submenu.name_display }}</button>
+            <button [routerLink]="submenu.url" mat-menu-item *ngFor="let submenu of menu.submenuitems">{{ submenu.name }}</button>
           </div>
         </mat-menu>
       </ng-container>

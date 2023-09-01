@@ -1,0 +1,300 @@
+<div class="mx-lg-5 mx-md-4 mx-sm-3">
+    <div class="row head_part mt-2">
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="Category"> Category </label>
+                </div>
+                <div class="col-sm-5">
+                    <select class="form-select form-control form-select-sm" aria-label="Default select example">
+                        <option selected> select</option>
+                        <option (click)="selecteCategory(category)" *ngFor="let category of categories " [value]="category.id">{{category.eng_text}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label for="Category"> Head </label>
+                </div>
+                <div class="col-sm-5">
+                    <select class="form-select form-control form-select-sm" aria-label="Default select example">
+                        <option selected>Assests</option>
+                        <option value="1">Koshi</option>
+                        <option value="2">MAdhesh</option>
+                        <option value="3">Bagmati</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Table -->
+    <div class="chart border p-2 mt-3">
+        <div class="row table_part">
+            <div class="col-sm-4">
+                <div class="border p-1">
+                    <div class="row table-light">
+                        <div class="text-center">
+                            <strong>Head-List</strong>
+                        </div>
+                    </div>
+                    <div style="overflow-y: scroll;max-height: 200px;" class="scrollable">
+                        <table class="table">
+                            <thead style="position: sticky;top: 0;z-index: 1;" class="table-dark">
+                                <tr>
+                                    <th scope="col">SN</th>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Head</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="hl-table-body">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="border p-1">
+                    <div class="row table-light text-center">
+                        <strong>SubHead List</strong>
+                    </div>
+                    <table class="table border p-2">
+                        <thead class="table-dark">
+                            <th>S.N</th>
+                            <th>Code</th>
+                            <th>Sub Head</th>
+                        </thead>
+                        <tr>
+                            <td>1</td>
+                            <td>80</td>
+                            <td>CASH</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>80</td>
+                            <td>CASH</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>80</td>
+                            <td>CASH</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="border p-1">
+                    <div class="row table-light">
+                        <div class="text-center">
+                            <strong>Account-List</strong>
+                        </div>
+                    </div>
+                    <table class="table border p-2">
+                        <thead class="table-dark">
+                            <th>S.N</th>
+                            <th>A/c Code</th>
+                            <th>Account</th>
+                            <th>D.Per%</th>
+                        </thead>
+                        <tr>
+                            <td>1</td>
+                            <td>80</td>
+                            <td>CASH IN HAND</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>80</td>
+                            <td>CASH IN HAND FOR MILk</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>80</td>
+                            <td>CASH</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <!-- Code -->
+        <div class="row last_part">
+            <div class="col-sm-4">
+                <div class="border p-1">
+                    <div class="row table-light">
+                        <div class="col-sm-3">Code No:</div>
+                        <div class="col-sm-9">
+                            <input type="number" id="hl_code_no" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="row table-light mt-2">
+                        <div class="col-sm-3">Item:</div>
+                        <div class="col-sm-9">
+                            <select id="hl_item" class="form-select form-control form-select-sm">
+                                <option selected disabled>Select</option>
+                                <option value="1">No</option>
+                                <option value="2">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row head_entry mt-2">
+                        <div class="col-sm-3">Head:</div>
+                        <div class="col-sm-9">
+                            <input type="text" id="hl_text" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="border p-1">
+                    <div class="row table-light">
+                        <div class="col-sm-3">
+                            <p>Category</p>
+                        </div>
+                        <div class="col-sm-3 text-end">
+                            <p>Assests</p>
+                        </div>
+                        <div class="col-sm-3 text-end">
+                            <p>Head</p>
+                        </div>
+                        <div class="col-sm-3 text-end">
+                            <p>Cash</p>
+                        </div>
+                    </div>
+                    <div class="row table-light">
+                        <div class="col-sm-3">Code No:</div>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="row table-light mt-2">
+                        <div class="col-sm-3">Item:</div>
+                        <div class="col-sm-9">
+                            <select class="form-select form-control form-select-sm">
+                                <option selected>No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row head_entry mt-2">
+                        <div class="col-sm-3">Sub Head:</div>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Last column -->
+            <div class="col-sm-4">
+                <div class="border p-1">
+                    <div class="row table-light">
+                        <div class="col-sm-4">Code No:</div>
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="row table-light mt-2">
+                        <div class="col-sm-4">Item:</div>
+                        <div class="col-sm-8">
+                            <select class="form-select form-control form-select-sm">
+                                <option selected>No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row head_entry mt-2">
+                        <div class="col-sm-4">Account:</div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="row head_entry mt-2">
+                        <div class="col-sm-4">Billing:</div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                    <div class="row head_entry mt-2">
+                        <div class="col-sm-4">Master Item:</div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control form-control-sm" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="border">
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <button class="btn btn-outline" value="New Data" type="submit" id="new">
+                                New
+                            </button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-outline" value="Modify Data" type="submit" id="modify">
+                                Modify
+                            </button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-outline" id="hl_save">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border">
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <button class="btn btn-outline" value="New Data" type="submit" id="new">
+                                New
+                            </button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-outline" value="Modify Data" type="submit" id="modify">
+                                Modify
+                            </button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-outline" value="Save Data" type="submit" id="save">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border">
+                    <div class="d-flex justify-content-between">
+                        <div class="p-2">
+                            <button class="btn btn-outline" value="New Data" type="submit" id="new">
+                                New
+                            </button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-outline" value="Modify Data" type="submit" id="modify">
+                                Modify
+                            </button>
+                        </div>
+                        <div class="p-2">
+                            <button class="btn btn-outline" value="Save Data" type="submit" id="save">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Code -->
+</div>

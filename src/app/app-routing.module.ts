@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenuaccessComponent } from './components/menuaccess/menuaccess.component';
+import { AccountEntryComponent } from './components/account-entry/account-entry.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'default',pathMatch:'full'},
@@ -22,6 +23,9 @@ const routes: Routes = [
   },
   {
     path:'menuacc',component:MenuaccessComponent
+  },
+  {
+    path:'acc-entry',component:AccountEntryComponent
   }
 ];
 
