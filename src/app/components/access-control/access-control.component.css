@@ -1,0 +1,36 @@
+.menulistingsection {
+    height: 42px;
+    margin-top: 7px;
+    background: black;
+
+}
+
+#form-buttons {
+    margin-top: 5rem;
+}
+
+.scrollable {
+    height: 50vh;
+    overflow-y: scroll;
+    border-radius: 5px;
+}
+.menuScrollable{
+    height: 70vh;
+    overflow-y: scroll;
+    border-radius: 5px;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+#form-container {
+    height: 70%;
+    margin: auto;
+}
+
+.active{
+    background:rgb(124, 124, 124);
+}

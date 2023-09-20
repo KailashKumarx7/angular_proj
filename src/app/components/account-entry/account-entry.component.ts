@@ -11,6 +11,7 @@ import { AccountEntryService } from 'src/app/services/account-entry.service';
 })
 export class AccountEntryComponent {
 
+  selectedCategoryId!:Number;
 
 
   categories:Category[]=[];
@@ -25,9 +26,12 @@ export class AccountEntryComponent {
     }) 
   }
 
-  selecteCategory(category:Category){
-    console.log(category.id);
-  }
+  selectCategory(event: any) {
+    this.selectedCategoryId = event.target.value; 
+    console.log(this.selectedCategoryId);
+    
+    
+}
 
 
   

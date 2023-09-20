@@ -1,0 +1,93 @@
+<div class="container" style="width:100vw;">
+    <div class="row">
+        <div class="col-md-6 p-2">
+            <div class="scrollable">
+                <table class="table" id="user_table">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">SN</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">User Level</th>
+                            <th scope="col">Running</th>
+                            <th scope="col">Teacher</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-3 ">
+            <div class="menulistingsection rounded-top">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h6 class="p-2" style="color: white;font-size: 20px;">SN</h6>
+                    </div>
+                    <div class="col-md-9">
+                        <select class="form-select" id="userlevel">
+                            <option disabled selected>Menu List</option>
+                
+                        </select>
+                    </div>
+                </div>
+                <div class="menuScrollable">
+                    <div id="menuItemsContainer">
+                       
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-3 ">
+            <div class="menulistingsection rounded-top">
+                <div class="row">
+                    <div class="col-md-3" >
+                        <h6 class="p-2" style="color:white;font-size: 20px;">SN</h6>
+                    </div>
+                    <div id="nameDisplaySection" class="col-md-9">
+                        <h6 class="p-2" style="color:white;font-size: 20px;">Name Display</h6>
+                    </div>
+                </div>
+                <div class="menuScrollable">
+                    <div id="menudisplaysection">
+                        <!-- <div class="row">
+                            <ul class="list-unstyled d-flex">
+                                <li class="col-3 p-2 pt-2">1</li><li class="col-9 p-2 pt-2 d-flex justify-content-between align-items-center">
+                                    <p class="m-0">Name Display</p>
+                                </li>
+                            </ul>
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 p-2 mt-4">
+        <div id="form-container">
+            <form class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="name1" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name1">
+                </div>
+
+                <div class="mb-3 col-md-6">
+                    <label for="userlevel" class="form-label">User Level</label>
+                    <select class="form-select" id="userlevel">
+                        <option selected>Choose user level</option>
+                        <option value="1">Level 1</option>
+                        <option value="2">Level 2</option>
+                        <option value="3">Level 3</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="form-buttons" class="d-flex justify-content-center mt-50">
+    <button id="menu-access-entry-submition" class="btn btn-primary" style="width: 50vw;">Submit</button>
+</div>

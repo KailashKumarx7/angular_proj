@@ -16,7 +16,7 @@
     </mat-menu>
   </div>
 
-  <span class="logo">Bhakari</span>
+  <span routerLink="default" class="logo">Bhakari</span>
   <span class="spacer"></span>
   <ng-container *ngIf="islogedin">
     <span class="spacer"></span>
@@ -28,9 +28,17 @@
         
         <mat-menu class="mat-menu custom-height" #menuDropdown="matMenu" xPosition="after">
           <div class="custom">
-            <button [routerLink]="submenu.url" mat-menu-item *ngFor="let submenu of menu.submenuitems">{{ submenu.name }}</button>
+            <button [routerLink]="submenu.url"  mat-menu-item *ngFor="let submenu of menu.submenuitems">{{ submenu.name }}</button>
           </div>
+          
+            <!-- <mat-menu  class="mat-menu custom-height" #subDropdown="matMenu">
+              
+                <button></button>
+              
+            </mat-menu> -->
+          
         </mat-menu>
+
       </ng-container>
       <button mat-button routerLink="menuacc" >Menu</button>
     </div>

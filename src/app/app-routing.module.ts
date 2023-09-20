@@ -6,28 +6,63 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenuaccessComponent } from './components/menuaccess/menuaccess.component';
 import { AccountEntryComponent } from './components/account-entry/account-entry.component';
+import { AccessControlComponent } from './components/access-control/access-control.component';
+import { DataMigrationComponent } from './components/data-migration/data-migration.component';
 
 const routes: Routes = [
-  {path:'',redirectTo:'default',pathMatch:'full'},
   {
-    path:'default',component:DefaultPageComponent
+    path: '',
+    redirectTo: 'default',
+    pathMatch: 'full',
   },
   {
-    path:'login',component:LoginComponent
+    path: 'default',
+    component: DefaultPageComponent,
   },
   {
-    path:'signup',component:SignupComponent
+    path: 'login',
+    component: LoginComponent,
   },
   {
-    path:'dashboard',component:DashboardComponent
+    path: 'signup',
+    component: SignupComponent,
   },
   {
-    path:'menuacc',component:MenuaccessComponent
+    path: 'dashboard',
+    component: DashboardComponent,
   },
   {
-    path:'acc-entry',component:AccountEntryComponent
-  }
+    path: 'menuacc',
+    component: MenuaccessComponent,
+  },
+  {
+    path: 'acc-entry',
+    component: AccountEntryComponent,
+  },
+  {
+    path: 'access-ctrl',
+    component: AccessControlComponent,
+  },
+  {
+    path: 'dt-mig',
+    component: DataMigrationComponent,
+  },
+  {
+    path: 'utility/',
+    children: [
+      {
+        path: 'dt-mig',
+        component: DataMigrationComponent,
+      },
+    ],
+  },
+  // Add a wildcard route to redirect any unmatched routes to 'default'
+  {
+    path: '**',
+    redirectTo: 'default',
+  },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

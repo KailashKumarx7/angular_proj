@@ -19,6 +19,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RouterModule } from '@angular/router';
 import { MenuaccessComponent } from './components/menuaccess/menuaccess.component';
 import { AccountEntryComponent } from './components/account-entry/account-entry.component';
+import { AccessControlComponent } from './components/access-control/access-control.component';
+import { DataMigrationComponent } from './components/data-migration/data-migration.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { AccountEntryComponent } from './components/account-entry/account-entry.
     SignupComponent,
     DashboardComponent,
     MenuaccessComponent,
-    AccountEntryComponent
+    AccountEntryComponent,
+    AccessControlComponent,
+    DataMigrationComponent
 
   ],
   imports: [
