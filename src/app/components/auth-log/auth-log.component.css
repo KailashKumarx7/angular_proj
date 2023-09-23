@@ -1,0 +1,26 @@
+.example-card{
+    max-width: 400px;
+    width: 100%;
+    
+}
+
+.auth-page{
+    padding-top: 110px;
+    box-sizing: border-box;
+    max-height: calc(100vh - 110px);
+}
+
+.example-full-width{
+    width: 100%;
+}
+.text-center{
+    justify-content: center;
+}
+
+a {
+    cursor: pointer;
+    color: blue !important;
+    text-decoration: underline !important;
+}
+
+  

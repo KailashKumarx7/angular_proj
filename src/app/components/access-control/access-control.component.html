@@ -1,93 +1,225 @@
-<div class="container" style="width:100vw;">
+<div class="container access-control">
+  <mat-card class="card-height">
+
     <div class="row">
-        <div class="col-md-6 p-2">
-            <div class="scrollable">
-                <table class="table" id="user_table">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">SN</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">User Level</th>
-                            <th scope="col">Running</th>
-                            <th scope="col">Teacher</th>
-                        </tr>
-                    </thead>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="example-table-container">
 
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+          <table mat-table [dataSource]="dataSource" style="overflow-x: hidden;" class="mat-elevation-z8 demo-table">
+            <!-- Position Column -->
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef>No.</th>
+              <td mat-cell *matCellDef="let element;let i = index">{{i+1}}</td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let element">{{element.full_name}}</td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="userlevel">
+              <th mat-header-cell *matHeaderCellDef>User Level</th>
+              <td mat-cell *matCellDef="let element">{{element.access_level}}</td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Running</th>
+              <td mat-cell *matCellDef="let element">{{element.user_status}}</td>
+            </ng-container>
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef>Teacher</th>
+              <td mat-cell *matCellDef="let element">{{element.isteacher}}</td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="getUserid(element.user_key)"></tr>
+          </table>
         </div>
-        <div class="col-md-3 ">
-            <div class="menulistingsection rounded-top">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h6 class="p-2" style="color: white;font-size: 20px;">SN</h6>
-                    </div>
-                    <div class="col-md-9">
-                        <select class="form-select" id="userlevel">
-                            <option disabled selected>Menu List</option>
+        <br>
+        <form [formGroup]="newmembergroup">
+          <div class="m-1 row">
+
+            <mat-form-field class="example-full-width">
+              
+              <mat-label>Select Insititution</mat-label>
+              <input type="text" matInput formControlName="school_name" [matAutocomplete]="autoschool">
+              <mat-autocomplete autoActiveFirstOption #autoschool >
+                <mat-option *ngFor="let school of SchoolNameFilteredOptions | async" [value]="school.inst_name">
+                  {{school.inst_name}}
+                </mat-option>
+              </mat-autocomplete>
                 
-                        </select>
-                    </div>
-                </div>
-                <div class="menuScrollable">
-                    <div id="menuItemsContainer">
-                       
-                    </div>
-                </div>
+            </mat-form-field>
+          </div>
+          <div class="add-user " *ngIf="wantonewmember">
+            <div class="m-1 row">
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Full Name</mat-label>
+                  <input formControlName="full_name" matInput >
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>User Id</mat-label>
+                  <input type="text" formControlName="user_id" matInput >
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Password</mat-label>
+                  <input formControlName="password" type="password" matInput
+                    placeholder="Ex. kishor">
+                </mat-form-field>
+              </div>
 
             </div>
-
-        </div>
-        <div class="col-md-3 ">
-            <div class="menulistingsection rounded-top">
-                <div class="row">
-                    <div class="col-md-3" >
-                        <h6 class="p-2" style="color:white;font-size: 20px;">SN</h6>
-                    </div>
-                    <div id="nameDisplaySection" class="col-md-9">
-                        <h6 class="p-2" style="color:white;font-size: 20px;">Name Display</h6>
-                    </div>
-                </div>
-                <div class="menuScrollable">
-                    <div id="menudisplaysection">
-                        <!-- <div class="row">
-                            <ul class="list-unstyled d-flex">
-                                <li class="col-3 p-2 pt-2">1</li><li class="col-9 p-2 pt-2 d-flex justify-content-between align-items-center">
-                                    <p class="m-0">Name Display</p>
-                                </li>
-                            </ul>
-                        </div> -->
-                    </div>
-                </div>
+            <div class="m-1 row">
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Name</mat-label>
+                  <input type="text" matInput formControlName="name">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Email</mat-label>
+                  <input formControlName="email" matInput placeholder="Ex. kishor">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Print On</mat-label>
+                  <input formControlName="print_on" matInput placeholder="Ex. kishor">
+                </mat-form-field>
+              </div>
 
             </div>
+            <div class="m-1 row">
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Paper Size</mat-label>
+                  <input type="number" formControlName="paper_size" matInput placeholder="Ex. kishor">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Number</mat-label>
+                  <input formControlName="phone_number" matInput placeholder="Ex. kishor">
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Access Level</mat-label>
+                  <input type="text" matInput formControlName="access_level" [matAutocomplete]="autouserlevel">
+                  <mat-autocomplete autoActiveFirstOption #autouserlevel>
+                    <mat-option *ngFor="let userlevel of UserLevelFilteredOptions | async" [value]="userlevel.access_name">
+                      {{userlevel.access_name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div class="m-1 row">
+              <div class="col-lg-4">
+                <mat-form-field>
+                  <mat-label>Faculty</mat-label>
+                  <mat-select formControlName="faculty" multiple>
+                    <mat-option *ngFor="let faculty of toppinglist" [value]="faculty.fac_key">{{faculty.fac_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-lg-4">
+                <mat-checkbox formControlName="isteacher" class="example-margin">Is teacher!</mat-checkbox>
+              </div>
+              <div class="col-lg-4">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Employee Name</mat-label>
+                  <input type="text" formControlName="employee_key" matInput 
+                    [matAutocomplete]="autoemployee">
+                  <mat-autocomplete autoActiveFirstOption #autoemployee="matAutocomplete">
+                    <mat-option *ngFor="let employee of EmployeeFilteredOptions | async" [value]="employee.emp_key">
+                      {{employee.emp_name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+        <div *ngIf="!wantonewmember" class="add-user">
+
         </div>
-    </div>
-    <div class="col-md-6 p-2 mt-4">
-        <div id="form-container">
-            <form class="row">
-                <div class="mb-3 col-md-6">
-                    <label for="name1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name1">
-                </div>
 
-                <div class="mb-3 col-md-6">
-                    <label for="userlevel" class="form-label">User Level</label>
-                    <select class="form-select" id="userlevel">
-                        <option selected>Choose user level</option>
-                        <option value="1">Level 1</option>
-                        <option value="2">Level 2</option>
-                        <option value="3">Level 3</option>
-                    </select>
-                </div>
-            </form>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 row">
+        <div class="col-lg-6">
+          <div style="height: 500px; overflow: auto;">
+            <table [dataSource]="menuSource" mat-table style="overflow-x: hidden;" class="mat-elevation-z8 ">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>id</th>
+                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+              </ng-container>
+              <ng-container matColumnDef="menu_name">
+                <th mat-header-cell *matHeaderCellDef>Menu List</th>
+                <td mat-cell *matCellDef="let element">{{element.menu_name}}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displaymenuName; sticky:true"></tr>
+              <tr mat-row *matRowDef="let row; columns:displaymenuName"></tr>
+
+            </table>
+          </div>
         </div>
+        <div class="col-lg-6">
+          <div style="max-height: 80vh; overflow: auto;">
+            <table mat-table style="overflow-x: hidden;" class="mat-elevation-z8">
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>id</th>
+                <td mat-cell *matCellDef="let element"></td>
+              </ng-container>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Selected Menu</th>
+                <td mat-cell *matCellDef="let element"></td>
+              </ng-container>
+
+              <!-- Define an empty data source -->
+              <tr mat-header-row *matHeaderRowDef="['id', 'name']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['id', 'name']; let index = index"></tr>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+      <hr>
     </div>
-</div>
-
-
-<div id="form-buttons" class="d-flex justify-content-center mt-50">
-    <button id="menu-access-entry-submition" class="btn btn-primary" style="width: 50vw;">Submit</button>
+    <div class="row m-1 example-button-row">
+      <div class="col-lg-1"><button (click)="addNew()" mat-raised-button>New</button></div>
+      <div class="col-lg-1"> <button mat-raised-button (click)="getFormValue()">Save</button></div>
+      <div class="col-lg-2"><button mat-raised-button disabled>Save Action</button></div>
+      <div class="col-lg-1"> <button mat-raised-button disabled>Apply</button></div>
+      <div class="col-lg-1"><button mat-raised-button (click)="updateUser()">Update</button></div>
+      <div class="col-lg-1"> <button mat-raised-button>Delete</button></div>
+      <div class="col-lg-2">
+        <!-- <mat-form-field class="example-full-width">
+          <mat-label>Menu</mat-label>
+          <input type="text" placeholder="menu" matInput [formControl]="myControl" [matAutocomplete]="auto">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayEmployee">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field> -->
+      </div>
+    </div>
+  </mat-card>
 </div>

@@ -8,6 +8,8 @@ import { MenuaccessComponent } from './components/menuaccess/menuaccess.componen
 import { AccountEntryComponent } from './components/account-entry/account-entry.component';
 import { AccessControlComponent } from './components/access-control/access-control.component';
 import { DataMigrationComponent } from './components/data-migration/data-migration.component';
+import { AuthLogComponent } from './components/auth-log/auth-log.component';
+import { authGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -30,6 +32,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate:[authGuard]
   },
   {
     path: 'menuacc',
@@ -46,6 +49,10 @@ const routes: Routes = [
   {
     path: 'dt-mig',
     component: DataMigrationComponent,
+  },
+  {
+    path: 'auth',
+    component: AuthLogComponent
   },
   {
     path: 'utility/',

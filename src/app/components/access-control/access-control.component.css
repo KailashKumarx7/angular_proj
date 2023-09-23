@@ -1,4 +1,65 @@
-.menulistingsection {
+.access-control{
+    padding-top: 70px;
+   max-width: 100%;
+}
+
+.example-table-container {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+  }
+
+  .add-user{
+    height: 300px;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  mat-form-field {
+   max-width: 100%;
+  }
+
+  .demo-row-is-clicked{
+    background-color: aquamarine;
+  }
+
+
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .menulistingsection {
     height: 42px;
     margin-top: 7px;
     background: black;
@@ -33,4 +94,6 @@ thead {
 
 .active{
     background:rgb(124, 124, 124);
-}
+} */
+
+

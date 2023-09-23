@@ -21,6 +21,7 @@ import { MenuaccessComponent } from './components/menuaccess/menuaccess.componen
 import { AccountEntryComponent } from './components/account-entry/account-entry.component';
 import { AccessControlComponent } from './components/access-control/access-control.component';
 import { DataMigrationComponent } from './components/data-migration/data-migration.component';
+import { AuthLogComponent } from './components/auth-log/auth-log.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { DataMigrationComponent } from './components/data-migration/data-migrati
     MenuaccessComponent,
     AccountEntryComponent,
     AccessControlComponent,
-    DataMigrationComponent
+    DataMigrationComponent,
+    AuthLogComponent
 
   ],
   imports: [
