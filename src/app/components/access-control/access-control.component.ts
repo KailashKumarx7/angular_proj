@@ -32,7 +32,7 @@ export class AccessControlComponent {
       this.toppinglist = [];
       this.submenuSource = [];
       this.menutopplinglist = [];
-      this.newselectedmenuSource =[];
+      
   }
 
 
@@ -71,7 +71,7 @@ export class AccessControlComponent {
   submenuSource!:SubmenuUrl[];
 
   selectedmenuSource!:SubmenuUrl[];
-  newselectedmenuSource!:SubmenuUrl[];
+  newselectedmenuSource:SubmenuUrl[]=[];
 
   
   
@@ -334,13 +334,30 @@ getSubmenuByitemno(value:any){
   )
 }
 
+// addData() {
+//   const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
+//   this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
+//   this.table.renderRows();
+// }
 
-getThisrowdata(data:any){
 
-  this.newselectedmenuSource.push(data);
-  console.log(this.newselectedmenuSource);
- 
-  
+getThisrowdata(data: any) {
+
+const getabledata = data;
+this.newselectedmenuSource.push(getabledata);
+
+console.log(this.newselectedmenuSource)
+
+//   console.log(data);
+//   const selecteditem = data.menu_sub_item_key;
+//   const filteredSubmenu = this.submenuSource.filter(submenu => submenu.menu_sub_item_key === selecteditem);
+
+//   //Spread the filteredSubmenu array to push all its elements into newselectedmenuSource
+//  this.newselectedmenuSource.push(...filteredSubmenu);
+
+//   console.log(this.newselectedmenuSource);
 }
+
+
 
 }
