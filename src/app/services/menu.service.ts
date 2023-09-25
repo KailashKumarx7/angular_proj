@@ -4,7 +4,7 @@ import { Menu } from '../model/menu';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { Submenu } from '../model/submenu';
-import { SubmenuUrl } from '../model/models';
+import { MenuList, SubmenuUrl } from '../model/models';
 
 
 @Injectable({
@@ -19,12 +19,24 @@ export class MenuService {
     return this.http.get<Menu[]>(this.baseApiUrl+'/Menuitem/GetAll');
   }
 
+  getMenuList():Observable<MenuList[]>{
+    return this.http.get<MenuList[]>(this.baseApiUrl+'/Menuitem/GetAll');
+  }
+
+  getSubmenuByItemno(item_no:number):Observable<SubmenuUrl[]>{
+    return this.http.get<SubmenuUrl[]>(`${this.baseApiUrl}/Submenuitem/Submenuitembymenuitem/${item_no}`);
+  }
+
   getSubmenu(menuid:any):Observable<Submenu[]>{
     return this.http.get<Submenu[]>(this.baseApiUrl+'/Submenuitem/Submenuitembymenuitem/'+menuid);
   }
 
   getAllSubMenuAndMenu():Observable<any>{
     return this.http.get(this.baseApiUrl+'/Menuitem/menu-with-submenu');
+  }
+
+  getAllSubMenus():Observable<SubmenuUrl[]>{
+    return this.http.get<SubmenuUrl[]>(this.baseApiUrl+'/Submenuitem/allSubmenu');
   }
 
   postSubmenu(submenu:SubmenuUrl):Observable<any>{

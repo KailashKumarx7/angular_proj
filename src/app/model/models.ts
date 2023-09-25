@@ -42,6 +42,11 @@ export interface Employee {
       emp_name :string
 }
 
+export interface MenuList{
+    item_no: number,
+    menu_item_name_display: string
+}
+
 
 
 export interface SchoolName {
@@ -59,31 +64,10 @@ export interface Faculty {
       fac_key:number,
       fac_name:string,
 }
-export interface MenuList {
-    id: number;
-    menu_name: string;
-  }
+
   
   
-  export const MenuData: MenuList[] = [
-    { id: 1, menu_name: 'menu 1' },
-    { id: 2, menu_name: 'menu 2' },
-    { id: 3, menu_name: 'menu 3' },
-    { id: 4, menu_name: 'menu 5' },
-    { id: 5, menu_name: 'menu 5' },
-    { id: 6, menu_name: 'menu 15' },
-    { id: 7, menu_name: 'menu 1d' },
-    { id: 8, menu_name: 'menu 1d' },
-    { id: 9, menu_name: 'menu 1' },
-    { id: 10, menu_name: 'menu 1' },
-    { id: 11, menu_name: 'menu 15' },
-    { id: 12, menu_name: 'menu 16' },
-    { id: 13, menu_name: 'menu 15' },
-    { id: 14, menu_name: 'menu 1' },
-    { id: 15, menu_name: 'menu 10' },
-    { id: 16, menu_name: 'menu 1' },
   
-  ];
 
 
 

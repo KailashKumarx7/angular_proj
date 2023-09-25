@@ -21,9 +21,17 @@
    max-width: 100%;
   }
 
-  .demo-row-is-clicked{
-    background-color: aquamarine;
+  
+
+  .selected-row {
+    background-color: lightblue; 
   }
+
+ 
+
+
+  
+  
 
 
  

@@ -3,9 +3,9 @@
 
     <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12">
-        <div class="example-table-container">
+        <div class="example-table-container px-3 mat-elevation-z18">
 
-          <table mat-table [dataSource]="dataSource" style="overflow-x: hidden;" class="mat-elevation-z8 demo-table">
+          <table mat-table [dataSource]="dataSource" class="">
             <!-- Position Column -->
             <ng-container matColumnDef="index">
               <th mat-header-cell *matHeaderCellDef>No.</th>
@@ -36,23 +36,28 @@
 
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns; let element;" (click)="getUserid(element.user_key)"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns; let element;"
+              [class.selected-row]="selectedRow === element" (click)="selectRow(element)"
+              (click)="getUserid(element.user_key)"></tr>
+
+
           </table>
         </div>
         <br>
-        <form [formGroup]="newmembergroup">
+        <form style="background: rgba(46, 46, 46, 0.368);" class="p-4" [formGroup]="newmembergroup">
           <div class="m-1 row">
 
             <mat-form-field class="example-full-width">
-              
+
               <mat-label>Select Insititution</mat-label>
-              <input type="text" matInput formControlName="school_name" [matAutocomplete]="autoschool">
-              <mat-autocomplete autoActiveFirstOption #autoschool >
+              <input type="text" matInput formControlName="school_name" [matAutocomplete]="autoschool"> <mat-icon
+                matSuffix>arrow_drop_down</mat-icon>
+              <mat-autocomplete autoActiveFirstOption #autoschool>
                 <mat-option *ngFor="let school of SchoolNameFilteredOptions | async" [value]="school.inst_name">
                   {{school.inst_name}}
                 </mat-option>
               </mat-autocomplete>
-                
+
             </mat-form-field>
           </div>
           <div class="add-user " *ngIf="wantonewmember">
@@ -60,20 +65,19 @@
               <div class="col-lg-4">
                 <mat-form-field class="example-full-width">
                   <mat-label>Full Name</mat-label>
-                  <input formControlName="full_name" matInput >
+                  <input formControlName="full_name" matInput>
                 </mat-form-field>
               </div>
               <div class="col-lg-4">
                 <mat-form-field class="example-full-width">
                   <mat-label>User Id</mat-label>
-                  <input type="text" formControlName="user_id" matInput >
+                  <input type="text" formControlName="user_id" matInput>
                 </mat-form-field>
               </div>
               <div class="col-lg-4">
                 <mat-form-field class="example-full-width">
                   <mat-label>Password</mat-label>
-                  <input formControlName="password" type="password" matInput
-                    placeholder="Ex. kishor">
+                  <input formControlName="password" type="password" matInput placeholder="Ex. kishor">
                 </mat-form-field>
               </div>
 
@@ -94,7 +98,7 @@
               <div class="col-lg-4">
                 <mat-form-field class="example-full-width">
                   <mat-label>Print On</mat-label>
-                  <input formControlName="print_on" matInput placeholder="Ex. kishor">
+                  <input type="text" formControlName="print_on" matInput>
                 </mat-form-field>
               </div>
 
@@ -103,21 +107,23 @@
               <div class="col-lg-4">
                 <mat-form-field class="example-full-width">
                   <mat-label>Paper Size</mat-label>
-                  <input type="number" formControlName="paper_size" matInput placeholder="Ex. kishor">
+                  <input formControlName="paper_size" matInput>
                 </mat-form-field>
               </div>
               <div class="col-lg-4">
                 <mat-form-field class="example-full-width">
                   <mat-label>Number</mat-label>
-                  <input formControlName="phone_number" matInput placeholder="Ex. kishor">
+                  <input type="text" formControlName="phone_number" matInput>
                 </mat-form-field>
               </div>
               <div class="col-lg-4">
                 <mat-form-field class="example-full-width">
                   <mat-label>Access Level</mat-label>
                   <input type="text" matInput formControlName="access_level" [matAutocomplete]="autouserlevel">
+                  <mat-icon matSuffix>arrow_drop_down</mat-icon>
                   <mat-autocomplete autoActiveFirstOption #autouserlevel>
-                    <mat-option *ngFor="let userlevel of UserLevelFilteredOptions | async" [value]="userlevel.access_name">
+                    <mat-option *ngFor="let userlevel of UserLevelFilteredOptions | async"
+                      [value]="userlevel.access_name">
                       {{userlevel.access_name}}
                     </mat-option>
                   </mat-autocomplete>
@@ -130,7 +136,8 @@
                 <mat-form-field>
                   <mat-label>Faculty</mat-label>
                   <mat-select formControlName="faculty" multiple>
-                    <mat-option *ngFor="let faculty of toppinglist" [value]="faculty.fac_key">{{faculty.fac_name}}</mat-option>
+                    <mat-option *ngFor="let faculty of toppinglist"
+                      [value]="faculty.fac_key">{{faculty.fac_name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -140,15 +147,15 @@
               <div class="col-lg-4">
                 <mat-form-field class="example-full-width">
                   <mat-label>Employee Name</mat-label>
-                  <input type="text" formControlName="employee_key" matInput 
-                    [matAutocomplete]="autoemployee">
+                  <input type="text" formControlName="employee_key" matInput [matAutocomplete]="autoemployee">
+                  <mat-icon matSuffix>arrow_drop_down</mat-icon>
                   <mat-autocomplete autoActiveFirstOption #autoemployee="matAutocomplete">
                     <mat-option *ngFor="let employee of EmployeeFilteredOptions | async" [value]="employee.emp_key">
                       {{employee.emp_name}}
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-                
+
               </div>
             </div>
           </div>
@@ -162,33 +169,43 @@
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 row">
         <div class="col-lg-6">
-          <div style="height: 500px; overflow: auto;">
-            <table [dataSource]="menuSource" mat-table style="overflow-x: hidden;" class="mat-elevation-z8 ">
+          <div class="mat-elevation-z18 px-3" style="height: 500px; overflow: auto;">
+            <table [dataSource]="submenuSource" mat-table style="overflow-x: hidden;" class=" ">
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef>id</th>
-                <td mat-cell *matCellDef="let element">{{element.id}}</td>
+                <td mat-cell *matCellDef="let element; let i = index;">{{i+1}}</td>
               </ng-container>
               <ng-container matColumnDef="menu_name">
-                <th mat-header-cell *matHeaderCellDef>Menu List</th>
-                <td mat-cell *matCellDef="let element">{{element.menu_name}}</td>
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-form-field appearance="outline" style="height: 40px;" class="custom-mat-form-field">
+                    <mat-label>Select Menu</mat-label>
+                    <mat-select (selectionChange)="getSubmenuByitemno($event)">
+                      <mat-option [value]="null">None</mat-option>
+                      <mat-option *ngFor="let menuitem of menutopplinglist" [value]="menuitem.item_no">
+                        {{menuitem.menu_item_name_display}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displaymenuName; sticky:true"></tr>
-              <tr mat-row *matRowDef="let row; columns:displaymenuName"></tr>
+              <tr mat-row *matRowDef="let row; columns:displaymenuName" (dblclick)="getThisrowdata(row)"></tr>
 
             </table>
           </div>
         </div>
         <div class="col-lg-6">
-          <div style="max-height: 80vh; overflow: auto;">
-            <table mat-table style="overflow-x: hidden;" class="mat-elevation-z8">
+          <div class="mat-elevation-z18 px-3" style="max-height: 80vh; overflow: auto;">
+            <table [dataSource]="newselectedmenuSource" mat-table style="overflow-x: hidden;" class="">
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef>id</th>
-                <td mat-cell *matCellDef="let element"></td>
+                <td mat-cell *matCellDef="let element; let i = index;"> {{i+1}}</td>
               </ng-container>
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Selected Menu</th>
-                <td mat-cell *matCellDef="let element"></td>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
               </ng-container>
 
               <!-- Define an empty data source -->

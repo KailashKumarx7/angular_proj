@@ -2,25 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { response } from 'express';
 import { Observable, map, startWith } from 'rxjs';
-import { Employee, Faculty, MenuData, MenuList, NewUser, SchoolName, UserLevel } from 'src/app/model/models';
+import { Employee, Faculty, MenuList, NewUser, SchoolName, SubmenuUrl, UserLevel } from 'src/app/model/models';
 import { GetDataService } from 'src/app/services/get-data.service';
+import { MenuService } from 'src/app/services/menu.service';
 import { UserService } from 'src/app/services/user.service';
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  userlevel: string;
-  status: string;
-  type: string;
-}
 
-
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Diyong', userlevel: 'Finance controler', status: 'NO', type: 'no' },
-  { position: 2, name: 'Ronish', userlevel: 'Library ', status: 'Yes', type: 'no' },
-  { position: 3, name: 'Depasa', userlevel: 'User', status: 'Yes', type: 'no' },
-  { position: 4, name: 'Miyong', userlevel: 'User', status: 'NO', type: 'no' },
-];
 @Component({
   selector: 'app-access-control',
   templateUrl: './access-control.component.html',
@@ -30,18 +16,23 @@ export class AccessControlComponent {
 
   isteacher: boolean = true;
    user_key!:number;
+   selectedRow: any; // This will store the selected row data
 
 
   constructor(
     private _formBuilder: FormBuilder, 
     private userService:UserService,
-    private getdataService:GetDataService
+    private getdataService:GetDataService,
+    private menuService:MenuService
     ) {
       this.EmployeeOption = [];
       this.FacultyOption = [];
       this.SchoolNameOption=[];
       this.UserLevelOption =[];
       this.toppinglist = [];
+      this.submenuSource = [];
+      this.menutopplinglist = [];
+      this.newselectedmenuSource =[];
   }
 
 
@@ -55,8 +46,8 @@ export class AccessControlComponent {
     faculty:[''],
     phone_number: [''],
     school_name: [''],
-    print_on: [''],
-    paper_size: [''],
+    print_on: [null],
+    paper_size: [null],
     isteacher: false,
     employee_key:['']
   })
@@ -74,8 +65,15 @@ export class AccessControlComponent {
 
   toppinglist!:Faculty[]; 
 
+  menutopplinglist!:MenuList[];
+
   displaymenuName: string[] = ['id', 'menu_name'];
-  menuSource:MenuList[]= MenuData;
+  submenuSource!:SubmenuUrl[];
+
+  selectedmenuSource!:SubmenuUrl[];
+  newselectedmenuSource!:SubmenuUrl[];
+
+  
   
 
   SchoolNameOption!: SchoolName[];
@@ -97,6 +95,7 @@ export class AccessControlComponent {
     this.getAllInstitutions();
     this.getAllFaculties();
     this.getAllAccesslists();
+    this.getAllSubMenus();
 
 
     this.SchoolNameFilteredOptions = this.newmembergroup.get('school_name')!.valueChanges.pipe(
@@ -295,10 +294,53 @@ updateUser(){
   this.userService.updateUserByUserkey(user_key,formData).subscribe(
     (response)=>{
       console.log(response);
+      this.fetchDataFromServicej();
+      this.newmembergroup.reset();
     }
   )
 }
  
+selectRow(row: any): void {
+  if (this.selectedRow === row) {
+    // If the clicked row is already selected, unselect it
+    this.selectedRow = undefined;
+  } else {
+    // Otherwise, select the clicked row
+    this.selectedRow = row;
+  }
+}
 
+getAllSubMenus(){
+  this.menuService.getMenuList().subscribe(
+    (response)=>{
+      this.menutopplinglist = response;
+    }
+  );
+  this.menuService.getAllSubMenus().subscribe(
+    (response)=>{
+      console.log(response);
+      this.submenuSource = response;
+    }
+  )
+}
+
+getSubmenuByitemno(value:any){
+  var item_no = value.value;
+  this.menuService.getSubmenuByItemno(item_no).subscribe(
+    (response)=>{
+      console.log(response);
+      this.submenuSource = response;
+    }
+  )
+}
+
+
+getThisrowdata(data:any){
+
+  this.newselectedmenuSource.push(data);
+  console.log(this.newselectedmenuSource);
+ 
+  
+}
 
 }
