@@ -44,7 +44,7 @@
           </table>
         </div>
         <br>
-        <form style="background: rgba(46, 46, 46, 0.368);" class="p-4" [formGroup]="newmembergroup">
+        <form style="background: rgba(46, 46, 46, 0.368);" class="p-2" [formGroup]="newmembergroup">
           <div class="m-1 row">
 
             <mat-form-field class="example-full-width">
@@ -169,7 +169,7 @@
       </div>
       <div class="col-lg-6 col-md-6 col-sm-12 row">
         <div class="col-lg-6">
-          <div class="mat-elevation-z18 px-3" style="height: 655px; overflow: auto;">
+          <div class="mat-elevation-z18 px-3" style="height: 630px; overflow: auto;">
             <table [dataSource]="submenuSource" mat-table style="overflow-x: hidden;" class=" ">
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef>id</th>
@@ -197,7 +197,7 @@
           </div>
         </div>
         <div class="col-lg-6">
-          <div class="mat-elevation-z18 px-3" style="height: 655px; overflow: auto;">
+          <div class="mat-elevation-z18 px-3" style="height: 630px; overflow: auto;">
             <table class="table">
               <thead>
                 <tr>
@@ -220,24 +220,14 @@
       </div>
       <hr>
     </div>
-    <div class="row m-1 example-button-row">
-      <div class="col-lg-1"><button (click)="addNew()" mat-raised-button>New</button></div>
-      <div class="col-lg-1"> <button mat-raised-button (click)="getFormValue()">Save</button></div>
-      <div class="col-lg-2"><button mat-raised-button disabled>Save Action</button></div>
-      <div class="col-lg-1"> <button mat-raised-button disabled>Apply</button></div>
-      <div class="col-lg-1"><button mat-raised-button (click)="updateUser()">Update</button></div>
-      <div class="col-lg-1"> <button mat-raised-button>Delete</button></div>
-      <div class="col-lg-2">
-        <!-- <mat-form-field class="example-full-width">
-          <mat-label>Menu</mat-label>
-          <input type="text" placeholder="menu" matInput [formControl]="myControl" [matAutocomplete]="auto">
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayEmployee">
-            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-              {{option}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field> -->
-      </div>
+    <div class="row example-button-row">
+      <div class="col-lg-1 button-div"><button (click)="addNew()" mat-raised-button>New</button></div>
+      <div class="col-lg-1 button-div"> <button mat-raised-button (click)="getFormValue()">Save</button></div>
+      <div class="col-lg-1 button-div"><button mat-raised-button (click)="updateUser()">Update</button></div>
+      <div class="col-lg-1 button-div"> <button mat-raised-button>Delete</button></div>
+      <div class="col-lg-5 button-div"></div>
+      <div class="col-lg-2 button-div"><button mat-raised-button (click)="addAccessSubMenu()">Save Action</button></div>
+      <div class="col-lg-1 button-div"> <button mat-raised-button disabled>Apply</button></div>
     </div>
   </mat-card>
 </div>

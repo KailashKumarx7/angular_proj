@@ -9,6 +9,15 @@
     overflow: auto;
   }
 
+  .button-div{
+    margin: 0!important;
+  }
+
+  .example-button-row{
+    padding: 0!important;
+    margin: 0!important;
+  }
+
   .add-user{
     height: 300px;
   }
@@ -26,6 +35,11 @@
   .selected-row {
     background-color: lightblue; 
   }
+
+
+  .spacer {
+    flex: 1 1 auto;
+}
 
  
 

@@ -66,6 +66,9 @@ isalreadyhaveaccount:boolean = true;
     this.authServices.login(loginData).subscribe(
       (response) => {
         console.log(response.message);
+        console.log(response.userkey);
+        const userKey = response.userkey;
+        localStorage.setItem('user_key',userKey);
         this.router.navigate(['/dashboard'])
         localStorage.setItem('isloged','true');
         this.sharedService.setLoggedInStatus(true);

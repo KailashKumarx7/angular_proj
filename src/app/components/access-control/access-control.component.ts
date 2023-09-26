@@ -15,24 +15,24 @@ import { UserService } from 'src/app/services/user.service';
 export class AccessControlComponent {
 
   isteacher: boolean = true;
-   user_key!:number;
-   selectedRow: any; // This will store the selected row data
+  user_key!: number;
+  selectedRow: any; // This will store the selected row data
 
 
   constructor(
-    private _formBuilder: FormBuilder, 
-    private userService:UserService,
-    private getdataService:GetDataService,
-    private menuService:MenuService
-    ) {
-      this.EmployeeOption = [];
-      this.FacultyOption = [];
-      this.SchoolNameOption=[];
-      this.UserLevelOption =[];
-      this.toppinglist = [];
-      this.submenuSource = [];
-      this.menutopplinglist = [];
-      
+    private _formBuilder: FormBuilder,
+    private userService: UserService,
+    private getdataService: GetDataService,
+    private menuService: MenuService
+  ) {
+    this.EmployeeOption = [];
+    this.FacultyOption = [];
+    this.SchoolNameOption = [];
+    this.UserLevelOption = [];
+    this.toppinglist = [];
+    this.submenuSource = [];
+    this.menutopplinglist = [];
+
   }
 
 
@@ -41,15 +41,15 @@ export class AccessControlComponent {
     user_id: [''],
     password: [''],
     access_level: [''],
-    name:[''],
+    name: [''],
     email: [''],
-    faculty:[''],
+    faculty: [''],
     phone_number: [''],
     school_name: [''],
     print_on: [null],
     paper_size: [null],
     isteacher: false,
-    employee_key:['']
+    employee_key: ['']
   })
 
 
@@ -63,30 +63,30 @@ export class AccessControlComponent {
   // toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'
 
 
-  toppinglist!:Faculty[]; 
+  toppinglist!: Faculty[];
 
-  menutopplinglist!:MenuList[];
+  menutopplinglist!: MenuList[];
 
   displaymenuName: string[] = ['id', 'menu_name'];
-  submenuSource!:SubmenuUrl[];
+  submenuSource!: SubmenuUrl[];
 
-  selectedmenuSource!:SubmenuUrl[];
-  newselectedmenuSource:SubmenuUrl[]=[];
+  oldselectedmenuSource!: SubmenuUrl[];
+  newselectedmenuSource: SubmenuUrl[] = [];
 
-  
-  
+
+
 
   SchoolNameOption!: SchoolName[];
   SchoolNameFilteredOptions!: Observable<SchoolName[]>;
 
-  UserLevelOption!:UserLevel[];
-  UserLevelFilteredOptions!:Observable<UserLevel[]>;
+  UserLevelOption!: UserLevel[];
+  UserLevelFilteredOptions!: Observable<UserLevel[]>;
 
-  FacultyOption!:Faculty[];
-  FacultyFilteredOptions!:Observable<Faculty[]>;
+  FacultyOption!: Faculty[];
+  FacultyFilteredOptions!: Observable<Faculty[]>;
 
-  EmployeeOption!:Employee[];
-  EmployeeFilteredOptions!:Observable<Employee[]>;
+  EmployeeOption!: Employee[];
+  EmployeeFilteredOptions!: Observable<Employee[]>;
 
   ngOnInit() {
 
@@ -112,28 +112,28 @@ export class AccessControlComponent {
       }),
     );
 
-    this.UserLevelFilteredOptions = this. newmembergroup.get('access_level')!.valueChanges.pipe(
+    this.UserLevelFilteredOptions = this.newmembergroup.get('access_level')!.valueChanges.pipe(
       startWith(''),
       map(value => {
-        if(typeof value === 'string'){
+        if (typeof value === 'string') {
           return this._filterUserlevel(value);
-        }else if(value && typeof value === 'object' && 'access_name' in value){
+        } else if (value && typeof value === 'object' && 'access_name' in value) {
           const selectedValue = value as UserLevel;
           return this._filterUserlevel(selectedValue.access_name);
-        }else{
+        } else {
           return this.UserLevelOption.slice();
         }
       })
     );
-    this.FacultyFilteredOptions = this. newmembergroup.get('faculty')!.valueChanges.pipe(
+    this.FacultyFilteredOptions = this.newmembergroup.get('faculty')!.valueChanges.pipe(
       startWith(''),
-      map(value=>{
-        if(typeof value === 'string'){
+      map(value => {
+        if (typeof value === 'string') {
           return this._filterFaculty(value);
-        }else if(value && typeof value === 'object' && 'fac_name' in value){
+        } else if (value && typeof value === 'object' && 'fac_name' in value) {
           const selectedValue = value as Faculty;
           return this._filterFaculty(selectedValue.fac_name);
-        }else{
+        } else {
           return this.FacultyOption.slice();
         }
       })
@@ -141,69 +141,70 @@ export class AccessControlComponent {
 
     this.EmployeeFilteredOptions = this.newmembergroup.get('employee_key')!.valueChanges.pipe(
       startWith(''),
-      map(value=>{
-        if(typeof value === 'string'){
+      map(value => {
+        if (typeof value === 'string') {
           return this._filterEmployee(value);
-        }else if(value && typeof value === 'object' && 'emp_name' in value){
+        } else if (value && typeof value === 'object' && 'emp_name' in value) {
           const selectedValue = value as Employee;
           return this._filterEmployee(selectedValue.emp_name);
-        }else{
+        } else {
           return this.EmployeeOption.slice();
         }
       })
     );
 
-  
+
   }
 
 
-  fetchDataFromServicej(){
+  fetchDataFromServicej() {
     this.userService.getAllUsers().subscribe(
       (data: NewUser[]) => {
-       
-        this.dataSource = data;}
+
+        this.dataSource = data;
+      }
     )
   }
 
 
- 
 
-  displaySchool(school:SchoolName):string{
+
+  displaySchool(school: SchoolName): string {
     return school && school.inst_name ? school.inst_name : '';
   }
 
-  displayUserlevel(userlevel:UserLevel):string{
+  displayUserlevel(userlevel: UserLevel): string {
     return userlevel && userlevel.access_name ? userlevel.access_name : '';
   }
 
-  displayFaculty(faculty:Faculty):string{
+  displayFaculty(faculty: Faculty): string {
     return faculty && faculty.fac_name ? faculty.fac_name : '';
   }
 
-  displayEmployee(employee:Employee):string{
+  displayEmployee(employee: Employee): string {
     return employee && employee.emp_name ? employee.emp_name : '';
   }
 
- 
 
-  private _filterSchool(name:string):SchoolName[]{
+
+  private _filterSchool(name: string): SchoolName[] {
     const filterValue = name.toLowerCase();
-    return this.SchoolNameOption.filter(option=> option.inst_name.toLowerCase().includes(filterValue));
+    return this.SchoolNameOption.filter(option => option.inst_name.toLowerCase().includes(filterValue));
   }
 
-  private _filterUserlevel(name:string):UserLevel[]{
+  private _filterUserlevel(name: string): UserLevel[] {
     const filterValue = name.toLowerCase();
     return this.UserLevelOption.filter(option => option.access_name.toLowerCase().includes(filterValue));
   }
 
-  private _filterFaculty(name:string):Faculty[]{
+  private _filterFaculty(name: string): Faculty[] {
     const filterValue = name.toLowerCase();
-    return this.FacultyOption.filter(option=> option.fac_name.toLowerCase().includes(filterValue));
+    return this.FacultyOption.filter(option => option.fac_name.toLowerCase().includes(filterValue));
   }
 
-  private _filterEmployee(name:string):Employee[]{
+  private _filterEmployee(name: string): Employee[] {
     const filterValue = name.toLowerCase();
-    return this.EmployeeOption.filter(option=> option.emp_name.toLowerCase().includes(filterValue));
+    return this.EmployeeOption.filter(option => option.emp_name.toLowerCase().includes(filterValue));
   }
 
 
@@ -221,13 +222,13 @@ export class AccessControlComponent {
     if (Array.isArray(formData.faculty)) {
       formData.faculty = formData.faculty.join(', ');
     }
-    
+
     console.log(formData.faculty)
-    
+
     console.log(formData)
     this.userService.addNewUser(formData).subscribe(
-      (response)=>{
-        console.log("ok"+response);
+      (response) => {
+        console.log("ok" + response);
         this.fetchDataFromServicej();
         this.newmembergroup.reset();
       }
@@ -235,129 +236,164 @@ export class AccessControlComponent {
     // Pass the newUser object to the service 
   }
 
-  
-  
-  
-getAllEmployees(){
-  this.getdataService.getEmployees().subscribe(
-    (response)=>{
-      this.EmployeeOption = response;
-      console.log(response);
-    }
-  )
-}
-
-getAllInstitutions(){
-  this.getdataService.getInstitutions().subscribe(
-    (response)=>{
-      this.SchoolNameOption = response;
-      console.log(response);
-    }
-  )
-}
-
-getAllFaculties(){
-  this.getdataService.getFaculties().subscribe(
-    (response)=>{
-      this.toppinglist = response;
-      console.log(response);
-    }
-  )
-}
-
-getAllAccesslists(){
-  this.getdataService.getAccesslists().subscribe(
-    (response)=>{
-      this.UserLevelOption = response;
-      console.log(response);
-    }
-  )
-}
 
 
-getUserid(id:number){
-  this.user_key = id;
-  this.userService.getUserByUserkey(id).subscribe(
-    (response)=>{
-      console.log(response);
-      this.newmembergroup.patchValue(response);
-    }
-  )
-}
 
-updateUser(){
-  var user_key = this.user_key;
-  const formData = this.newmembergroup.value;
+  getAllEmployees() {
+    this.getdataService.getEmployees().subscribe(
+      (response) => {
+        this.EmployeeOption = response;
+      }
+    )
+  }
+
+  getAllInstitutions() {
+    this.getdataService.getInstitutions().subscribe(
+      (response) => {
+        this.SchoolNameOption = response;
+
+      }
+    )
+  }
+
+  getAllFaculties() {
+    this.getdataService.getFaculties().subscribe(
+      (response) => {
+        this.toppinglist = response;
+
+      }
+    )
+  }
+
+  getAllAccesslists() {
+    this.getdataService.getAccesslists().subscribe(
+      (response) => {
+        this.UserLevelOption = response;
+
+      }
+    )
+  }
+
+
+  getUserid(id: number) {
+    this.user_key = id;
+    console.log(this.user_key);
+    this.userService.getUserByUserkey(id).subscribe(
+      (response) => {
+        this.newmembergroup.patchValue(response);
+
+      }
+    );
+
+    this.menuService.getAccessableSubmenu(id).subscribe(
+      (response) => {
+        console.log(response)
+        this.newselectedmenuSource = response.listOfMenuAccess;
+        const allSubmenu = response.allsubmenu;
+
+        const submenuToadd = allSubmenu.filter((item:any)=>{
+
+          return !this.newselectedmenuSource.some(
+            (selecteditem)=>
+            selecteditem.item_no === item.menu_item_key && selecteditem.menu_sub_item_key === item.menu_sub_item_key
+          );
+        })
+        this.submenuSource = submenuToadd;
+        
+
+      }
+    )
+  }
+
+  updateUser() {
+    var user_key = this.user_key;
+    const formData = this.newmembergroup.value;
     if (Array.isArray(formData.faculty)) {
       formData.faculty = formData.faculty.join(', ');
     }
-  this.userService.updateUserByUserkey(user_key,formData).subscribe(
-    (response)=>{
-      console.log(response);
-      this.fetchDataFromServicej();
-      this.newmembergroup.reset();
-    }
-  )
-}
- 
-selectRow(row: any): void {
-  if (this.selectedRow === row) {
-    // If the clicked row is already selected, unselect it
-    this.selectedRow = undefined;
-  } else {
-    // Otherwise, select the clicked row
-    this.selectedRow = row;
+    this.userService.updateUserByUserkey(user_key, formData).subscribe(
+      (response) => {
+        console.log(response);
+        this.fetchDataFromServicej();
+        this.newmembergroup.reset();
+      }
+    )
   }
-}
 
-getAllSubMenus(){
-  this.menuService.getMenuList().subscribe(
-    (response)=>{
-      this.menutopplinglist = response;
+  selectRow(row: any): void {
+    if (this.selectedRow === row) {
+      // If the clicked row is already selected, unselect it
+      this.selectedRow = undefined;
+    } else {
+      // Otherwise, select the clicked row
+      this.selectedRow = row;
     }
-  );
-  this.menuService.getAllSubMenus().subscribe(
-    (response)=>{
-      console.log(response);
-      this.submenuSource = response;
+  }
+
+  getAllSubMenus() {
+    // this.menuService.getMenuList().subscribe(
+    //   (response) => {
+    //     this.menutopplinglist = response;
+    //   }
+    // );
+    // this.menuService.getAllSubMenus().subscribe(
+    //   (response) => {
+
+    //     this.submenuSource = response;
+    //   }
+    // )
+  }
+
+  getSubmenuByitemno(value: any) {
+    var item_no = value.value;
+    this.menuService.getSubmenuByItemno(item_no).subscribe(
+      (response) => {
+        console.log(response);
+        this.submenuSource = response;
+      }
+    )
+  }
+
+
+
+  getThisrowdata(data: any) {
+    const getabledata = data;
+    const exists = this.newselectedmenuSource.some(item =>
+      item.item_no === getabledata.menu_item_key && item.menu_sub_item_key === getabledata.menu_sub_item_key);
+
+    if (!exists) {
+      this.newselectedmenuSource.push(getabledata);
+      console.log(this.newselectedmenuSource)
     }
-  )
-}
 
-getSubmenuByitemno(value:any){
-  var item_no = value.value;
-  this.menuService.getSubmenuByItemno(item_no).subscribe(
-    (response)=>{
-      console.log(response);
-      this.submenuSource = response;
-    }
-  )
-}
-
-// addData() {
-//   const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-//   this.dataSource.push(ELEMENT_DATA[randomElementIndex]);
-//   this.table.renderRows();
-// }
+  }
 
 
-getThisrowdata(data: any) {
+  addAccessSubMenu() {
+    const user_id = this.user_key;
+    const regd_by = localStorage.getItem('user_key');
 
-const getabledata = data;
-this.newselectedmenuSource.push(getabledata);
+    console.log(user_id);
+    console.log(regd_by);
+    this.newselectedmenuSource.forEach(item => {
+      const formatedData = {
+        name: item.name,
+        user_key: user_id,
+        regd_by: regd_by,
+        menu_item_key: item.item_no,
+        menu_sub_item_key: item.menu_sub_item_key,
+        name_display: item.name,
+        menu_command_name: item.menu_command_name,
+        menu_fast_way: item.menu_fast_way,
+      }
+      console.log(formatedData);
+      this.menuService.addAccessSubMenu(formatedData).subscribe(
+        (response)=>{
+          console.log(response);
+        }
+      )
+    })
 
-console.log(this.newselectedmenuSource)
-
-//   console.log(data);
-//   const selecteditem = data.menu_sub_item_key;
-//   const filteredSubmenu = this.submenuSource.filter(submenu => submenu.menu_sub_item_key === selecteditem);
-
-//   //Spread the filteredSubmenu array to push all its elements into newselectedmenuSource
-//  this.newselectedmenuSource.push(...filteredSubmenu);
-
-//   console.log(this.newselectedmenuSource);
-}
-
-
-
+    
+  }
 }

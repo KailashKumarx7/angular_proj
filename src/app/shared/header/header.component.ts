@@ -73,7 +73,7 @@ export class HeaderComponent {
     }
     this.menuService.getAllSubMenuAndMenu().subscribe((data)=>{
       this.menus = data;
-      console.log(data);
+      
     })
     
   }

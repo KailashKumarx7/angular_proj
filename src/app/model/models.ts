@@ -65,6 +65,17 @@ export interface Faculty {
       fac_name:string,
 }
 
+export interface AccessableMenu{
+      name :String,
+      user_key :Number,
+      regd_by:String|null,
+      menu_item_key :Number,
+      menu_sub_item_key :Number,
+      name_display :String,
+      menu_command_name :String,
+      menu_fast_way :String
+}
+
   
   
   
