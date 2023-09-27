@@ -41,4 +41,8 @@ export class GetDataService {
   getByAccessKey(access_key:number):Observable<any>{
     return this.http.get(`${this.baseApiUrl}/Accesslist/getByAccessKey/${access_key}`);
   }
+
+  getDatabaseTables():Observable<any>{
+    return this.http.get<any[]>(this.baseApiUrl+'/DataUpload/GetTables');
+  }
 }

@@ -76,6 +76,8 @@ export interface AccessableMenu{
       menu_fast_way :String
 }
 
+
+
   
   
   
