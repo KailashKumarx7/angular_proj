@@ -22,6 +22,8 @@ import { AccountEntryComponent } from './components/account-entry/account-entry.
 import { AccessControlComponent } from './components/access-control/access-control.component';
 import { DataMigrationComponent } from './components/data-migration/data-migration.component';
 import { AuthLogComponent } from './components/auth-log/auth-log.component';
+import { MasterReportComponent } from './components/master-report/master-report.component';
+import { PartyLedgerComponent } from './components/party-ledger/party-ledger.component';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { AuthLogComponent } from './components/auth-log/auth-log.component';
     AccountEntryComponent,
     AccessControlComponent,
     DataMigrationComponent,
-    AuthLogComponent
+    AuthLogComponent,
+    MasterReportComponent,
+    PartyLedgerComponent
 
   ],
   imports: [
@@ -51,7 +55,7 @@ import { AuthLogComponent } from './components/auth-log/auth-log.component';
     FormsModule,
     OverlayModule,
     CdkMenuModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,45 @@
+<div class="container access-control">
+    <mat-card>
+        <mat-card-header>Master Report</mat-card-header>
+<form action="" [formGroup]="partyledger">
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 mx-5">
+            <mat-form-field color="accent">
+                <mat-label>Inherited calendar color</mat-label>
+                <input formControlName="startingdate" matInput [matDatepicker]="picker1">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-1 col-sm-1 col-md-1"><span>To</span></div>
+        <div class="col-lg-2 col-md-2 col-sm-2"><mat-form-field color="accent">
+                <mat-label>Inherited calendar color</mat-label>
+                <input formControlName="lastdate" matInput [matDatepicker]="picker2">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 mx-5">
+            <mat-form-field class="example-full-width">
+                <mat-label>Account List</mat-label>
+                <input type="text"
+                       matInput
+                      formControlName="accountlist"
+                       [matAutocomplete]="auto">
+                <mat-autocomplete autoActiveFirstOption #auto>
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option.ac_key">
+                    {{option.nep_text}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 mx-5">
+            <button mat-raised-button color="primary">Report</button>
+        </div>
+    </div>
+</form>
+        
+    </mat-card>
+</div>

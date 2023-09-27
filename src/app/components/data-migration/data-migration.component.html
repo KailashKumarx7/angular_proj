@@ -16,9 +16,16 @@
         <div class="col-lg-2">
           <input type="file" (change)="handleFileInput($event)" formControlName="filecontrol">
         </div>
+        <div class="col-lg-1">
+          <button mat-raised-button (click)="onSubmit()">Submit</button>
+        </div>
       </div>
+      <mat-divider></mat-divider>
+
+      
+      
   
-      <button (click)="onSubmit()">Submit</button>
+      
     </form>
   </mat-card>
   

@@ -45,4 +45,10 @@ export class GetDataService {
   getDatabaseTables():Observable<any>{
     return this.http.get<any[]>(this.baseApiUrl+'/DataUpload/GetTables');
   }
+
+
+  //get account list
+  getAccountList():Observable<any>{
+    return this.http.get<any[]>(this.baseApiUrl+'/Account/getAllAccount');
+  }
 }

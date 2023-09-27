@@ -10,6 +10,8 @@ import { AccessControlComponent } from './components/access-control/access-contr
 import { DataMigrationComponent } from './components/data-migration/data-migration.component';
 import { AuthLogComponent } from './components/auth-log/auth-log.component';
 import { authGuard } from './guard/auth.guard';
+import { MasterReportComponent } from './components/master-report/master-report.component';
+import { PartyLedgerComponent } from './components/party-ledger/party-ledger.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
   {
     path: 'acc-entry',
     component: AccountEntryComponent,
+  },
+  {
+    path:'master-repo',
+    component:MasterReportComponent
+  },
+  {
+    path:'party-led',
+    component:PartyLedgerComponent
   },
   {
     path: 'access-ctrl',
