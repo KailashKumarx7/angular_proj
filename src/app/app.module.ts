@@ -24,6 +24,8 @@ import { DataMigrationComponent } from './components/data-migration/data-migrati
 import { AuthLogComponent } from './components/auth-log/auth-log.component';
 import { MasterReportComponent } from './components/master-report/master-report.component';
 import { PartyLedgerComponent } from './components/party-ledger/party-ledger.component';
+import { NepaliDatepickerModule } from 'nepali-datepicker-angular';
+
 
 
 @NgModule({
@@ -56,6 +58,7 @@ import { PartyLedgerComponent } from './components/party-ledger/party-ledger.com
     OverlayModule,
     CdkMenuModule,
     RouterModule,
+    NepaliDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

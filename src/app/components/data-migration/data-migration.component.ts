@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataServiceService } from 'src/app/services/data-service.service';
 import { GetDataService } from 'src/app/services/get-data.service';
 
+
+
 @Component({
   selector: 'app-data-migration',
   templateUrl: './data-migration.component.html',
@@ -11,6 +13,9 @@ import { GetDataService } from 'src/app/services/get-data.service';
 })
 export class DataMigrationComponent {
   selectedTableValue!: string;
+
+  headrows!:[];
+  datarows!:[];
 
   selectedFile!:File;
 
@@ -44,11 +49,13 @@ export class DataMigrationComponent {
 
   onSubmit() {
    const filedata = new FormData();
-   const tablename = this.datamigrate.get('selectedTableValue')?.value;
+    const tablename = this.datamigrate.get('selectedTableValue')?.value;
    filedata.append('file',this.selectedFile,this.selectedFile.name)
-   this.https.post(`https://localhost:7188/DataUpload/DataUpload/${tablename}`,filedata).subscribe(
-    (result)=>{
-      console.log(result);
+   
+   this.dataService.migrateData(tablename,filedata).subscribe(
+    (response)=>{
+      this.headrows = response.tableHeading;
+      this.datarows = response.tableData;
     }
    )
   }

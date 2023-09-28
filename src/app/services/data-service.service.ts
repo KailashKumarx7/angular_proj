@@ -11,19 +11,8 @@ export class DataServiceService {
   constructor(private http: HttpClient) { }
 
 
-  migrateData(tableName: string, data: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('FilePath', '');
-    formData.append('FileContent', data);
-
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
-
-    return this.http.post(`${this.baseApiUrl}/DataUpload/DataUpload/${tableName}`, formData, {
-      headers,
-    });
-  
-
+  migrateData(tableName: any, data: any): Observable<any> {
+    return this.http.post(`${this.baseApiUrl}/DataUpload/DataUpload/${tableName}`,data);
   }
 
 }

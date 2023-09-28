@@ -15,6 +15,13 @@ interface AccountList {
   styleUrls: ['./party-ledger.component.css']
 })
 export class PartyLedgerComponent implements OnInit {
+date!: string;
+updateEnglishDate($event: string) {
+throw new Error('Method not implemented.');
+}
+updateNepaliDate($event: string) {
+throw new Error('Method not implemented.');
+}
   partyledger = this._formBuilder.group({
     startingdate: [''],
     lastdate: [''],

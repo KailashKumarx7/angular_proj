@@ -1,8 +1,8 @@
 <div class="container access-control">
     <mat-card>
-        <mat-card-header>Master Report</mat-card-header>
+        <mat-card-header>Party Report</mat-card-header>
 <form action="" [formGroup]="partyledger">
-    <div class="row">
+    <div class="row row1">
         <div class="col-lg-2 col-md-2 col-sm-2 mx-5">
             <mat-form-field color="accent">
                 <mat-label>Inherited calendar color</mat-label>
@@ -38,8 +38,10 @@
         <div class="col-lg-1 col-md-1 col-sm-1 mx-5">
             <button mat-raised-button color="primary">Report</button>
         </div>
+
+        <ne-datepicker [date]="date" dateIn="BS" >  </ne-datepicker>
+
     </div>
-</form>
-        
-    </mat-card>
+</form>   
+</mat-card>
 </div>

@@ -21,7 +21,24 @@
         </div>
       </div>
       <mat-divider></mat-divider>
+      <div class="table mat-elevation-z18">
+        <div class="table-container">
+          <table class="scrollable-table">
+            <thead>
+              <tr>
+                <th *ngFor="let headrow of headrows">{{headrow}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of datarows">
+                <td *ngFor="let key of data | keyvalue">{{ key.value }}</td>
 
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+      </div>
       
       
   

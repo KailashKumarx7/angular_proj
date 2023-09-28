@@ -2,3 +2,29 @@
     padding-top: 70px;
     width: 100%;
 }
+
+.table-container {
+    width: 100%; /* Set the container width */
+    overflow-x: auto; /* Enable horizontal scrolling */
+  }
+  
+  .scrollable-table {
+    width: 100%; /* Set the table width */
+    border-collapse: collapse;
+  }
+  
+  /* Optional: Style your table as needed */
+  .scrollable-table th,
+  .scrollable-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  /* Optional: Add a fixed header */
+  .scrollable-table thead {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+  }
+  
