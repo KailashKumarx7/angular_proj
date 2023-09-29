@@ -55,6 +55,7 @@ export class DataMigrationComponent {
    this.dataService.migrateData(tablename,filedata).subscribe(
     (response)=>{
       this.headrows = response.tableHeading;
+      console.log(response.tableData);
       this.datarows = response.tableData;
     }
    )

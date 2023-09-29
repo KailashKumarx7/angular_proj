@@ -14,7 +14,13 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AccessControlComponent {
 
-  isteacher: boolean = true;
+
+  buttonValue:boolean = true;
+  isteacher: boolean = false;
+  isdisabled:boolean = false;
+  applydisable:boolean = false;
+  buttonText: string = this.buttonValue ? 'Update' : 'Save';
+
   user_key!: number;
   selectedRow: any; // This will store the selected row data
 
@@ -54,7 +60,7 @@ export class AccessControlComponent {
 
 
 
-  wantonewmember: boolean = true;
+  wantonewmember: boolean = false;
   displayedColumns: string[] = ['index', 'name', 'userlevel', 'status', 'type'];
   dataSource: NewUser[] = [];
   clickedRows = new Set<NewUser>();
@@ -209,7 +215,11 @@ export class AccessControlComponent {
 
 
   addNew() {
-    this.wantonewmember = !this.wantonewmember;
+    this.wantonewmember = true;
+    this.buttonValue = false;
+    this.isdisabled = true;
+    this.newmembergroup.reset();
+    this.setButtonValue(this.buttonValue);
   }
 
   onCheckboxChange() {
@@ -285,6 +295,18 @@ export class AccessControlComponent {
       }
     );
 
+    
+    this.wantonewmember=true;
+    this.buttonValue = true;
+    this.isdisabled = true;
+    
+    this.setButtonValue(this.buttonValue);
+    var currentUser = localStorage.getItem('user_key');
+    if (currentUser !== null && this.user_key === +currentUser) {
+      this.applydisable = true;
+    }else{
+      this.applydisable = false;
+    }
     this.menuService.getAccessableSubmenu(id).subscribe(
       (response) => {
         console.log(response)
@@ -396,4 +418,10 @@ export class AccessControlComponent {
 
     
   }
+
+  setButtonValue(newValue: boolean) {
+    this.buttonValue = newValue;
+    this.buttonText = newValue ? 'Update' : 'Save';
+  }
+  
 }

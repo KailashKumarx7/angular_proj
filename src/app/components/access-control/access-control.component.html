@@ -222,12 +222,13 @@
     </div>
     <div class="row example-button-row">
       <div class="col-lg-1 button-div"><button (click)="addNew()" mat-raised-button>New</button></div>
-      <div class="col-lg-1 button-div"> <button mat-raised-button (click)="getFormValue()">Save</button></div>
-      <div class="col-lg-1 button-div"><button mat-raised-button (click)="updateUser()">Update</button></div>
-      <div class="col-lg-1 button-div"> <button mat-raised-button>Delete</button></div>
+      <div class="col-lg-1 button-div">
+        <button [disabled]="!isdisabled" mat-raised-button (click)="getFormValue()">{{ buttonText }}</button>
+      </div>
+      
       <div class="col-lg-5 button-div"></div>
       <div class="col-lg-2 button-div"><button mat-raised-button (click)="addAccessSubMenu()">Save Action</button></div>
-      <div class="col-lg-1 button-div"> <button mat-raised-button disabled>Apply</button></div>
+      <div class="col-lg-1 button-div"> <button [disabled]="!applydisable" mat-raised-button >Appy</button></div>
     </div>
   </mat-card>
 </div>

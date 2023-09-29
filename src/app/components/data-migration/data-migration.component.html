@@ -26,38 +26,16 @@
           <table class="scrollable-table">
             <thead>
               <tr>
-                <th *ngFor="let headrow of headrows">{{headrow}}</th>
+                <th *ngFor="let columnName of headrows">{{ columnName }}</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let data of datarows">
-                <td *ngFor="let key of data | keyvalue">{{ key.value }}</td>
-
+              <tr *ngFor="let rowData of datarows">
+                <td *ngFor="let columnName of headrows">{{ rowData[columnName] }}</td>
               </tr>
             </tbody>
           </table>
-          
         </div>
       </div>
-      
-      
-  
-      
     </form>
   </mat-card>
-  
-
-
-<!-- <form id="uploadForm">
-    <select name="" id="tableDropdown"></select>
-    <input type="file" id="fileInput" />
-    <button type="submit">Upload</button>
-</form>
-
-<div id="loadingSpinner" class="d-flex justify-content-center" style="display: none;">
-    <div class="spinner-border" role="status">
-        <span class="sr-only"></span>
-    </div>
-</div>
-
-<div id="message" style="display: none;"></div> -->
