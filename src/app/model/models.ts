@@ -76,6 +76,25 @@ export interface AccessableMenu{
       menu_fast_way :String
 }
 
+export interface Account{
+    
+        ac_code: string,
+        nep_text: string,
+        item_key:string,
+        cat_key:string,
+        head_key:string,
+        ac_key:string,
+        ldm: string,
+        user_key:string,
+        eng_text: string,
+        inst_key:string,
+        billing_key:string,
+        sub_head_key:string,
+        ac_code_num: string,
+        master_item_key:string,
+      
+}
+
 
 
   

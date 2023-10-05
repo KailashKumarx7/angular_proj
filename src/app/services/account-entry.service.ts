@@ -20,7 +20,31 @@ export class AccountEntryService {
     return this.http.get<Category[]>(this.baseApiUrl+'/Category/getAll');
   }
 
-  getHeadByCat_id(id:any):Observable<any>{
+  getHeadByCatId(id:any):Observable<any>{
     return this.http.get<any>(this.baseApiUrl+'/Head/GetHeadbyCategory/'+id);
+  }
+
+  getSubheadByCatId(id:any):Observable<any>{
+    return this.http.get<any>(this.baseApiUrl+'/Subhead/getByCatKey/'+id);
+  }
+
+  getSuhheadByHeadKey(head_key:any):Observable<any>{
+    return this.http.get<any>(this.baseApiUrl+'/Subhead/getByHeadKey/'+head_key);
+  }
+
+  getAccountByCatKey(cat_key:any):Observable<any>{
+    return this.http.get<any>(this.baseApiUrl+'/Account/getAccountByCatKey/'+cat_key);
+  }
+
+  getAccountBySubHeadKey(sub_head_key:any):Observable<any>{
+    return this.http.get<any>(this.baseApiUrl+'/Account/getAccountByHeadKey/'+sub_head_key);
+  }
+
+  addAccount(data:any):Observable<any>{
+    return this.http.post<any>(`${this.baseApiUrl}/Account`,data);
+  }
+
+  updateAccount(id:number,data:any):Observable<any>{
+    return this.http.put<any>(`${this.baseApiUrl}/Account/updateAccount/${id}`,data);
   }
 }

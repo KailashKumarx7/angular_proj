@@ -1,7 +1,9 @@
-.access-control{
-    padding-top: 70px;
-   max-width: 100%;
+.container{
+  padding: 0!important;
+  margin: 0!important;
 }
+
+
 
 .example-table-container {
     position: relative;
