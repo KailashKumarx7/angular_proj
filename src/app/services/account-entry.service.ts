@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment';
 import { Category } from '../model/models';
 
@@ -47,4 +47,15 @@ export class AccountEntryService {
   updateAccount(id:number,data:any):Observable<any>{
     return this.http.put<any>(`${this.baseApiUrl}/Account/updateAccount/${id}`,data);
   }
+
+  addHead(data: any): Observable<any> {
+    console.log('Sending data:', data);
+    return this.http.post<any>(`${this.baseApiUrl}/Head/AddHead`, data)
+      .pipe(
+        tap(response => {
+          console.log('Response:', response);
+        })
+      );
+  }
+  
 }

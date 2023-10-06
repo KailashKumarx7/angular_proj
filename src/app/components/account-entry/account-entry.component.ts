@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { response } from 'express';
@@ -13,8 +13,14 @@ import { AccountEntryService } from 'src/app/services/account-entry.service';
 })
 export class AccountEntryComponent {
 
+  @ViewChild('hCodeInput') hCodeInput!: ElementRef;
+  @ViewChild('sheadcode') sheadcode!:ElementRef;
+  @ViewChild('accountCode') accountCode!:ElementRef;
   selectedCategoryId!: Number;
 
+  selectedHeadRow: any;
+  selectedSubHeadRow:any;
+  selectedAccountRow:any;
 
   //buttons 
   head_new_btn: boolean = false;
@@ -40,7 +46,7 @@ export class AccountEntryComponent {
   cat_key!: number;
   head_key!: number;
   subHead_key!: number;
-  account_key!:number;
+  account_key!: number;
 
 
 
@@ -198,9 +204,49 @@ export class AccountEntryComponent {
 
   saveHeadForm() {
     const head_flag = this.head_flag;
+    const h_code = this.headFormGroup.get('h_code')!.value;
+    const h_nep_text = this.headFormGroup.get('h_nep_text')!.value;
+    const cat_key = this.cat_key;
+    const user_key = localStorage.getItem('user_key');
+    const currentDate = new Date();
+    const formatedDate = currentDate.toISOString();
+
+    const headData = {
+      h_code:h_code,
+      nep_text:h_nep_text,
+      item_key:0,
+      cat_key:cat_key,
+      head_key:0,
+      del_key:0,
+      ldm:formatedDate,
+      eng_text:h_nep_text,
+      inst_key:0,
+      dec_code:0,
+      h_code_num:h_code,
+    }
+
+    const updateHeadData={
+      h_code:h_code,
+      nep_text:h_nep_text,
+      item_key:0,
+      cat_key:cat_key,
+      del_key:0,
+      ldm:formatedDate,
+      eng_text:h_nep_text,
+      inst_key:0,
+      dec_code:0,
+      h_code_num:h_code,
+    }
+
+
 
     if (head_flag === 1) {
-      console.log("save action ")
+      console.log(headData);
+      this.accountService.addHead(headData).subscribe(
+        (response)=>{
+          console.log(response);
+        }
+      )
     } else if (head_flag === 2) {
       console.log("modify flag or action")
     } else {
@@ -255,9 +301,9 @@ export class AccountEntryComponent {
     const billing = element.billing_key;
     const master_item_key = element.master_item_key;
     this.account_modify_btn = true;
-     console.log(element);
+    console.log(element);
 
-     this.account_key = element.id;
+    this.account_key = element.id;
 
 
     this.accountFormGroup.patchValue({
@@ -286,15 +332,15 @@ export class AccountEntryComponent {
     const ac_nep_text = this.accountFormGroup.get('ac_nep_text')!.value;
     const billing = this.accountFormGroup.get('billing')!.value;
     const master_item = this.accountFormGroup.get('master_item')!.value;
-  
+
     // Extract values from other variables
     const cat_key = this.cat_key;
     const head_key = this.head_key;
     const sub_head_key = this.subHead_key;
     const user_key = localStorage.getItem('user_key');
     const currentDate = new Date();
-    const formatedDate= currentDate.toISOString();
-  
+    const formatedDate = currentDate.toISOString();
+
     // Create the accountdata object
     const accountdata = {
       ac_code: ac_code,
@@ -314,30 +360,60 @@ export class AccountEntryComponent {
     };
 
     const account_flag = this.account_flag;
-    if(account_flag === 1){
+    if (account_flag === 1) {
       this.accountService.addAccount(accountdata).subscribe(
-        (response)=>{
+        (response) => {
           console.log(response);
         }
       )
-    }else if(account_flag === 2)
-    {
+    } else if (account_flag === 2) {
       const id = this.account_key;
-      this.accountService.updateAccount(id,accountdata).subscribe(
-        (response)=>{
+      this.accountService.updateAccount(id, accountdata).subscribe(
+        (response) => {
           console.log(response);
         }
       )
     }
 
-    
-  
+
+
     // Log the accountdata object to the console
     console.log(accountdata);
   }
 
 
 
+
+  selectRow(row: any): void {
+
+    if (this.selectedHeadRow === row) {
+      // If the clicked row is already selected, unselect it
+      this.selectedHeadRow = undefined;
+    } else {
+      // Otherwise, select the clicked row
+      this.selectedHeadRow = row;
+      this.hCodeInput.nativeElement.focus();
+    }
+  }
+
+  selectSubHeadRow(row:any):void{
+
+    if(this.selectedSubHeadRow === row){
+      this.selectedSubHeadRow = undefined;
+    }else{
+      this.selectedSubHeadRow = row;
+      this.sheadcode.nativeElement.focus();
+    }
+  }
+
+  selectAccountRow(row:any):void{
+    if(this.selectedAccountRow === row){
+      this.selectedAccountRow = undefined;
+    }else{
+      this.selectedAccountRow = row;
+      this.accountCode.nativeElement.focus();
+    }
+  }
 
 
 
