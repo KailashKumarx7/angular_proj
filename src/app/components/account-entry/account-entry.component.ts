@@ -48,6 +48,11 @@ export class AccountEntryComponent {
   subHead_key!: number;
   account_key!: number;
 
+  //PM Keys
+  head_pm_key!:number;
+  subhead_pm_key!:number;
+  account_pm_key!:number;
+
 
 
   selectedCategory: any;
@@ -149,28 +154,9 @@ export class AccountEntryComponent {
       const selectedOption = options.find(option => option.eng_text === selectedCatKey);
       console.log(selectedOption);
       this.cat_key = selectedOption.id;
-
-      this.accountService.getHeadByCatId(selectedOption.id).subscribe(
-        (response) => {
-
-          this.headDataSource = response;
-          this.head_new_btn = true;
-
-        }
-      );
-      this.accountService.getSubheadByCatId(selectedOption.id).subscribe(
-        (response) => {
-          this.subheadDataSource = response;
-
-        }
-      );
-
-      this.accountService.getAccountByCatKey(selectedOption.id).subscribe(
-        (response) => {
-          this.accountDataSource = response;
-          //console.log(response);
-        }
-      )
+      this.getHeadByCatKey(selectedOption.id);
+      this.getSubHeadByCatKey(selectedOption.id);
+      this.getAccountByCatKey(selectedOption.id);
     })
 
   }
@@ -183,23 +169,20 @@ export class AccountEntryComponent {
     const h_code = element.h_code;
     const h_nep_text = element.nep_text;
 
+    this.head_pm_key = element.id;
+
     this.headFormGroup.patchValue({
       h_code: h_code,
       h_nep_text: h_nep_text
     });
-
-    this.accountService.getSuhheadByHeadKey(head_key).subscribe(
-      (response) => {
-        this.subheadDataSource = response
-        this.sub_head_new_btn = true;
-      }
-    )
-
+    this.getSubHeadByHeadKey(head_key);
+    this.getAccountByHeadKey(head_key);
   }
 
   newHeadBtn(number: number) {
     this.head_flag = number;
     this.head_save_btn = true;
+    this.headFormGroup.reset();
   }
 
   saveHeadForm() {
@@ -241,14 +224,14 @@ export class AccountEntryComponent {
 
 
     if (head_flag === 1) {
-      console.log(headData);
-      this.accountService.addHead(headData).subscribe(
-        (response)=>{
-          console.log(response);
-        }
-      )
+      this.addHead(headData);
+      this.getHeadByCatKey(cat_key);
+      
     } else if (head_flag === 2) {
-      console.log("modify flag or action")
+      var id = this.head_pm_key;
+      this.updateHead(cat_key,id,updateHeadData);
+      
+
     } else {
       console.log("please select flag using new or modefy then u can save changes")
     }
@@ -262,6 +245,7 @@ export class AccountEntryComponent {
   newSubHeadBtn(number: number) {
     this.sub_head_flag = number;
     this.sub_head_save_btn = true;
+    this.subHeadFormGroup.reset();
   }
 
   updateSubHeadBtn(number: number) {
@@ -270,6 +254,43 @@ export class AccountEntryComponent {
   }
 
   saveSubHeadForm() {
+    const sub_head_code = this.subHeadFormGroup.get('sub_head_code')?.value;
+    const sub_head_text = this.subHeadFormGroup.get('sub_head_text')?.value;
+    const cat_key = this.cat_key;
+    const head_key = this.head_key;
+    const sub_head_key = this.subHead_key;
+    const user_key = localStorage.getItem('user_key');
+    const currentDate = new Date();
+    const formatedDate = currentDate.toISOString();
+    const sub_head_pmkey = this.subhead_pm_key;
+
+    const subHeadData = {
+        del_key :0,
+        ldm :formatedDate,
+        inst_key :0,
+        user_key :user_key,
+        cat_key :cat_key,
+        head_key :head_key,
+        sub_head_key :sub_head_key,
+        sub_head_code :sub_head_code,
+        sub_head_text :sub_head_text,
+        sub_head_code_eng :sub_head_code,
+        sub_head_text_eng :sub_head_text,
+        item_key :0,
+        sub_head_code_num :sub_head_code,
+    }
+    const flag = this.sub_head_flag;
+
+    if(flag === 1){
+      this.addSubHead(head_key,subHeadData);
+      
+    }else if(flag === 2){
+      this.updateSubHead(head_key,sub_head_pmkey,subHeadData);
+    }else{
+      console.log("hello hello");
+    }
+
+
 
   }
 
@@ -279,22 +300,16 @@ export class AccountEntryComponent {
     this.sub_head_modify_btn = true;
     const sub_head_code = element.sub_head_code;
     const sub_head_text = element.sub_head_text;
+    this.subhead_pm_key = element.pmkey;
     this.subHeadFormGroup.patchValue({
       sub_head_code: sub_head_code,
       sub_head_text: sub_head_text
     })
 
-    this.accountService.getAccountBySubHeadKey(subHeadKey).subscribe(
-      (response) => {
-        this.accountDataSource = response;
-        this.account_new_btn = true;
-      }
-    )
+    this.getAccountBySubHeadKey(subHeadKey);
+
+    
   }
-
-
-
-
   selectAccount(element: any) {
     const account_code = element.ac_code;
     const account = element.nep_text;
@@ -303,7 +318,7 @@ export class AccountEntryComponent {
     this.account_modify_btn = true;
     console.log(element);
 
-    this.account_key = element.id;
+    this.account_pm_key = element.id;
 
 
     this.accountFormGroup.patchValue({
@@ -319,6 +334,7 @@ export class AccountEntryComponent {
   newAccountBtn(number: number) {
     this.account_flag = number;
     this.account_save_btn = true;
+    this.accountFormGroup.reset();
   }
 
   updateAccountBtn(number: number) {
@@ -361,18 +377,11 @@ export class AccountEntryComponent {
 
     const account_flag = this.account_flag;
     if (account_flag === 1) {
-      this.accountService.addAccount(accountdata).subscribe(
-        (response) => {
-          console.log(response);
-        }
-      )
+      this.addAccount(sub_head_key,accountdata);
     } else if (account_flag === 2) {
-      const id = this.account_key;
-      this.accountService.updateAccount(id, accountdata).subscribe(
-        (response) => {
-          console.log(response);
-        }
-      )
+      const id = this.account_pm_key;
+      this.updateAccount(sub_head_key,id,accountdata);
+      
     }
 
 
@@ -380,8 +389,6 @@ export class AccountEntryComponent {
     // Log the accountdata object to the console
     console.log(accountdata);
   }
-
-
 
 
   selectRow(row: any): void {
@@ -415,6 +422,113 @@ export class AccountEntryComponent {
     }
   }
 
+  //GET DATA
+  getHeadByCatKey(cat_key:number){
+    this.accountService.getHeadByCatId(cat_key).subscribe(
+      (response) => {
+
+        this.headDataSource = response;
+        this.head_new_btn = true;
+
+      }
+    );
+  }
+
+  getSubHeadByCatKey(cat_key:number){
+    this.accountService.getSubheadByCatId(cat_key).subscribe(
+      (response) => {
+        this.subheadDataSource = response;
+
+      }
+    );
+  }
+
+  getAccountByCatKey(cat_key:number){
+    this.accountService.getAccountByCatKey(cat_key).subscribe(
+      (response) => {
+        this.accountDataSource = response;
+        //console.log(response);
+      }
+    )
+  }
+
+  getSubHeadByHeadKey(head_key:number){
+    this.accountService.getSuhheadByHeadKey(head_key).subscribe(
+      (response) => {
+        this.subheadDataSource = response
+        this.sub_head_new_btn = true;
+      }
+    );
+  }
+  getAccountByHeadKey(head_key:number){
+    this.accountService.getAccountByHeadKey(head_key).subscribe(
+      (response)=>{
+        console.log(response);
+        this.accountDataSource = response;
+      }
+    )
+  }
+
+  getAccountBySubHeadKey(sub_head_key:number){
+    this.accountService.getAccountBySubHeadKey(sub_head_key).subscribe(
+      (response) => {
+        this.accountDataSource = response;
+        this.account_new_btn = true;
+      }
+    )
+  }
+
+
+
+  //ADD DATA
+  addHead(headData:any){
+    this.accountService.addHead(headData).subscribe(
+      (response)=>{ 
+      }
+    );
+  }
+
+  addSubHead(head_key:number,subHeadData:any){
+    this.accountService.addSubHead(subHeadData).subscribe(
+      (response)=>{
+        this.getSubHeadByHeadKey(head_key);
+      }
+    )
+  }
+
+  addAccount(subheadkey:number,data:any){
+    this.accountService.addAccount(data).subscribe(
+      (response) => {
+        this.getAccountBySubHeadKey(subheadkey);
+      }
+    );
+  }
+
+
+  //UPDATE DATA
+  updateHead(cat_key:number,id:number,updatedHeadData:any){
+    this.accountService.updateHead(id,updatedHeadData).subscribe(
+      (response)=>{
+        this.getHeadByCatKey(cat_key);
+      }
+    )
+  }
+
+  updateSubHead(head_key:number,id:number,updatedSubHeadData:any){
+    this.accountService.updateSubHead(id,updatedSubHeadData).subscribe(
+      (response)=>{
+        this.getSubHeadByHeadKey(head_key);
+      }
+    )
+  }
+
+  updateAccount(subheadkey:number,id:number,updatedData:any){
+    this.accountService.updateAccount(id, updatedData).subscribe(
+      (response) => {
+        this.getAccountBySubHeadKey(subheadkey);
+      }
+    )
+  }
 
 
 }

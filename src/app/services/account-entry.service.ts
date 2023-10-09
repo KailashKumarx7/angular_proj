@@ -24,6 +24,14 @@ export class AccountEntryService {
     return this.http.get<any>(this.baseApiUrl+'/Head/GetHeadbyCategory/'+id);
   }
 
+  updateHead(id:number,updatedHeadData:any):Observable<any>{
+    return this.http.put<any>(`${this.baseApiUrl}/Head/updateHead/${id}`,updatedHeadData);
+  }
+
+  addSubHead(data:any):Observable<any>{
+    return this.http.post<any>(`${this.baseApiUrl}/Subhead/addSubhead`,data);
+  }
+
   getSubheadByCatId(id:any):Observable<any>{
     return this.http.get<any>(this.baseApiUrl+'/Subhead/getByCatKey/'+id);
   }
@@ -46,6 +54,13 @@ export class AccountEntryService {
 
   updateAccount(id:number,data:any):Observable<any>{
     return this.http.put<any>(`${this.baseApiUrl}/Account/updateAccount/${id}`,data);
+  }
+  updateSubHead(id:number,data:any):Observable<any>{
+    return this.http.put<any>(`${this.baseApiUrl}/Subhead/updateSubhead/${id}`,data);
+  }
+
+  getAccountByHeadKey(head_key:number):Observable<any>{
+    return this.http.get<any>(`${this.baseApiUrl}/Account/getAccountByhKey/${head_key}`);
   }
 
   addHead(data: any): Observable<any> {
