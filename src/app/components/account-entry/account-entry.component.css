@@ -1,33 +1,91 @@
-.container{
-    margin: 0;
-    padding: 0;
-    width: 100%;
+.container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
-.chart{
+.chart {
   max-height: 400px !important;
 }
 
-
 .example-container {
-    height: 200px;
-    overflow: auto;
-  }
+  /* Set a specific height and width for both elements */
+  height: 200px;
+  width: 100%;
+  overflow: auto;
+  position: relative;
 
-  .form-container{
-    height: 199px;
-    overflow: auto;
-  }
+}
+
+.form-container {
+  height: 199px;
+  width: 100%;
+  overflow: auto;
+}
+
+table {
+  /* Set the table width to 100% */
+  width: 100%;
+}
+
+th {
+  background-color: rgb(150, 150, 150)!important;
+  color: black;
+}
+
+.selected-row {
+  background-color: lightblue;
+}
+
+button {
+  background: rgb(152, 152, 152)!important;
+}
+
+.example-loading-shade {
+  /* Match the dimensions of example-container */
+  height: 200px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  background: rgba(255, 255, 255, 0.0);
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  pointer-events: none;
+
   
-  table {
-    width: 100%;
-  }
+}
 
-  th {
-    background-color: black!important;
-    color: white;
-  }
+.example-loading-shade {
+  opacity: 0.5; /* Adjust opacity as needed */
+}
 
-  .selected-row {
-    background-color: lightblue; 
-  }
+.mat-table {
+  position: relative;
+}
+
+.mat-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+
+
+.example-rate-limit-reached {
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Use a more specific selector */
+.outer-shadow {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5)!important;
+}
+

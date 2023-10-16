@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { response } from 'express';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, delay, forkJoin, map, startWith, timer } from 'rxjs';
 import { Category } from 'src/app/model/models';
 import { AccountEntryService } from 'src/app/services/account-entry.service';
 
@@ -16,11 +16,27 @@ export class AccountEntryComponent {
   @ViewChild('hCodeInput') hCodeInput!: ElementRef;
   @ViewChild('sheadcode') sheadcode!:ElementRef;
   @ViewChild('accountCode') accountCode!:ElementRef;
+  @ViewChild('headmodifybtn', { read: ElementRef }) headmodifybtn!: ElementRef;
+  @ViewChild('headsavebtn', { read: ElementRef }) headsavebtn!: ElementRef;
+  @ViewChild('headnewbtn', { read: ElementRef }) headnewbtn!: ElementRef;
+  @ViewChild('subheadnewbtn', { read: ElementRef }) subheadnewbtn!: ElementRef;
+  @ViewChild('subheadmodifybtn', { read: ElementRef }) subheadmodifybtn!: ElementRef;
+  @ViewChild('subheadsavebtn', { read: ElementRef }) subheadsavebtn!: ElementRef;
+  @ViewChild('accountnewbtn', { read: ElementRef }) accountnewbtn!: ElementRef;
+  @ViewChild('accountmodifybtn', { read: ElementRef }) accountmodifybtn!: ElementRef;
+  @ViewChild('accountsavebtn', { read: ElementRef }) accountsavebtn!: ElementRef;
+
   selectedCategoryId!: Number;
 
   selectedHeadRow: any;
   selectedSubHeadRow:any;
   selectedAccountRow:any;
+
+  isLoading = false;
+  isLoadingResults = false;
+  isHeadLoadingResults=false;
+  isSubHeadLoadingResults = false;
+  isAccountLoadingResults = false;
 
   //buttons 
   head_new_btn: boolean = false;
@@ -55,6 +71,7 @@ export class AccountEntryComponent {
 
 
 
+  categoryList:any[];
   selectedCategory: any;
   filteredOptions: any;
   categories: Category[] = [];
@@ -86,6 +103,7 @@ export class AccountEntryComponent {
     private _formBuilder: FormBuilder,
   ) {
     this.CategoryOption = [];
+    this.categoryList=[];
 
     this.headFormGroup = this._formBuilder.group({
       h_code: ['', [Validators.required]],
@@ -106,6 +124,7 @@ export class AccountEntryComponent {
     });
 
     this.wholeAccountGroup = this._formBuilder.group({
+      faculty:[''],
       headFormGroup: this.headFormGroup,
       subHeadFormGroup: this.subHeadFormGroup,
       accountFormGroup: this.accountFormGroup
@@ -129,6 +148,7 @@ export class AccountEntryComponent {
     )
     this.accountService.getCategory().subscribe((data) => {
       this.CategoryOption = data;
+      this.categoryList = data;
       console.log(data);
     });
 
@@ -148,18 +168,48 @@ export class AccountEntryComponent {
 
   }
 
-  onOptionSelected(event: MatAutocompleteSelectedEvent) {
-    this.CategoryFilteredOptions.subscribe(options => {
-      const selectedCatKey = event.option.value;
-      const selectedOption = options.find(option => option.eng_text === selectedCatKey);
-      console.log(selectedOption);
-      this.cat_key = selectedOption.id;
-      this.getHeadByCatKey(selectedOption.id);
-      this.getSubHeadByCatKey(selectedOption.id);
-      this.getAccountByCatKey(selectedOption.id);
-    })
+  // onOptionSelected(event: any) {
+  //   this.isLoadingResults = true; // Set to true before making the request
+  
+  //   const thisdata = this.wholeAccountGroup.get('faculty')?.value;
+  //   console.log(thisdata);
+  //   console.log(event.value);
+  
+  //   // Simulate a one-second delay before loading the data
+  //   setTimeout(() => {
+  //     const selectedCatKey = event.value;
+  //     const selectedOption1 = this.categoryList.find(option => option.eng_text === selectedCatKey);
+  
+  //     console.log(selectedOption1);
+  //     this.cat_key = selectedOption1.id;
+  //     this.getHeadByCatKey(selectedOption1.id);
+  //     this.getSubHeadByCatKey(selectedOption1.id);
+  //     this.getAccountByCatKey(selectedOption1.id);
+  //     this.isLoadingResults = false; // Set to false after one second
+  //   }, 1000); // Delay for one second
+  // }
 
+  onOptionSelected(event: any) {
+  
+    const thisdata = this.wholeAccountGroup.get('faculty')?.value;
+    console.log(thisdata);
+    console.log(event.value);
+    const selectedCatKey = event.value;
+    const selectedOption1 = this.categoryList.find(option => option.eng_text === selectedCatKey);
+    
+  
+    // Create an observable for each request
+    const getHeadByCatKey$ = this.getHeadByCatKey(selectedOption1.id);
+    const getSubHeadByCatKey$ = this.getSubHeadByCatKey(selectedOption1.id);
+    const getAccountByCatKey$ = this.getAccountByCatKey(selectedOption1.id);
+  
+    // ForkJoin all the observables
+    forkJoin([getHeadByCatKey$, getSubHeadByCatKey$, getAccountByCatKey$])
+    .subscribe(() => {
+    });
   }
+  
+  
 
 
   selectHead(element: any) {
@@ -183,6 +233,8 @@ export class AccountEntryComponent {
     this.head_flag = number;
     this.head_save_btn = true;
     this.headFormGroup.reset();
+    this.setActiveButton(this.headnewbtn);
+    this.headnewbtn.nativeElement.classList.add('outer-shadow')
   }
 
   saveHeadForm() {
@@ -238,20 +290,29 @@ export class AccountEntryComponent {
   }
 
   updateHeadBtn(number: number) {
+    console.log('updateHeadBtn called');
     this.head_flag = number;
     this.head_save_btn = true;
+    this.hCodeInput.nativeElement.focus();
+    this.setActiveButton(this.headmodifybtn);
+
   }
+  
 
   newSubHeadBtn(number: number) {
     this.sub_head_flag = number;
     this.sub_head_save_btn = true;
     this.subHeadFormGroup.reset();
+    this.setActiveButton(this.subheadnewbtn);
+
   }
 
   updateSubHeadBtn(number: number) {
     this.sub_head_flag = number;
     this.sub_head_save_btn = true;
-  }
+    this.sheadcode.nativeElement.focus();
+    this.setActiveButton(this.subheadmodifybtn);
+}
 
   saveSubHeadForm() {
     const sub_head_code = this.subHeadFormGroup.get('sub_head_code')?.value;
@@ -335,11 +396,14 @@ export class AccountEntryComponent {
     this.account_flag = number;
     this.account_save_btn = true;
     this.accountFormGroup.reset();
+    this.setActiveButton(this.accountnewbtn);
   }
 
   updateAccountBtn(number: number) {
     this.account_flag = number;
     this.account_save_btn = true;
+    this.accountCode.nativeElement.focus();
+    this.setActiveButton(this.accountmodifybtn);
   }
 
   saveAccountForm() {
@@ -399,7 +463,7 @@ export class AccountEntryComponent {
     } else {
       // Otherwise, select the clicked row
       this.selectedHeadRow = row;
-      this.hCodeInput.nativeElement.focus();
+      //this.hCodeInput.nativeElement.focus();
     }
   }
 
@@ -409,7 +473,6 @@ export class AccountEntryComponent {
       this.selectedSubHeadRow = undefined;
     }else{
       this.selectedSubHeadRow = row;
-      this.sheadcode.nativeElement.focus();
     }
   }
 
@@ -418,64 +481,87 @@ export class AccountEntryComponent {
       this.selectedAccountRow = undefined;
     }else{
       this.selectedAccountRow = row;
-      this.accountCode.nativeElement.focus();
     }
   }
 
   //GET DATA
-  getHeadByCatKey(cat_key:number){
-    this.accountService.getHeadByCatId(cat_key).subscribe(
-      (response) => {
-
-        this.headDataSource = response;
-        this.head_new_btn = true;
-
-      }
-    );
+  getHeadByCatKey(cat_key: number) {
+    this.isHeadLoadingResults = true; // Set isLoading to true before making the request
+  
+    setTimeout(() => {
+      this.accountService.getHeadByCatId(cat_key).subscribe(
+        (response) => {
+          this.headDataSource = response;
+          this.head_new_btn = true;
+          this.isHeadLoadingResults = false; // Set isLoading back to false after data is loaded
+        }
+      );
+    }, 1000); // Simulate a 2-second loading delay with setTimeout
   }
+  
 
   getSubHeadByCatKey(cat_key:number){
-    this.accountService.getSubheadByCatId(cat_key).subscribe(
-      (response) => {
-        this.subheadDataSource = response;
-
-      }
-    );
+    this.isSubHeadLoadingResults = true;
+    setTimeout(() => {
+      
+      this.accountService.getSubheadByCatId(cat_key).subscribe(
+        (response) => {
+          this.subheadDataSource = response;
+          this.isSubHeadLoadingResults = false;
+        }
+      );
+    }, 1000);
   }
 
   getAccountByCatKey(cat_key:number){
-    this.accountService.getAccountByCatKey(cat_key).subscribe(
-      (response) => {
-        this.accountDataSource = response;
-        //console.log(response);
-      }
-    )
+    this.isAccountLoadingResults = true;
+    setTimeout(() => {
+      this.accountService.getAccountByCatKey(cat_key).subscribe(
+        (response) => {
+          this.accountDataSource = response;
+          this.isAccountLoadingResults = false;
+          //console.log(response);
+        }
+      )
+    }, 1000);
   }
 
   getSubHeadByHeadKey(head_key:number){
+    this.isSubHeadLoadingResults = true;
+   setTimeout(() => {
     this.accountService.getSuhheadByHeadKey(head_key).subscribe(
       (response) => {
         this.subheadDataSource = response
         this.sub_head_new_btn = true;
+        this.isSubHeadLoadingResults = false;
       }
     );
+   }, 1000);
   }
   getAccountByHeadKey(head_key:number){
-    this.accountService.getAccountByHeadKey(head_key).subscribe(
-      (response)=>{
-        console.log(response);
-        this.accountDataSource = response;
-      }
-    )
+    this.isAccountLoadingResults = true;
+    setTimeout(() => {
+      this.accountService.getAccountByHeadKey(head_key).subscribe(
+        (response)=>{
+          console.log(response);
+          this.accountDataSource = response;
+          this.isAccountLoadingResults = false;
+        }
+      )
+    }, 1000);
   }
 
   getAccountBySubHeadKey(sub_head_key:number){
-    this.accountService.getAccountBySubHeadKey(sub_head_key).subscribe(
-      (response) => {
-        this.accountDataSource = response;
-        this.account_new_btn = true;
-      }
-    )
+    this.isAccountLoadingResults = true;
+    setTimeout(() => {
+      this.accountService.getAccountBySubHeadKey(sub_head_key).subscribe(
+        (response) => {
+          this.accountDataSource = response;
+          this.account_new_btn = true;
+          this.isAccountLoadingResults = false;
+        }
+      )
+    }, 1000);
   }
 
 
@@ -530,5 +616,29 @@ export class AccountEntryComponent {
     )
   }
 
+
+  //Helper method
+  setActiveButton(element: ElementRef) {
+    // List of all the buttons
+    const buttons = [
+      this.headmodifybtn,
+      this.headsavebtn,
+      this.headnewbtn,
+      this.subheadnewbtn,
+      this.subheadmodifybtn,
+      this.subheadsavebtn,
+      this.accountnewbtn,
+      this.accountmodifybtn,
+      this.accountsavebtn
+    ];
+
+    // Remove 'outer-shadow' class from all buttons
+    buttons.forEach((button) => {
+      button.nativeElement.classList.remove('outer-shadow');
+    });
+
+    // Add 'outer-shadow' class to the specified button
+    element.nativeElement.classList.add('outer-shadow');
+  }
 
 }
