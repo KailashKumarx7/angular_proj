@@ -28,6 +28,10 @@ export class AccountEntryComponent {
 
   selectedCategoryId!: Number;
 
+
+  //input fied disabled:
+  isButtonActive=false;
+
   selectedHeadRow: any;
   selectedSubHeadRow:any;
   selectedAccountRow:any;
@@ -102,25 +106,29 @@ export class AccountEntryComponent {
     private accountService: AccountEntryService,
     private _formBuilder: FormBuilder,
   ) {
+    
     this.CategoryOption = [];
     this.categoryList=[];
 
     this.headFormGroup = this._formBuilder.group({
-      h_code: ['', [Validators.required]],
-      h_nep_text: ['', [Validators.required]],
+      h_code: [{ value: '', disabled: true }, [Validators.required]],
+      h_item:[{ disabled:true}, [Validators.required]],
+      h_nep_text: [{ value: '', disabled: true }, [Validators.required]],
 
     });
     this.subHeadFormGroup = this._formBuilder.group({
-      sub_head_code: [''],
-      sub_head_text: [''],
+      sub_head_code: [{ value: '', disabled: true },],
+      sh_item:[{ disabled:true}, [Validators.required]],
+      sub_head_text: [{ value: '', disabled: true },],
 
     });
 
     this.accountFormGroup = this._formBuilder.group({
-      ac_code: ['', [Validators.required]],
-      ac_nep_text: ['', [Validators.required]],
-      billing: ['', [Validators.required]],
-      master_item: ['', [Validators.required]]
+      ac_code: [{ value: '', disabled: true }, [Validators.required]],
+      a_item:[{value:'select', disabled:true}, [Validators.required]],
+      ac_nep_text: [{ value: '', disabled: true }, [Validators.required]],
+      billing: [{ value: '', disabled: true }, [Validators.required]],
+      master_item: [{ value: '', disabled: true }, [Validators.required]]
     });
 
     this.wholeAccountGroup = this._formBuilder.group({
@@ -235,6 +243,7 @@ export class AccountEntryComponent {
     this.headFormGroup.reset();
     this.setActiveButton(this.headnewbtn);
     this.headnewbtn.nativeElement.classList.add('outer-shadow')
+    this.headFormGroup.enable();
   }
 
   saveHeadForm() {
@@ -291,6 +300,7 @@ export class AccountEntryComponent {
 
   updateHeadBtn(number: number) {
     console.log('updateHeadBtn called');
+    this.headFormGroup.enable();
     this.head_flag = number;
     this.head_save_btn = true;
     this.hCodeInput.nativeElement.focus();

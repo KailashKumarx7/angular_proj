@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -51,4 +51,20 @@ export class GetDataService {
   getAccountList():Observable<any>{
     return this.http.get<any[]>(this.baseApiUrl+'/Account/getAllAccount');
   }
+
+  // getPartyledgerByAcKey(ac_key:any,sdate:any,edate:any):Observable<any>{
+  //   return this.http.get<any[]>(`${this.baseApiUrl}/api/VoucherDetailForReport/getVoucherDetailByAckey/${ac_key}/${sdate}/${edate}`);
+  // }
+
+  getPartyledgerByAcKey(ac_key: any, SFormattedADDate: any, EFormattedADDate: any): Observable<any> {
+    return this.http.get(`${this.baseApiUrl}/api/VoucherDetailForReport/getVoucherDetailByAckey/${ac_key}/${SFormattedADDate}/${EFormattedADDate}`).pipe(
+      catchError(error => {
+        if(error.status==404)
+        return throwError("Not Found");
+        console.error(error);
+        return throwError(error);
+      })
+    );
+  }
+  
 }

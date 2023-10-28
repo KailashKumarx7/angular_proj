@@ -20,7 +20,7 @@
 .form-container {
   height: 199px;
   width: 100%;
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 table {

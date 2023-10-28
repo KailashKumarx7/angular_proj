@@ -74,15 +74,15 @@
                         <div class="row table-light">
                             <div class="col-sm-3">Code No:</div>
                             <div class="col-sm-9">
-                                <input formControlName="h_code" type="text" id="hl_code_no"
+                                <input  formControlName="h_code" type="text" id="hl_code_no"
                                     class="form-control form-control-sm" #hCodeInput />
                             </div>
                         </div>
                         <div class="row table-light mt-2">
                             <div class="col-sm-3">Item:</div>
                             <div class="col-sm-9">
-                                <select id="hl_item" class="form-select form-control form-select-sm">
-                                    <option selected disabled>Select</option>
+                                <select formControlName="h_item" id="hl_item" class="form-select form-control form-select-sm">
+                                    <option selected >Select</option>
                                     <option value="1">No</option>
                                     <option value="2">Yes</option>
                                 </select>
@@ -156,33 +156,20 @@
                         </div>
                     </div>
                     <hr>
-                    <div formGroupName="subHeadFormGroup" class="border form-container p-1">
-                        <div class="row table-light">
-                            <div class="col-sm-3">
-                                <p>Category</p>
-                            </div>
-                            <div class="col-sm-3 text-end">
-                                <p>Assests</p>
-                            </div>
-                            <div class="col-sm-3 text-end">
-                                <p>Head</p>
-                            </div>
-                            <div class="col-sm-3 text-end">
-                                <p>Cash</p>
-                            </div>
-                        </div>
+                    <div formGroupName="subHeadFormGroup" style="max-width: 100%" class="border form-container p-1">
+                        
                         <div class="row table-light">
                             <div class="col-sm-3">Code No:</div>
                             <div class="col-sm-9">
-                                <input #sheadcode formControlName="sub_head_code" type="text"
+                                <input  #sheadcode formControlName="sub_head_code" type="text"
                                     class="form-control form-control-sm" />
                             </div>
                         </div>
                         <div class="row table-light mt-2">
                             <div class="col-sm-3">Item:</div>
                             <div class="col-sm-9">
-                                <select class="form-select form-control form-select-sm">
-                                    <option selected>No</option>
+                                <select  formControlName="sh_item" class="form-select form-control form-select-sm">
+                                    <option >No</option>
                                     <option value="1">Yes</option>
                                 </select>
                             </div>
@@ -190,7 +177,7 @@
                         <div class="row head_entry mt-2">
                             <div class="col-sm-3">Sub Head:</div>
                             <div class="col-sm-9">
-                                <input formControlName="sub_head_text" type="text"
+                                <input  formControlName="sub_head_text" type="text"
                                     class="form-control form-control-sm" />
                             </div>
                         </div>
@@ -276,7 +263,7 @@
                         <div class="row table-light mt-2">
                             <div class="col-sm-4">Item:</div>
                             <div class="col-sm-8">
-                                <select class="form-select form-control form-select-sm">
+                                <select formControlName="a_item" class="form-select form-control form-select-sm">
                                     <option selected>No</option>
                                     <option value="1">Yes</option>
                                 </select>
