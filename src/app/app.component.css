@@ -2,3 +2,14 @@
     padding-top: 70px;
     width: 100%;
 }
+
+@media print{
+    app-header{
+        visibility: hidden;
+    }
+
+    .body-section{
+        padding-top: 0;
+        width: 100%;
+    }
+}

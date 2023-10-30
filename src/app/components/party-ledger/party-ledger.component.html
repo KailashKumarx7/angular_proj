@@ -1,36 +1,106 @@
-<div class="container access-control">
-    <mat-card>
-        <mat-card-header>Party Report</mat-card-header>
-<form action="" [formGroup]="partyledger">
-    <div class="row row1">
-        <div class="col-lg-2 col-md-2 col-sm-2 mx-5">
-                <ne-datepicker (dateInBS)="startingDate($event)" [date]="date" dateIn="BS" >  </ne-datepicker>
-        </div>
-        <div class="col-lg-1 col-sm-1 col-md-1"><span>To</span></div>
-        <div class="col-lg-2 col-md-2 col-sm-2">
-        <ne-datepicker (dateInBS)="endDate($event)" [date]="date" dateIn="BS" >  </ne-datepicker>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 mx-5">
+<div class="main-container h-100">
+    <div class="non-printable">
+      <form action="" [formGroup]="partyledger">
+        <div class="row row1">
+          <div class="col-lg-2 col-md-2 col-sm-2 mx-5">
+            <ne-datepicker (dateInBS)="startingDate($event)" [date]="date" dateIn="BS"> </ne-datepicker>
+          </div>
+          <div class="col-lg-1 col-sm-1 col-md-1"><span>To</span></div>
+          <div class="col-lg-2 col-md-2 col-sm-2">
+            <ne-datepicker (dateInBS)="endDate($event)" [date]="date" dateIn="BS"> </ne-datepicker>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-2 mx-5">
             <mat-form-field class="example-full-width">
-                <mat-label>Account List</mat-label>
-                <input type="text"
-                       matInput
-                      formControlName="accountlist"
-                       [matAutocomplete]="auto">
-                <mat-autocomplete autoActiveFirstOption #auto>
-                  <mat-option *ngFor="let option of filteredOptions | async" (click)="accountSeletd(option.ac_key)" [value]="option.nep_text">
-                    {{option.nep_text}}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-        </div>
-
-        <div class="col-lg-1 col-md-1 col-sm-1 mx-5">
+              <mat-label>Account List</mat-label>
+              <input type="text" matInput formControlName="accountlist" [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto>
+                <mat-option *ngFor="let option of filteredOptions | async" (click)="accountSeletd(option)"
+                  [value]="option.nep_text">
+                  {{option.nep_text}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+  
+          <div class="col-lg-1 col-md-1 col-sm-1 mx-5">
             <button (click)="getvalues()" mat-raised-button color="primary">Report</button>
+          </div>
         </div>
-
-
+      </form>
     </div>
-</form>   
-</mat-card>
+    <div class="" id="printableContent">
+      <div class="page-header no-page-break"> <!-- This is the header content -->
+        <div class="text-center align-items-center">
+          <p>{{cooperativeData.cooperative_name}}</p>
+          <p>{{cooperativeData.cooperative_address}}, {{cooperativeData.working_area}}</p>
+        </div>
+        <div>
+          <p>PARTY LEDGER OF: {{selectedAcountData.nep_text}}</p>
+          <p>FROM {{selectedSDateAndEDate.sDate}} to {{selectedSDateAndEDate.eDate}}</p>
+        </div>
+      </div>
+      <section class="example-container table-wrapper no-page-break">
+        <table mat-table [dataSource]="voucherDetailsData">
+
+          <ng-container matColumnDef="SN">
+            <th mat-header-cell *matHeaderCellDef> SN </th>
+            <td mat-cell *matCellDef="let transaction; let i = index"> {{1+i}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let transaction"> {{transaction.ed }} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+          <ng-container matColumnDef="V.NO">
+            <th mat-header-cell *matHeaderCellDef> V.NO </th>
+            <td mat-cell *matCellDef="let transaction"> {{transaction.v_t_key }} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+          <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let transaction"> {{transaction.description }} </td>
+            <td mat-footer-cell *matFooterCellDef style="text-align: right;">Total </td>
+          </ng-container>
+          <ng-container matColumnDef="Dr.Amount">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Dr.Amount </th>
+            <td mat-cell *matCellDef="let transaction" style="text-align: right;"> {{transaction.dr_amt }} </td>
+            <td mat-footer-cell *matFooterCellDef style="text-align: right;"> {{totalcount.totalDrAmount }} </td>
+          </ng-container>
+          <ng-container matColumnDef="Cr.Amount">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Cr.Amount </th>
+            <td mat-cell *matCellDef="let transaction" style="text-align: right;"> {{transaction.cr_amt }} </td>
+            <td mat-footer-cell *matFooterCellDef style="text-align: right;"> {{totalcount.totalCrAmount }} </td>
+          </ng-container>
+          <ng-container matColumnDef="Balance">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right;"> Balance </th>
+            <td mat-cell *matCellDef="let transaction" style="text-align: right;"> {{transaction.balance}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="voucherDetailsHeading; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: voucherDetailsHeading;"></tr>
+          <tr mat-footer-row *matFooterRowDef="voucherDetailsHeading"></tr>
+        </table>
+      </section>
+      <div class="page-footer no-page-break"> <!-- This is the footer content -->
+        <div class="row">
+          <div class="col-sm-4">
+            <h3>Report Generated By: <strong>EMS</strong></h3>
+          </div>
+          <div class="col-sm-4 text-sm-center">
+            <h5>Page: 1/1</h5>
+          </div>
+          <div class="col-sm-4 text-end">
+            <p>Date/Time {{currentDate}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-lg-end px-lg-5">
+      <button (click)="printDiv()" mat-raised-button style="width: fit-content;">Print</button>
+    </div>
 </div>

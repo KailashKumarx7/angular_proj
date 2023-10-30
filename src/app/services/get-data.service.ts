@@ -66,5 +66,9 @@ export class GetDataService {
       })
     );
   }
+
+  getVoucherTypes():Observable<any>{
+    return this.http.get(this.baseApiUrl+"/VoucherType/getAllVoucherType");
+  }
   
 }

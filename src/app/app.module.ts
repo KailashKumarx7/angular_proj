@@ -25,6 +25,8 @@ import { AuthLogComponent } from './components/auth-log/auth-log.component';
 import { MasterReportComponent } from './components/master-report/master-report.component';
 import { PartyLedgerComponent } from './components/party-ledger/party-ledger.component';
 import { NepaliDatepickerModule } from 'nepali-datepicker-angular';
+import NepaliDate from 'nepali-date-converter';
+import { TestComponentComponent } from './components/test-component/test-component.component';
 
 
 
@@ -43,7 +45,8 @@ import { NepaliDatepickerModule } from 'nepali-datepicker-angular';
     DataMigrationComponent,
     AuthLogComponent,
     MasterReportComponent,
-    PartyLedgerComponent
+    PartyLedgerComponent,
+    TestComponentComponent
 
   ],
   imports: [

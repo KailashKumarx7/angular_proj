@@ -12,6 +12,7 @@ import { AuthLogComponent } from './components/auth-log/auth-log.component';
 import { authGuard } from './guard/auth.guard';
 import { MasterReportComponent } from './components/master-report/master-report.component';
 import { PartyLedgerComponent } from './components/party-ledger/party-ledger.component';
+import { TestComponentComponent } from './components/test-component/test-component.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'default',
     component: DefaultPageComponent,
+  },
+  {
+    path:'test',
+    component:TestComponentComponent
   },
   {
     path: 'login',

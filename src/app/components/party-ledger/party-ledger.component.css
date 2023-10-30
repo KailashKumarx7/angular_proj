@@ -1,4 +1,94 @@
-.row1{
-    padding: 0!important;
-    margin: 0 !important;
+.row1 {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.main-container{
+  padding: 20px;
+}
+
+#printableContent{
+  padding: 30px;
+}
+
+/* Custom CSS to make the table body scrollable */
+/* .table-container {
+    max-height: 400px;
+    overflow: hidden; 
+    position: relative; 
+  }
+  
+  .table-body-container {
+    max-height: 300px; 
+    overflow-y: scroll; 
+  }
+  
+  
+  .scrollable-body {
+    overflow-x: hidden;
+  } */
+
+.example-container {
+  max-height: 270px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+tr.mat-mdc-footer-row {
+  font-weight: bold;
+}
+
+.mat-mdc-table-sticky {
+  border-top: 1px solid #e0e0e0;
+}
+
+#printableContent {
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* @media print {
+    .page-header, .page-footer {
+        display: block;
+        position: fixed;
+        width: 100%;
+    }
+
+    .page-header {
+        top: 0;
+    }
+
+    .page-footer {
+        bottom: 0;
+    }
+} */
+@media print {
+  .non-printable{
+    visibility: hidden;
+  }
+  button {
+    visibility: hidden;
+  }
+  table {
+    page-break-after: always;
+  }
+  .example-container {
+    max-height: max-content;
+    overflow: visible;
+  }
+
+  #printableContent {
+    display: block !important;
+    padding: 0;
+    top: 2cm;
+    left: 1.5cm;
+    right: .75cm;
+    bottom: 0.75cm;
+    position: absolute;
+  }
+
+  
 }
