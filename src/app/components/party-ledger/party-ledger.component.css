@@ -139,7 +139,7 @@ tr.mat-mdc-footer-row {
 } */
 
 @page {
-  size: legal;
+  size: A4;
   margin: 0; /* Optionally, adjust the margins as needed */
 }
 

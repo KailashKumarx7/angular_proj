@@ -379,7 +379,7 @@ export class PartyLedgerComponent implements OnInit {
     const devided = Math.ceil(lengthOfData / partation);
 
     for (var i = 0; i < devided; i++) {
-      let content = `<div style="border:1px solid black;" class="page">`;
+      let content = `<div style="border:2px solid black;" class="page">`;
 
       content += headerContent?.innerHTML;
       let start = i * partation;
