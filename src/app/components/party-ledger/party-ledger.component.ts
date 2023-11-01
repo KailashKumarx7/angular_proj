@@ -245,7 +245,7 @@ export class PartyLedgerComponent implements OnInit {
           if (Number.isInteger(number)) {
             return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
           } else {
-            return number.toLocaleString('en-US');
+            return number.toLocaleString('en-US',{ minimumFractionDigits: 2, maximumFractionDigits: 2 });
           }
         }
 
@@ -321,9 +321,9 @@ export class PartyLedgerComponent implements OnInit {
       tableHtml += `<td style="width:70px;padding:.3rem;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
       tableHtml += `<td style="width:60px;padding:.3rem;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
       tableHtml += `<td style="padding:.3rem;" class="description-class">${item.description}</td>`;
-      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem;" class="dr-amount-class">${item.dr_amt}</td>`;
-      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem;" class="cr-amount-class">${item.cr_amt}</td>`;
-      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem;" class="balance-class">${item.balance}</td>`;
+      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem; font-size:15px;" class="dr-amount-class">${item.dr_amt}</td>`;
+      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem;font-size:15px;" class="cr-amount-class">${item.cr_amt}</td>`;
+      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem;font-size:15px;" class="balance-class">${item.balance}</td>`;
       tableHtml += '</tr>';
     });
 
