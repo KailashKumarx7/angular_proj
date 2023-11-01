@@ -150,6 +150,14 @@ tr.mat-mdc-footer-row {
     page-break-after: always;
   }
 
+  .table-row-data{
+    
+    max-height: 10px!important;
+  }
+  .table-row-data td{
+    font-size: 100px;
+  }
+
   .non-printable {
     visibility: hidden;
     display: none;

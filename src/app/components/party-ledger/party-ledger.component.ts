@@ -348,14 +348,14 @@ export class PartyLedgerComponent implements OnInit {
     tableHtml += '<tbody>';
 
     data.forEach((item, index) => {
-      tableHtml += '<tr>';
-      tableHtml += `<td style="width:10px;" class="sn-class">${index + 1}</td>`;
-      tableHtml += `<td style="width:70px;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
-      tableHtml += `<td style="width:60px;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
-      tableHtml += `<td style="width:200px;" class="description-class">${item.description}</td>`;
-      tableHtml += `<td style="width:100px;" class="dr-amount-class">${item.dr_amt}</td>`;
-      tableHtml += `<td style="width:100px;" class="cr-amount-class">${item.cr_amt}</td>`;
-      tableHtml += `<td style="width:100px;" class="balance-class">${item.balance}</td>`;
+      tableHtml += '<tr style="font-size:16px;font-weight:400; max-height:10px;" class="table-row-data">';
+      tableHtml += `<td style="width:10px;padding:.2rem;" class="sn-class">${index + 1}</td>`;
+      tableHtml += `<td style="width:70px;padding:.2rem;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
+      tableHtml += `<td style="width:60px;padding:.2rem;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
+      tableHtml += `<td style="width:200px;padding:.2rem;" class="description-class">${item.description}</td>`;
+      tableHtml += `<td style="width:100px;padding:.2rem;" class="dr-amount-class">${item.dr_amt}</td>`;
+      tableHtml += `<td style="width:100px;padding:.2rem;" class="cr-amount-class">${item.cr_amt}</td>`;
+      tableHtml += `<td style="width:100px;padding:.2rem;" class="balance-class">${item.balance}</td>`;
       tableHtml += '</tr>';
     });
 
@@ -458,7 +458,7 @@ export class PartyLedgerComponent implements OnInit {
     const sourceOfData = this.voucherDetailsData;
     var devidedData = [];
     const lengthOfData = sourceOfData.length;
-    const partation = 14;
+    const partation = 17;
     const devided = Math.ceil(lengthOfData / partation);
 
     for (var i = 0; i < devided; i++) {
