@@ -167,6 +167,10 @@ tr.mat-mdc-footer-row {
     visibility: visible;
     display: contents;
   }
+
+  button{
+    visibility: hidden;
+  }
  
   
 }
