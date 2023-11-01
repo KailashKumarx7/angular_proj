@@ -458,7 +458,7 @@ export class PartyLedgerComponent implements OnInit {
     const sourceOfData = this.voucherDetailsData;
     var devidedData = [];
     const lengthOfData = sourceOfData.length;
-    const partation = 16;
+    const partation = 15;
     const devided = Math.ceil(lengthOfData / partation);
 
     for (var i = 0; i < devided; i++) {
