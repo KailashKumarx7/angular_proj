@@ -329,7 +329,7 @@ export class PartyLedgerComponent implements OnInit {
       return 'Invalid data format';
     }
 
-    let tableHtml = '<table class="table">';
+    let tableHtml = '<table class="table table-bordered">';
     tableHtml += '<thead><tr>';
     tableHtml += `<th style="width:10px;" class="sn-class">${columnHeaders[0]}</th>`;
     tableHtml += `<th style="width:70px;" class="date-class">${columnHeaders[1]}</th>`;
@@ -395,6 +395,58 @@ export class PartyLedgerComponent implements OnInit {
 
   }
 
+  // copryForPrint() {
+  //   const headerContent = document.querySelector('#pageHeaderId');
+  //   const footerContent = document.querySelector('#pageFooterId');
+  //   const printingBox = document.querySelector('#printingBox');
+  //   const sourceOfData = this.voucherDetailsData;
+  //   var devidedData = [];
+  //   const lengthOfData = sourceOfData.length;
+  //   const partation = 14;
+  //   const devided = Math.ceil(lengthOfData / partation);
+
+  //   for (var i = 0; i < devided; i++) {
+
+  //     let content:any = `<div class="page">`;
+
+  //      content += headerContent?.innerHTML;
+  //     let start = i * partation;
+  //     let end = Math.min((i + 1) * partation, lengthOfData);
+
+  //     for (var j = start; j < end; j++) {
+  //       devidedData.push(sourceOfData[j]);
+
+  //     }
+
+  //     const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance'];
+  //     content += this.tableBox(devidedData, columnHeaders);;
+
+  //     if (i === devided - 1) {
+  //       var totalDrCrAmount = this.totalcount;
+        
+  //       content += `
+  //         <tr>
+  //        <td style="width:10px;" class="sn-class"></td>
+  //        <td style="width:70px;" class="date-class"></td>
+  //        <td style="width:60px;" class="vno-class"></td>
+  //        <td style="width:500px!important;" class="description-class"> Total</td>
+  //        <td style="width:100px;" class="dr-amount-class">${totalDrCrAmount.totalDrAmount}</td>
+  //        <td style="width:100px;" class="cr-amount-class">${totalDrCrAmount.totalCrAmount}</td>
+  //        <td style="width:100px;" class="balance-class"></td>
+  //         </tr>
+  //       `;
+  //     }
+
+
+  //     content += footerContent?.innerHTML;
+  //     content += `</div>`;
+
+  //     document.getElementById('printingBox')!.innerHTML += content;
+
+  //     devidedData = [];
+  //   }
+
+  // }
   copryForPrint() {
     const headerContent = document.querySelector('#pageHeaderId');
     const footerContent = document.querySelector('#pageFooterId');
@@ -406,44 +458,43 @@ export class PartyLedgerComponent implements OnInit {
     const devided = Math.ceil(lengthOfData / partation);
 
     for (var i = 0; i < devided; i++) {
+        let content = `<div class="page">`;
 
-      let content: any = headerContent?.innerHTML;
-      let start = i * partation;
-      let end = Math.min((i + 1) * partation, lengthOfData);
+        content += headerContent?.innerHTML;
+        let start = i * partation;
+        let end = Math.min((i + 1) * partation, lengthOfData);
 
-      for (var j = start; j < end; j++) {
-        devidedData.push(sourceOfData[j]);
+        for (var j = start; j < end; j++) {
+            devidedData.push(sourceOfData[j]);
+        }
 
-      }
+        const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance'];
+        content += this.tableBox(devidedData, columnHeaders);
 
-      const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance'];
-      content += this.tableBox(devidedData, columnHeaders);;
+        if (i === devided - 1) {
+            var totalDrCrAmount = this.totalcount;
+            content += `
+                <tr>
+                    <td style="width:10px;" class="sn-class"></td>
+                    <td style="width:70px;" class="date-class"></td>
+                    <td style="width:60px;" class="vno-class"></td>
+                    <td style="width:500px!important;" class="description-class"> Total</td>
+                    <td style="width:100px;" class="dr-amount-class">${totalDrCrAmount.totalDrAmount}</td>
+                    <td style="width:100px;" class="cr-amount-class">${totalDrCrAmount.totalCrAmount}</td>
+                    <td style="width:100px;" class="balance-class"></td>
+                </tr>
+            `;
+        }
 
-      if (i === devided - 1) {
-        var totalDrCrAmount = this.totalcount;
-        
-        content += `
-          <tr>
-         <td style="width:10px;" class="sn-class"></td>
-         <td style="width:70px;" class="date-class"></td>
-         <td style="width:60px;" class="vno-class"></td>
-         <td style="width:500px!important;" class="description-class"> Total</td>
-         <td style="width:100px;" class="dr-amount-class">${totalDrCrAmount.totalDrAmount}</td>
-         <td style="width:100px;" class="cr-amount-class">${totalDrCrAmount.totalCrAmount}</td>
-         <td style="width:100px;" class="balance-class"></td>
-          </tr>
-        `;
-      }
+        content += footerContent?.innerHTML;
+        content += `</div>`;
 
+        printingBox?.insertAdjacentHTML('beforeend', content);
 
-      content += footerContent?.innerHTML;
-
-      document.getElementById('printingBox')!.innerHTML += content;
-
-      devidedData = [];
+        devidedData = [];
     }
+}
 
-  }
 
 
 

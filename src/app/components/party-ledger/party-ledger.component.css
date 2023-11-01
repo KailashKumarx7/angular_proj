@@ -138,24 +138,33 @@ tr.mat-mdc-footer-row {
   
 } */
 
+@media print {
+  .page {
+    page-break-before: always;
+    bottom: 0;
+  }
+  .page-header{
+    page-break-before: always;
+  }
+  .page-footer{
+    page-break-after: always;
+  }
 
-@media print{
-  .non-printable{
+  .non-printable {
     visibility: hidden;
     display: none;
   }
 
-  #printingBox{
+  #printingBox {
     visibility: visible;
-    display: block;
-    
+    display: contents;
   }
- 
+}
 
 
-  .page-footer{
+/* .page-footer{
     margin-bottom: 100px;
-  }
+  } */
 /* 
    .sn-class{
     max-width: 30px!important;
@@ -179,9 +188,6 @@ tr.mat-mdc-footer-row {
     max-width: 30px!important;
    } */
 
-
-  
-}
 
 
 
