@@ -333,15 +333,15 @@ export class PartyLedgerComponent implements OnInit {
       return 'Invalid data format';
     }
 
-    let tableHtml = '<table class="table table-bordered">';
+    let tableHtml = '<table style="border:1px solid black;" class="table table-bordered">';
     tableHtml += '<thead><tr>';
     tableHtml += `<th style="width:10px;" class="sn-class">${columnHeaders[0]}</th>`;
     tableHtml += `<th style="width:70px;" class="date-class">${columnHeaders[1]}</th>`;
     tableHtml += `<th style="width:60px;" class="vno-class">${columnHeaders[2]}</th>`;
     tableHtml += `<th style="width:200px;" class="description-class">${columnHeaders[3]}</th>`;
-    tableHtml += `<th style="width:100px;" class="dr-amount-class">${columnHeaders[4]}</th>`;
-    tableHtml += `<th style="width:100px;" class="cr-amount-class">${columnHeaders[5]}</th>`;
-    tableHtml += `<th style="width:100px;" class="balance-class">${columnHeaders[6]}</th>`;
+    tableHtml += `<th style="width:100px;" class="dr-amount-class text-end">${columnHeaders[4]}</th>`;
+    tableHtml += `<th style="width:100px;" class="cr-amount-class text-end">${columnHeaders[5]}</th>`;
+    tableHtml += `<th style="width:100px;" class="balance-class text-end">${columnHeaders[6]}</th>`;
 
 
     tableHtml += '</tr></thead>';
@@ -349,13 +349,13 @@ export class PartyLedgerComponent implements OnInit {
 
     data.forEach((item, index) => {
       tableHtml += '<tr style="font-size:16px;font-weight:400; max-height:10px;" class="table-row-data">';
-      tableHtml += `<td style="width:10px;padding:.2rem;" class="sn-class">${index + 1}</td>`;
-      tableHtml += `<td style="width:70px;padding:.2rem;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
-      tableHtml += `<td style="width:60px;padding:.2rem;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
-      tableHtml += `<td style="width:200px;padding:.2rem;" class="description-class">${item.description}</td>`;
-      tableHtml += `<td style="width:100px;padding:.2rem;" class="dr-amount-class">${item.dr_amt}</td>`;
-      tableHtml += `<td style="width:100px;padding:.2rem;" class="cr-amount-class">${item.cr_amt}</td>`;
-      tableHtml += `<td style="width:100px;padding:.2rem;" class="balance-class">${item.balance}</td>`;
+      tableHtml += `<td style="width:10px;padding:.3rem;" class="sn-class">${index + 1}</td>`;
+      tableHtml += `<td style="width:70px;padding:.3rem;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
+      tableHtml += `<td style="width:60px;padding:.3rem;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
+      tableHtml += `<td style="width:200px;padding:.3rem;" class="description-class">${item.description}</td>`;
+      tableHtml += `<td style="width:100px;padding:.3rem;" class="dr-amount-class">${item.dr_amt}</td>`;
+      tableHtml += `<td style="width:100px;padding:.3rem;" class="cr-amount-class">${item.cr_amt}</td>`;
+      tableHtml += `<td style="width:100px;padding:.3rem;" class="balance-class">${item.balance}</td>`;
       tableHtml += '</tr>';
     });
 
