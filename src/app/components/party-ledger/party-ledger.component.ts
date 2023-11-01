@@ -334,7 +334,7 @@ export class PartyLedgerComponent implements OnInit {
     tableHtml += `<th style="width:10px;" class="sn-class">${columnHeaders[0]}</th>`;
     tableHtml += `<th style="width:70px;" class="date-class">${columnHeaders[1]}</th>`;
     tableHtml += `<th style="width:60px;" class="vno-class">${columnHeaders[2]}</th>`;
-    tableHtml += `<th style="width:180px;" class="description-class">${columnHeaders[3]}</th>`;
+    tableHtml += `<th style="width:200px;" class="description-class">${columnHeaders[3]}</th>`;
     tableHtml += `<th style="width:100px;" class="dr-amount-class">${columnHeaders[4]}</th>`;
     tableHtml += `<th style="width:100px;" class="cr-amount-class">${columnHeaders[5]}</th>`;
     tableHtml += `<th style="width:100px;" class="balance-class">${columnHeaders[6]}</th>`;
@@ -348,7 +348,7 @@ export class PartyLedgerComponent implements OnInit {
       tableHtml += `<td style="width:10px;" class="sn-class">${index + 1}</td>`;
       tableHtml += `<td style="width:70px;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
       tableHtml += `<td style="width:60px;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
-      tableHtml += `<td style="width:180px;" class="description-class">${item.description}</td>`;
+      tableHtml += `<td style="width:200px;" class="description-class">${item.description}</td>`;
       tableHtml += `<td style="width:100px;" class="dr-amount-class">${item.dr_amt}</td>`;
       tableHtml += `<td style="width:100px;" class="cr-amount-class">${item.cr_amt}</td>`;
       tableHtml += `<td style="width:100px;" class="balance-class">${item.balance}</td>`;
@@ -478,7 +478,7 @@ export class PartyLedgerComponent implements OnInit {
                     <td style="width:10px;" class="sn-class"></td>
                     <td style="width:70px;" class="date-class"></td>
                     <td style="width:60px;" class="vno-class"></td>
-                    <td style="width:500px!important;" class="description-class"> Total</td>
+                    <td style="width:200px!important;" class="description-class"> Total</td>
                     <td style="width:100px;" class="dr-amount-class">${totalDrCrAmount.totalDrAmount}</td>
                     <td style="width:100px;" class="cr-amount-class">${totalDrCrAmount.totalCrAmount}</td>
                     <td style="width:100px;" class="balance-class"></td>
