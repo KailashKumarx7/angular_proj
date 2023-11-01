@@ -138,11 +138,17 @@ tr.mat-mdc-footer-row {
   
 } */
 
+@page {
+  size: A4;
+  margin: 0; /* Optionally, adjust the margins as needed */
+}
+
 @media print {
   .page {
     page-break-before: always;
     bottom: 0;
   }
+
   .page-header{
     page-break-before: always;
   }
