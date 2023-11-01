@@ -163,7 +163,11 @@ export class PartyLedgerComponent implements OnInit {
 
   getvalues() {
     console.log(this.selectedAcountData);
-    this.currentDate = new Date();
+    const date = new Date();
+    const nepalTime = this.getNepalTime();
+
+  console.log(nepalTime);
+    this.currentDate = nepalTime;
     // const SBSDate = this.SBSDate;
     // const EBSDate = this.EBSDate;
 
@@ -512,6 +516,21 @@ export class PartyLedgerComponent implements OnInit {
     printWindow!.document.close();
     printWindow!.print();
     printWindow!.close();
+  }
+
+
+  getNepalTime() {
+    const currentDate = new Date();
+
+    // Specify the time zone as "Asia/Kathmandu" for both date and time
+    const nepalDateTime = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Kathmandu',
+      dateStyle: 'medium',
+      timeStyle: 'medium'
+    }).format(currentDate);
+  
+  
+    return nepalDateTime;
   }
 
 
