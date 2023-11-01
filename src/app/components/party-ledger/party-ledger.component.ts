@@ -10,6 +10,7 @@ import { startWith, map } from 'rxjs/operators';
 import { GetDataService } from 'src/app/services/get-data.service';
 import { adToBs } from '@sbmdkl/nepali-date-converter';
 import { PrintService } from 'src/app/services/print.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 interface AccountList {
   ac_key: number;
@@ -29,6 +30,8 @@ interface Transaction {
 export class PartyLedgerComponent implements OnInit {
   date!: string;
 
+  tableContent: any;
+
   SBSDate!: string;
   EBSDate!: string;
   accountKey!: string;
@@ -44,6 +47,7 @@ export class PartyLedgerComponent implements OnInit {
   //data
   voucherTypes: any[] = [];
   voucherDetailsHeadingg!: string[];
+  newdata: any = [];
 
   selectedAcountData: any = [];
   selectedSDateAndEDate: any = {}
@@ -160,13 +164,19 @@ export class PartyLedgerComponent implements OnInit {
   getvalues() {
     console.log(this.selectedAcountData);
     this.currentDate = new Date();
-    const SBSDate = this.SBSDate;
-    const EBSDate = this.EBSDate;
+    // const SBSDate = this.SBSDate;
+    // const EBSDate = this.EBSDate;
+
+    const SBSDate = '2080/04/01';
+    const EBSDate = '2080/07/01';
+
     console.log(SBSDate);
     console.log(EBSDate);
     const SADDate = this._nepaliDatepickerService.BSToAD(SBSDate, 'yyyy/mm/dd');
     const EADDate = this._nepaliDatepickerService.BSToAD(EBSDate, 'yyyy/mm/dd');
-    const ac_key = this.accountKey;
+    // const ac_key = this.accountKey;
+
+    const ac_key = 1;
 
     const SFormattedADDate = this.datePipe.transform(SADDate, 'yyyy-MM-dd');
     const EFormattedADDate = this.datePipe.transform(EADDate, 'yyyy-MM-dd');
@@ -183,8 +193,6 @@ export class PartyLedgerComponent implements OnInit {
 
     this.getdataService.getPartyledgerByAcKey(ac_key, SFormattedADDate, EFormattedADDate).subscribe(
       (response) => {
-        // Handle the successful response here
-        //console.log(response.cooperativeData);
         this.cooperativeData = response.cooperativeData;
         const voucherDetailData: any[] = response.allData;
         const vtdata: any[] = this.voucherTypes;
@@ -225,13 +233,6 @@ export class PartyLedgerComponent implements OnInit {
           } else {
             cramt = formatNumber(cramt);
           }
-
-
-
-          // Function to format numbers
-
-
-
           const formatedDatePart = this.datePipe.transform(dateParts, 'MM/dd/yyyy');
           //console.log(formatedDatePart)
 
@@ -310,18 +311,144 @@ export class PartyLedgerComponent implements OnInit {
 
   printDiv() {
 
+    console.log(document.querySelector('#printablepage'));
+    this.copryForPrint();
+    const printableContentElement = document.querySelector('#printingBox');
+    // const printJob: any = window.print();
+    // printJob.appendChild(printableContentElement);
+    // printJob.start();
 
-    const printableContentElement = document.querySelector('#printableContent');
-    const printJob: any = window.print();
-    printJob.appendChild(printableContentElement);
-    printJob.start();
+    const printingBox = document.getElementById('printingBox');
+    printingBox!.classList.add('print');
+    window.print();
+  }
+
+  tableBox(data: any, columnHeaders: any) {
+
+    if (!Array.isArray(data)) {
+      return 'Invalid data format';
+    }
+
+    let tableHtml = '<table class="table">';
+    tableHtml += '<thead><tr>';
+    tableHtml += `<th style="width:10px;" class="sn-class">${columnHeaders[0]}</th>`;
+    tableHtml += `<th style="width:70px;" class="date-class">${columnHeaders[1]}</th>`;
+    tableHtml += `<th style="width:60px;" class="vno-class">${columnHeaders[2]}</th>`;
+    tableHtml += `<th style="width:180px;" class="description-class">${columnHeaders[3]}</th>`;
+    tableHtml += `<th style="width:100px;" class="dr-amount-class">${columnHeaders[4]}</th>`;
+    tableHtml += `<th style="width:100px;" class="cr-amount-class">${columnHeaders[5]}</th>`;
+    tableHtml += `<th style="width:100px;" class="balance-class">${columnHeaders[6]}</th>`;
+
+
+    tableHtml += '</tr></thead>';
+    tableHtml += '<tbody>';
+
+    data.forEach((item, index) => {
+      tableHtml += '<tr>';
+      tableHtml += `<td style="width:10px;" class="sn-class">${index + 1}</td>`;
+      tableHtml += `<td style="width:70px;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
+      tableHtml += `<td style="width:60px;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
+      tableHtml += `<td style="width:180px;" class="description-class">${item.description}</td>`;
+      tableHtml += `<td style="width:100px;" class="dr-amount-class">${item.dr_amt}</td>`;
+      tableHtml += `<td style="width:100px;" class="cr-amount-class">${item.cr_amt}</td>`;
+      tableHtml += `<td style="width:100px;" class="balance-class">${item.balance}</td>`;
+      tableHtml += '</tr>';
+    });
+
+    tableHtml += '</tbody>';
+    tableHtml += '</table>';
+
+    return tableHtml;
+
+
+
+    // console.log(newdata);
+    // if (!Array.isArray(newdata)) {
+    //   return 'Invalid data format';
+    // }
+
+    // let tableHtml = '<table class="table">';
+    // if (newdata.length > 0) {
+    //   tableHtml += '<thead><tr>';
+    //   for (const key in newdata[0]) {
+    //     if (newdata[0].hasOwnProperty(key)) {
+    //       tableHtml += `<th>${key}</th>`;
+    //     }
+    //   }
+    //   tableHtml += '</tr></thead>';
+    //   tableHtml += '<tbody>';
+    //   newdata.forEach((item) => {
+    //     tableHtml += '<tr>';
+    //     for (const key in item) {
+    //       if (item.hasOwnProperty(key)) {
+    //         tableHtml += `<td>${item[key]}</td>`;
+    //       }
+    //     }
+    //     tableHtml += '</tr>';
+    //   });
+    //   tableHtml += '</tbody>';
+    // }
+    // tableHtml += '</table>';
+
+    // return tableHtml;
+
 
   }
 
-  
-  
-  
-  
+  copryForPrint() {
+    const headerContent = document.querySelector('#pageHeaderId');
+    const footerContent = document.querySelector('#pageFooterId');
+    const printingBox = document.querySelector('#printingBox');
+    const sourceOfData = this.voucherDetailsData;
+    var devidedData = [];
+    const lengthOfData = sourceOfData.length;
+    const partation = 14;
+    const devided = Math.ceil(lengthOfData / partation);
+
+    for (var i = 0; i < devided; i++) {
+
+      let content: any = headerContent?.innerHTML;
+      let start = i * partation;
+      let end = Math.min((i + 1) * partation, lengthOfData);
+
+      for (var j = start; j < end; j++) {
+        devidedData.push(sourceOfData[j]);
+
+      }
+
+      const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance'];
+      content += this.tableBox(devidedData, columnHeaders);;
+
+      if (i === devided - 1) {
+        var totalDrCrAmount = this.totalcount;
+        
+        content += `
+          <tr>
+         <td style="width:10px;" class="sn-class"></td>
+         <td style="width:70px;" class="date-class"></td>
+         <td style="width:60px;" class="vno-class"></td>
+         <td style="width:500px!important;" class="description-class"> Total</td>
+         <td style="width:100px;" class="dr-amount-class">${totalDrCrAmount.totalDrAmount}</td>
+         <td style="width:100px;" class="cr-amount-class">${totalDrCrAmount.totalCrAmount}</td>
+         <td style="width:100px;" class="balance-class"></td>
+          </tr>
+        `;
+      }
+
+
+      content += footerContent?.innerHTML;
+
+      document.getElementById('printingBox')!.innerHTML += content;
+
+      devidedData = [];
+    }
+
+  }
+
+
+
+
+
 
   // Function to trigger printing
   printContent() {

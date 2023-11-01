@@ -42,15 +42,11 @@ export class TestComponentComponent {
   // }
 
 
-  printContent() {
-      const divElement = document.querySelector('.printablecontent');
-  
-      if (divElement) {
-          const elementRef: ElementRef = new ElementRef(divElement);
-          this.printService.printDivWithSharableBody(elementRef);
-      } else {
-          console.error('.container not found');
-      }
 
+    printContent() {
+      window.print();
+    }
+
+    
   }
-}
+

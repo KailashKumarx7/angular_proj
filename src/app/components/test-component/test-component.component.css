@@ -1,18 +1,36 @@
-.example-container {
-    height: 270px;
-    overflow: auto;
-  }
-  
-  table {
-    width: 100%;
-  }
-  
-  tr.mat-mdc-footer-row {
-    font-weight: bold;
-  }
-  
-  .mat-mdc-table-sticky {
-    border-top: 1px solid #e0e0e0;
+@media print {
+  .header {
+    position: fixed;
+    top: 0;
+    z-index: 1;
   }
 
+h1 {
+  page-break-before: always;
+}
+p{
+  page-break-after: avoid;
+}
 
+  @page {
+    margin: 0;
+  }
+
+  @page:right{
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    z-index: 2;
+  }
+
+  .bodypart {
+    padding-top: 100px;
+    padding-bottom: 200px;
+    z-index: 0;
+  }
+}
