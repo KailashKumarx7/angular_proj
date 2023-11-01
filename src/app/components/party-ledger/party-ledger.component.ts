@@ -17,10 +17,7 @@ interface AccountList {
   nep_text: string;
 }
 
-interface Transaction {
-  item: string;
-  cost: number;
-}
+
 
 @Component({
   selector: 'app-party-ledger',
@@ -28,71 +25,61 @@ interface Transaction {
   styleUrls: ['./party-ledger.component.css']
 })
 export class PartyLedgerComponent implements OnInit {
-  date!: string;
 
-  tableContent: any;
-
+  //------------------------------------------Date Properties/------------------------------------------
   SBSDate!: string;
   EBSDate!: string;
+  date!: string;
+
+
+  ///------------------------------------------Keys Properties/------------------------------------------
   accountKey!: string;
-  nepaliDateInstance = new NepaliDate();
-  dateone = new NepaliDate(new Date(2024, 2, 7)).toJsDate;
 
 
-  totalDrAmt = 0;
-  totalCrAmt = 0;
+
+  ///------------------------------------------Table Contents/------------------------------------------
+  tableContent: any;
+  voucherDetailsData!: any[];
+  voucherDetailsHeading: string[] = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance',];
+
+
+  ///------------------------------------------Total Counts for table/------------------------------------------
   totalcount: any = {};
 
 
-  //data
+  ///------------------------------------------data collection/------------------------------------------
   voucherTypes: any[] = [];
-  voucherDetailsHeadingg!: string[];
-  newdata: any = [];
 
+
+  ///------------------------------------------usable data/------------------------------------------
   selectedAcountData: any = [];
   selectedSDateAndEDate: any = {}
   currentDate: any;
-
   cooperativeData: any = [];
 
-  voucherDetailsData!: any[]; // Ensure that your data array has the correct property names
-  voucherDetailsHeading: string[] = [
-    'SN',
-    'Date',
-    'V.NO',
-    'Description',
-    'Dr.Amount',
-    'Cr.Amount',
-    'Balance',
-  ];
 
-
-  endDate($event: string) {
-    this.EBSDate = $event;
-  }
-  startingDate($event: string) {
-    this.SBSDate = $event;
-  }
+  ///------------------------------------------Form Groups/------------------------------------------
   partyledger = this._formBuilder.group({
-    //startingdate: [''],
-    //lastdate: [''],
     accountlist: ['']
   });
 
+  ///------------------------------------------Auto-Complete properties/------------------------------------------
+
+  //For Account selection
   options: AccountList[] = [];
   filteredOptions!: Observable<AccountList[]>;
 
+  ///------------------------------------------constructor/------------------------------------------
   constructor(
     private _formBuilder: FormBuilder,
     private getdataService: GetDataService,
     private datePipe: DatePipe,
     private _nepaliDatepickerService: NepaliDatepickerService,
     private printService: PrintService
-  ) {
+  ) { }
 
 
-  }
-
+  ///------------------------------------------OnInit/------------------------------------------
   ngOnInit() {
     const printableContentElement: any = document.querySelector('#printableContent');
     if (printableContentElement) {
@@ -101,9 +88,6 @@ export class PartyLedgerComponent implements OnInit {
     }
     this.getAccountList();
     this.getVoucherTypes();
-    var data = this.dateone
-    console.log(data);
-    this.convertToNepaliDate('2024-02-07');
 
     this.filteredOptions = this.partyledger.get('accountlist')!.valueChanges.pipe(
       startWith(''),
@@ -122,6 +106,8 @@ export class PartyLedgerComponent implements OnInit {
     );
   }
 
+
+  ///------------------------------------------Filter methods for Auto Complete:/------------------------------------
   private _filterAccountlist(value: string | AccountList): AccountList[] {
     const filterValue =
       typeof value === 'string' ? value.toLowerCase() : value.nep_text.toLowerCase();
@@ -130,6 +116,10 @@ export class PartyLedgerComponent implements OnInit {
       option.nep_text.toLowerCase().includes(filterValue)
     );
   }
+
+
+
+  ///------------------------------------------Service Calling method to get/---------------------------------------
 
   // Get account list
   getAccountList() {
@@ -144,6 +134,7 @@ export class PartyLedgerComponent implements OnInit {
     );
   }
 
+  //voucherTypes
   getVoucherTypes() {
     this.getdataService.getVoucherTypes().subscribe(
       response => {
@@ -155,18 +146,11 @@ export class PartyLedgerComponent implements OnInit {
       }
     )
   }
-  accountSeletd(option: any) {
-    this.selectedAcountData = option;
 
-    this.accountKey = option.ac_key;
-  }
-
+  ///------------------------------------------Buttoms methods/------------------------------------------
   getvalues() {
-    console.log(this.selectedAcountData);
-    const date = new Date();
-    const nepalTime = this.getNepalTime();
 
-  console.log(nepalTime);
+    const nepalTime = this.getNepalTime();
     this.currentDate = nepalTime;
     // const SBSDate = this.SBSDate;
     // const EBSDate = this.EBSDate;
@@ -174,8 +158,6 @@ export class PartyLedgerComponent implements OnInit {
     const SBSDate = '2080/04/01';
     const EBSDate = '2080/07/01';
 
-    console.log(SBSDate);
-    console.log(EBSDate);
     const SADDate = this._nepaliDatepickerService.BSToAD(SBSDate, 'yyyy/mm/dd');
     const EADDate = this._nepaliDatepickerService.BSToAD(EBSDate, 'yyyy/mm/dd');
     // const ac_key = this.accountKey;
@@ -185,10 +167,6 @@ export class PartyLedgerComponent implements OnInit {
     const SFormattedADDate = this.datePipe.transform(SADDate, 'yyyy-MM-dd');
     const EFormattedADDate = this.datePipe.transform(EADDate, 'yyyy-MM-dd');
 
-
-    console.log(SFormattedADDate);
-    console.log(EFormattedADDate);
-    console.log(this.accountKey);
 
     this.selectedSDateAndEDate = {
       sDate: SFormattedADDate,
@@ -221,9 +199,6 @@ export class PartyLedgerComponent implements OnInit {
           totalDrAmount += Number(dramt);
           totalCrAmount += Number(cramt);
 
-
-
-
           // Format dramt
           if (dramt === 0) {
             dramt = '';
@@ -238,7 +213,7 @@ export class PartyLedgerComponent implements OnInit {
             cramt = formatNumber(cramt);
           }
           const formatedDatePart = this.datePipe.transform(dateParts, 'MM/dd/yyyy');
-          //console.log(formatedDatePart)
+
 
 
           return {
@@ -263,10 +238,7 @@ export class PartyLedgerComponent implements OnInit {
         };
 
         this.totalcount = totalcount;
-        this.voucherDetailsData.forEach(item => {
-          this.totalDrAmt += item.dr_amt;
-          this.totalCrAmt += item.cr_amt;
-        });
+
 
         function formatNumber(number: number) {
           // Check if the number has decimal places
@@ -289,32 +261,9 @@ export class PartyLedgerComponent implements OnInit {
       }
     );
 
-
-
-
   }
-
-
-  convertToNepaliDate(adDate: string) {
-
-    const bsDate = adToBs(adDate);
-    console.log(bsDate);
-
-  }
-
-  getDrAmount() {
-    return this.totalDrAmt;
-  }
-
-  getCrAmount() {
-
-    return this.totalCrAmt;
-  }
-
-
 
   printDiv() {
-
     console.log(document.querySelector('#printablepage'));
     this.copryForPrint();
     const printableContentElement = document.querySelector('#printingBox');
@@ -327,6 +276,25 @@ export class PartyLedgerComponent implements OnInit {
     window.print();
   }
 
+
+
+
+  ///------------------------------------------template usable methods/------------------------------------------
+  endDate($event: string) {
+    this.EBSDate = $event;
+  }
+  startingDate($event: string) {
+    this.SBSDate = $event;
+  }
+  accountSeletd(option: any) {
+    this.selectedAcountData = option;
+
+    this.accountKey = option.ac_key;
+  }
+
+
+
+  ///------------------------------------------Helper Methods/------------------------------------------
   tableBox(data: any, columnHeaders: any) {
 
     if (!Array.isArray(data)) {
@@ -338,7 +306,7 @@ export class PartyLedgerComponent implements OnInit {
     tableHtml += `<th style="width:10px;" class="sn-class">${columnHeaders[0]}</th>`;
     tableHtml += `<th style="width:70px;" class="date-class">${columnHeaders[1]}</th>`;
     tableHtml += `<th style="width:60px;" class="vno-class">${columnHeaders[2]}</th>`;
-    tableHtml += `<th style="width:200px;" class="description-class">${columnHeaders[3]}</th>`;
+    tableHtml += `<th style="width:300px;" class="description-class">${columnHeaders[3]}</th>`;
     tableHtml += `<th style="width:100px;" class="dr-amount-class text-end">${columnHeaders[4]}</th>`;
     tableHtml += `<th style="width:100px;" class="cr-amount-class text-end">${columnHeaders[5]}</th>`;
     tableHtml += `<th style="width:100px;" class="balance-class text-end">${columnHeaders[6]}</th>`;
@@ -348,11 +316,11 @@ export class PartyLedgerComponent implements OnInit {
     tableHtml += '<tbody>';
 
     data.forEach((item, index) => {
-      tableHtml += '<tr style="font-size:16px;font-weight:400; max-height:10px;" class="table-row-data">';
+      tableHtml += '<tr style="font-size:18px;font-weight:400; height:10px;" class="table-row-data">';
       tableHtml += `<td style="width:10px;padding:.3rem;" class="sn-class">${index + 1}</td>`;
       tableHtml += `<td style="width:70px;padding:.3rem;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
       tableHtml += `<td style="width:60px;padding:.3rem;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
-      tableHtml += `<td style="width:200px;padding:.3rem;" class="description-class">${item.description}</td>`;
+      tableHtml += `<td style="width:300px;padding:.3rem;" class="description-class">${item.description}</td>`;
       tableHtml += `<td style="width:100px;padding:.3rem;" class="dr-amount-class">${item.dr_amt}</td>`;
       tableHtml += `<td style="width:100px;padding:.3rem;" class="cr-amount-class">${item.cr_amt}</td>`;
       tableHtml += `<td style="width:100px;padding:.3rem;" class="balance-class">${item.balance}</td>`;
@@ -398,59 +366,8 @@ export class PartyLedgerComponent implements OnInit {
 
 
   }
-
-  // copryForPrint() {
-  //   const headerContent = document.querySelector('#pageHeaderId');
-  //   const footerContent = document.querySelector('#pageFooterId');
-  //   const printingBox = document.querySelector('#printingBox');
-  //   const sourceOfData = this.voucherDetailsData;
-  //   var devidedData = [];
-  //   const lengthOfData = sourceOfData.length;
-  //   const partation = 14;
-  //   const devided = Math.ceil(lengthOfData / partation);
-
-  //   for (var i = 0; i < devided; i++) {
-
-  //     let content:any = `<div class="page">`;
-
-  //      content += headerContent?.innerHTML;
-  //     let start = i * partation;
-  //     let end = Math.min((i + 1) * partation, lengthOfData);
-
-  //     for (var j = start; j < end; j++) {
-  //       devidedData.push(sourceOfData[j]);
-
-  //     }
-
-  //     const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance'];
-  //     content += this.tableBox(devidedData, columnHeaders);;
-
-  //     if (i === devided - 1) {
-  //       var totalDrCrAmount = this.totalcount;
-        
-  //       content += `
-  //         <tr>
-  //        <td style="width:10px;" class="sn-class"></td>
-  //        <td style="width:70px;" class="date-class"></td>
-  //        <td style="width:60px;" class="vno-class"></td>
-  //        <td style="width:500px!important;" class="description-class"> Total</td>
-  //        <td style="width:100px;" class="dr-amount-class">${totalDrCrAmount.totalDrAmount}</td>
-  //        <td style="width:100px;" class="cr-amount-class">${totalDrCrAmount.totalCrAmount}</td>
-  //        <td style="width:100px;" class="balance-class"></td>
-  //         </tr>
-  //       `;
-  //     }
-
-
-  //     content += footerContent?.innerHTML;
-  //     content += `</div>`;
-
-  //     document.getElementById('printingBox')!.innerHTML += content;
-
-  //     devidedData = [];
-  //   }
-
-  // }
+  
+  //to print and make saperate page using this method
   copryForPrint() {
     const headerContent = document.querySelector('#pageHeaderId');
     const footerContent = document.querySelector('#pageFooterId');
@@ -462,63 +379,45 @@ export class PartyLedgerComponent implements OnInit {
     const devided = Math.ceil(lengthOfData / partation);
 
     for (var i = 0; i < devided; i++) {
-        let content = `<div class="page">`;
+      let content = `<div class="page">`;
 
-        content += headerContent?.innerHTML;
-        let start = i * partation;
-        let end = Math.min((i + 1) * partation, lengthOfData);
+      content += headerContent?.innerHTML;
+      let start = i * partation;
+      let end = Math.min((i + 1) * partation, lengthOfData);
 
-        for (var j = start; j < end; j++) {
-            devidedData.push(sourceOfData[j]);
-        }
+      for (var j = start; j < end; j++) {
+        devidedData.push(sourceOfData[j]);
+      }
 
-        const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance'];
-        content += this.tableBox(devidedData, columnHeaders);
+      const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance'];
+      content += this.tableBox(devidedData, columnHeaders);
 
-        if (i === devided - 1) {
-            var totalDrCrAmount = this.totalcount;
-            content += `
+      if (i === devided - 1) {
+        var totalDrCrAmount = this.totalcount;
+        content += `
                 <tr>
                     <td style="width:10px;" class="sn-class"></td>
                     <td style="width:70px;" class="date-class"></td>
                     <td style="width:60px;" class="vno-class"></td>
-                    <td style="width:200px!important;" class="description-class"> Total</td>
+                    <td style="width:300px!important;" class="description-class"> Total</td>
                     <td style="width:100px;" class="dr-amount-class">${totalDrCrAmount.totalDrAmount}</td>
                     <td style="width:100px;" class="cr-amount-class">${totalDrCrAmount.totalCrAmount}</td>
                     <td style="width:100px;" class="balance-class"></td>
                 </tr>
             `;
-        }
+      }
+      content += `<center>${i + 1}/${devided - 1}</center>`;
+      content += footerContent?.innerHTML;
 
-        content += footerContent?.innerHTML;
-        content += `</div>`;
+      content += `</div>`;
 
-        printingBox?.insertAdjacentHTML('beforeend', content);
+      printingBox?.insertAdjacentHTML('beforeend', content);
 
-        devidedData = [];
+      devidedData = [];
     }
-}
-
-
-
-
-
-
-
-  // Function to trigger printing
-  printContent() {
-    const printWindow = window.open('', '', 'width=800,height=600');
-    printWindow!.document.open();
-    printWindow!.document.write('<html><head><link rel="stylesheet" type="text/css" href="your-styles.css"></head><body>');
-    printWindow!.document.write('<div class="container mat-elevation-z8 pb-5">');
-    printWindow!.document.write(document.getElementById('printableContent')!.innerHTML);
-    printWindow!.document.write('</div></body></html>');
-    printWindow!.document.close();
-    printWindow!.print();
-    printWindow!.close();
   }
 
-
+  //Get Nepali Time
   getNepalTime() {
     const currentDate = new Date();
 
@@ -528,10 +427,7 @@ export class PartyLedgerComponent implements OnInit {
       dateStyle: 'medium',
       timeStyle: 'medium'
     }).format(currentDate);
-  
-  
     return nepalDateTime;
   }
-
 
 }
