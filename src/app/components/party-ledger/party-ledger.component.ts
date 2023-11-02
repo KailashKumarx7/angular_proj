@@ -56,7 +56,7 @@ export class PartyLedgerComponent implements OnInit {
   selectedSDateAndEDate: any = {}
   currentDate: any;
   cooperativeData: any = [];
-  softwareName:any=[];
+  softwareName: any = [];
 
 
   ///------------------------------------------Form Groups/------------------------------------------
@@ -178,7 +178,7 @@ export class PartyLedgerComponent implements OnInit {
       (response) => {
         //console.log(response.softwareNames);
         this.softwareName = response.softwareNames;
-        console.log(this.softwareName.application_name);
+        //console.log(this.softwareName.application_name);
         this.cooperativeData = response.cooperativeData;
         const voucherDetailData: any[] = response.allData;
         const vtdata: any[] = this.voucherTypes;
@@ -193,7 +193,30 @@ export class PartyLedgerComponent implements OnInit {
           const parts = dateParts[0].split('/');
           var day = Number(parts[1]) + 1;
           var datefinal = parts[2] + '-' + parts[0] + '-' + day;
-          const bsDate = adToBs(datefinal);
+          // const bsDate:any = adToBs(datefinal);
+          // const convertedBsDate = this.datePipe.transform(bsDate, 'yyyy/MM/dd');
+
+          const bsDate: any = adToBs(datefinal);
+          let convertedBsDate: string | null;
+
+          if (bsDate !== "0-00-00") {
+            const transformedDate = this.datePipe.transform(bsDate, 'yyyy/MM/dd');
+            if (transformedDate !== null) {
+              convertedBsDate = transformedDate;
+            } else {
+              // Handle the case where transformation failed (e.g., an invalid date format)
+              convertedBsDate = bsDate; // Or any other suitable message
+            }
+          } else {
+            // Handle the case where bsDate is "0-00-00" (skip conversion)
+            convertedBsDate = bsDate; // Or any other suitable message
+          }
+
+
+
+
+
+          console.log(convertedBsDate);
           var dramt = item.dr_amt;
           var cramt = item.cr_amt;
           const currentBalance = Number(previousBalance) + Number(dramt) - Number(cramt);
@@ -223,7 +246,7 @@ export class PartyLedgerComponent implements OnInit {
           return {
             ...item,
             v_t_key: vttext ? vttext.code : item.v_t_key,
-            ed: bsDate,
+            ed: convertedBsDate,
             ede: dateParts[0],
             dr_amt: dramt,
             cr_amt: cramt,
@@ -261,7 +284,7 @@ export class PartyLedgerComponent implements OnInit {
   }
 
   printDiv() {
-    console.log(document.querySelector('#printablepage'));
+    //console.log(document.querySelector('#printablepage'));
     this.copryForPrint();
     const printableContentElement = document.querySelector('#printingBox');
     // const printJob: any = window.print();
@@ -319,10 +342,10 @@ export class PartyLedgerComponent implements OnInit {
 
       if (balance < 0) {
         balance = Math.abs(balance);
-        console.log('Negative balance:', balance);
+        //.log('Negative balance:', balance);
         balanceLabel = "Cr";
       } else {
-        console.log('Positive balance:', balance);
+        //console.log('Positive balance:', balance);
         balanceLabel = "Dr";
       }
 
@@ -331,9 +354,10 @@ export class PartyLedgerComponent implements OnInit {
       }
 
       // tableHtml += '<tr style="font-size:11px;font-weight:500; height:5px;padding:0;" class="table-row-data">';
-      tableHtml += '<tr style="font-size: 11px; font-weight: 500; height: 5px; padding: 0; " class="table-row-data '+rowBackgroundColor+'">';
+      tableHtml += '<tr style="font-size: 11px; font-weight: 500; height: 5px; padding: 0; " class="table-row-data ' + rowBackgroundColor + '">';
       tableHtml += `<td style="width:10px;padding:.07rem;" class="sn-class text-center">${index + 1}</td>`;
-      tableHtml += `<td style="width:70px;padding:.07rem;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
+      tableHtml += `<td style="width:70px;padding:.07rem;" class="date-class"><span>${item.ed}</span>
+      <hr style="margin: 0; border: 0; border-top: var(--bs-border-width) solid;"> ${item.ede}</td>`;
       tableHtml += `<td style="width:60px;padding:.07rem;" class="vno-class text-center">${item.v_t_key} <br> ${item.v_no}</td>`;
       tableHtml += `<td style="padding:.07rem; padding-left:2px!important;" class="description-class">${item.description}</td>`;
       tableHtml += `<td style="width:110px;text-align:end;padding:.07rem; " class="dr-amount-class">${item.dr_amt}</td>`;

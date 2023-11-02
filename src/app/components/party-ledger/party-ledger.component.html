@@ -62,12 +62,12 @@
 
         <ng-container matColumnDef="Date">
           <th mat-header-cell *matHeaderCellDef> Date </th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.ed }} </td>
+          <td mat-cell *matCellDef="let transaction"> {{transaction.ed }}<hr style="margin: 0; border: 0; border-top: var(--bs-border-width) solid;">{{transaction.ede}} </td>
           <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="V.NO">
-          <th mat-header-cell *matHeaderCellDef> V.NO </th>
-          <td mat-cell *matCellDef="let transaction"> {{transaction.v_t_key }} </td>
+          <th class="text-center" mat-header-cell *matHeaderCellDef> V.NO </th>
+          <td class="text-center" mat-cell *matCellDef="let transaction"> {{transaction.v_t_key }}<br>{{transaction.v_no}} </td>
           <td mat-footer-cell *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="Description">
