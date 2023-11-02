@@ -51,7 +51,6 @@ tr.mat-mdc-footer-row {
 }
 
 #printingBox{
-  display: none;
 }
 
 /* @media print {
@@ -176,7 +175,9 @@ tr.mat-mdc-footer-row {
 
   button{
     visibility: hidden;
+    
   }
+
  
   
 }

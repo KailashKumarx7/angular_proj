@@ -194,7 +194,7 @@ export class PartyLedgerComponent implements OnInit {
           var cramt = item.cr_amt;
           const currentBalance = Number(previousBalance) + Number(dramt) - Number(cramt);
           previousBalance = currentBalance;
-          const formatedbalance = formatNumber(currentBalance);
+          const formatedbalance = this.formatNumber(currentBalance);
 
           totalDrAmount += Number(dramt);
           totalCrAmount += Number(cramt);
@@ -203,14 +203,14 @@ export class PartyLedgerComponent implements OnInit {
           if (dramt === 0) {
             dramt = '';
           } else {
-            dramt = formatNumber(dramt);
+            dramt = this.formatNumber(dramt);
           }
 
           // Format cramt
           if (cramt === 0) {
             cramt = '';
           } else {
-            cramt = formatNumber(cramt);
+            cramt = this.formatNumber(cramt);
           }
           const formatedDatePart = this.datePipe.transform(dateParts, 'MM/dd/yyyy');
 
@@ -227,8 +227,8 @@ export class PartyLedgerComponent implements OnInit {
           };
         });
         this.voucherDetailsData = mappedData;
-        const formattedTotalDrAmount = formatNumber(totalDrAmount);
-        const formattedTotalCrAmount = formatNumber(totalCrAmount);
+        const formattedTotalDrAmount = this.formatNumber(totalDrAmount);
+        const formattedTotalCrAmount = this.formatNumber(totalCrAmount);
 
         this.voucherDetailsData = mappedData;
 
@@ -240,14 +240,7 @@ export class PartyLedgerComponent implements OnInit {
         this.totalcount = totalcount;
 
 
-        function formatNumber(number: number) {
-          // Check if the number has decimal places
-          if (Number.isInteger(number)) {
-            return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-          } else {
-            return number.toLocaleString('en-US',{ minimumFractionDigits: 2, maximumFractionDigits: 2 });
-          }
-        }
+
 
       },
       (error: HttpErrorResponse) => {
@@ -301,8 +294,8 @@ export class PartyLedgerComponent implements OnInit {
       return 'Invalid data format';
     }
 
-    let tableHtml = '<table style="border:1px solid black;" class="table table-bordered">';
-    tableHtml += '<thead><tr>';
+    let tableHtml = '<table style="border-top: 4px solid black!important; border-bottom: 4px solid black!important; border-left: 0; border-right: 0 ;  margin-right:1px; " class="table table-bordered">';
+    tableHtml += '<thead><tr style="font-size:17px;">';
     tableHtml += `<th style="width:10px;" class="sn-class">${columnHeaders[0]}</th>`;
     tableHtml += `<th style="width:70px;" class="date-class">${columnHeaders[1]}</th>`;
     tableHtml += `<th style="width:60px;" class="vno-class">${columnHeaders[2]}</th>`;
@@ -314,17 +307,36 @@ export class PartyLedgerComponent implements OnInit {
 
     tableHtml += '</tr></thead>';
     tableHtml += '<tbody>';
-
+    let previousEd: any = null;
+    let rowBackgroundColor = '';
     data.forEach((item, index) => {
-      tableHtml += '<tr style="font-size:17px;font-weight:400; height:10px;" class="table-row-data">';
-      tableHtml += `<td style="width:10px;padding:.3rem;" class="sn-class">${index + 1}</td>`;
-      tableHtml += `<td style="width:70px;padding:.3rem;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
-      tableHtml += `<td style="width:60px;padding:.3rem;" class="vno-class">${item.v_t_key} <br> ${item.v_no}</td>`;
-      tableHtml += `<td style="padding:.3rem;" class="description-class">${item.description}</td>`;
-      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem; font-size:15px;" class="dr-amount-class">${item.dr_amt}</td>`;
-      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem;font-size:15px;" class="cr-amount-class">${item.cr_amt}</td>`;
-      tableHtml += `<td style="width:110px;text-align:end;padding:.3rem;font-size:15px;" class="balance-class">${item.balance}</td>`;
+      let balance = parseFloat(item.balance.replace(/,/g, ''));
+      let balanceLabel = "Cr"; // Default label
+
+      if (balance < 0) {
+        balance = Math.abs(balance);
+        console.log('Negative balance:', balance);
+        balanceLabel = "Cr";
+      } else {
+        console.log('Positive balance:', balance);
+        balanceLabel = "Dr";
+      }
+
+      if (item.ed === null || item.ed !== previousEd) {
+        rowBackgroundColor = 'table-secondary';
+      }
+
+      // tableHtml += '<tr style="font-size:11px;font-weight:500; height:5px;padding:0;" class="table-row-data">';
+      tableHtml += '<tr style="font-size: 11px; font-weight: 500; height: 5px; padding: 0; " class="table-row-data '+rowBackgroundColor+'">';
+      tableHtml += `<td style="width:10px;padding:.07rem;" class="sn-class text-center">${index + 1}</td>`;
+      tableHtml += `<td style="width:70px;padding:.07rem;" class="date-class">${item.ed} <br> ${item.ede}</td>`;
+      tableHtml += `<td style="width:60px;padding:.07rem;" class="vno-class text-center">${item.v_t_key} <br> ${item.v_no}</td>`;
+      tableHtml += `<td style="padding:.07rem;" class="description-class">${item.description}</td>`;
+      tableHtml += `<td style="width:110px;text-align:end;padding:.07rem; " class="dr-amount-class">${item.dr_amt}</td>`;
+      tableHtml += `<td style="width:110px;text-align:end;padding:.07rem;" class="cr-amount-class">${item.cr_amt}</td>`;
+      tableHtml += `<td style="width:110px;text-align:end;padding:.07rem;" class="balance-class">${this.formatNumber(balance)}<br> ${balanceLabel}</td>`;
       tableHtml += '</tr>';
+      previousEd = item.ed;
     });
 
     tableHtml += '</tbody>';
@@ -375,11 +387,11 @@ export class PartyLedgerComponent implements OnInit {
     const sourceOfData = this.voucherDetailsData;
     var devidedData = [];
     const lengthOfData = sourceOfData.length;
-    const partation = 15;
+    const partation = 17;
     const devided = Math.ceil(lengthOfData / partation);
 
     for (var i = 0; i < devided; i++) {
-      let content = `<div style="border:2px solid black;" class="page">`;
+      let content = `<div style="border:4px solid black; margin-top:30px" class="page">`;
 
       content += headerContent?.innerHTML;
       let start = i * partation;
@@ -407,19 +419,36 @@ export class PartyLedgerComponent implements OnInit {
                 </table>
             `;
       }
-      content += `<div class="row page-footer">
-                  <div class="col-sm-4">
-                    <h3>Report Generated By: <strong>EMS</strong></h3>
-                  </div>
-                  <div class="col-sm-2 text-sm-center">
-                    <h5>Page: ${i+1}/${devided}</h5>
-                  </div>
-                  <div class="col-sm-6 text-end">
-                    <p>Date/Time ${this.currentDate}</p>
-                  </div>
-                </div>`;
+      // content += `<div style="padding:0!important;margin-top:0!important; height:10px;" class="row page-footer">
+      //             <div style="padding-top:0!important; margin-top:0!important;" class="col-sm-4">
+      //               <span style="margin-top:0!important;">Report Generated By: <strong>EMS</strong></span>
+      //             </div>
+      //             <div style="padding-top:0!important;margin-top:0!important;" class="col-sm-2 text-sm-center">
+      //               <span style="margin-top:0!important;">Page: ${i+1}/${devided}</span>
+      //             </div>
+      //             <div style="padding-top:0!important;margin-top:0!important;" class="col-sm-6 text-end">
+      //               <span style="margin-top:0!important;">Date/Time ${this.currentDate}</span>
+      //             </div>
+      //           </div>`;
+      content += `<div style="padding: 0; top: 0!important; height: 20px; text-align: center;" class=" row page-footer ">
+                <div style="padding:0;margin-top: 0;" class="col-lg-4 col-md-4 col-sm-4">
+                <span style="margin-right: 10px; margin-top: 0;">Report Generated By: <strong>EMS</strong></span>
+                
+                </div>
+                <div style="padding:0;margin-top: 0;" class="col-lg-2 col-md-2 col-sm-2">
+                <span style="margin-right: 10px; margin-top: 0;">Page: ${i + 1}/${devided}</span>
+
+                </div>
+                <div style="padding:0;margin-top: 0;" class="col-lg-6 col-md-6 col-sm-6">
+                <span style="margin-top: 0;">Date/Time ${this.currentDate}</span>
+                
+                </div>
+
+              </div>
+              
+            `;
       //content += footerContent?.innerHTML;
-      
+
 
       content += `</div>`;
 
@@ -440,6 +469,15 @@ export class PartyLedgerComponent implements OnInit {
       timeStyle: 'medium'
     }).format(currentDate);
     return nepalDateTime;
+  }
+
+  formatNumber(number: number) {
+    // Check if the number has decimal places
+    if (Number.isInteger(number)) {
+      return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    } else {
+      return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
   }
 
 }
