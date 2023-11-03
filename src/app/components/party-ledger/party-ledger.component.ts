@@ -2,15 +2,12 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { response } from 'express';
-import NepaliDate from 'nepali-date-converter';
 import { NepaliDatepickerService } from 'nepali-datepicker-angular';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { GetDataService } from 'src/app/services/get-data.service';
 import { adToBs } from '@sbmdkl/nepali-date-converter';
 import { PrintService } from 'src/app/services/print.service';
-import { MatTableDataSource } from '@angular/material/table';
 
 interface AccountList {
   ac_key: number;
@@ -27,9 +24,11 @@ interface AccountList {
 export class PartyLedgerComponent implements OnInit {
 
   //------------------------------------------Date Properties/------------------------------------------
-  SBSDate!: string;
+  SBSDate:string= '2080/04/01';
   EBSDate!: string;
   date!: string;
+  datenep!: string;
+  gregorianDate!: string; 
 
 
   ///------------------------------------------Keys Properties/------------------------------------------
@@ -77,7 +76,11 @@ export class PartyLedgerComponent implements OnInit {
     private datePipe: DatePipe,
     private _nepaliDatepickerService: NepaliDatepickerService,
     private printService: PrintService
-  ) { }
+  ) { 
+
+    this.datenep = '2080/10/24';
+    this.gregorianDate = '';
+  }
 
 
   ///------------------------------------------OnInit/------------------------------------------
@@ -156,7 +159,7 @@ export class PartyLedgerComponent implements OnInit {
     // const SBSDate = this.SBSDate;
     // const EBSDate = this.EBSDate;
 
-    const SBSDate = '2080/04/01';
+    const SBSDate = this.SBSDate;
     const EBSDate = '2080/07/01';
 
     const SADDate = this._nepaliDatepickerService.BSToAD(SBSDate, 'yyyy/mm/dd');
@@ -303,8 +306,9 @@ export class PartyLedgerComponent implements OnInit {
   endDate($event: string) {
     this.EBSDate = $event;
   }
-  startingDate($event: string) {
-    this.SBSDate = $event;
+  startingDate($event: any) {
+    this.SBSDate = '';
+    console.log($event);
   }
   accountSeletd(option: any) {
     this.selectedAcountData = option;
@@ -429,7 +433,7 @@ export class PartyLedgerComponent implements OnInit {
         devidedData.push(sourceOfData[j]);
       }
 
-      const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr.Amount', 'Cr.Amount', 'Balance'];
+      const columnHeaders = ['SN', 'Date', 'V.NO', 'Description', 'Dr. Amount', 'Cr. Amount', 'Balance'];
       content += this.tableBox(devidedData, columnHeaders);
 
       if (i === devided - 1) {
@@ -508,5 +512,33 @@ export class PartyLedgerComponent implements OnInit {
       return number.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
   }
+
+  convertToNepaliDate(gregorianDate: string) {
+    // You need to implement the logic to convert a Gregorian date to Nepali here
+    // You might use a library or utility for this conversion
+    // For demonstration purposes, we'll simply assign the Gregorian date to the Nepali date
+    this.date = gregorianDate;
+  }
+
+  validateInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value;
+
+    // Implement your validation logic here
+    // For example, check if the input contains a valid date or number or slash
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(inputValue) && !/^\d+$/.test(inputValue) && !/\//.test(inputValue)) {
+      inputElement.value = ''; // Clear the input if it's not a valid input
+    }
+  }
+
+  onSlash(event: any) {
+    const date = event.target.value;
+  
+    // Insert a slash into the input field.
+  
+    this.date = date + '/';
+    console.log(date);
+  }
+  
 
 }

@@ -1,6 +1,9 @@
-import { Component, ElementRef, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit } from '@angular/core';
 import { GetDataService } from 'src/app/services/get-data.service';
 import { PrintService } from 'src/app/services/print.service';
+import { NepaliDatepickerService } from 'nepali-datepicker-angular';
+
+
 export interface Transaction {
   item: string;
   cost: number;
@@ -8,45 +11,23 @@ export interface Transaction {
 @Component({
   selector: 'app-test-component',
   templateUrl: './test-component.component.html',
-  styleUrls: ['./test-component.component.css']
+  styleUrls: ['./test-component.component.scss']
 })
-export class TestComponentComponent {
+export class TestComponentComponent implements OnInit{
+  date:string='';
+  constructor(
+    private _nepaliDatepickerService: NepaliDatepickerService,
 
-  constructor(@Inject(PrintService) private printService: PrintService){
+  ){
+    
+  }
+  ngOnInit(): void {
+   
+  }
+
+  startingDate($event:any){
 
   }
-  // displayedColumns = ['SN',
-  // 'Date',
-  // 'V.NO',
-  // 'Description',
-  // 'Dr.Amount',
-  // 'Cr.Amount',
-  // 'Balance',];
-  // transactions: any[] = [];
-  // constructor(private getDataService:GetDataService){
-  //   this.getDataService.getPartyledgerByAcKey(1, '2023-07-17', '2023-10-18').subscribe(
-  //     (response) => {
-  //       this.transactions=response.allData;
-  //     });
-  // }
-
-  
-
-  // ngOnInit():void{
-    
-  // }
-
-  // /** Gets the total cost of all transactions. */
-  // getTotalCost() {
-  //   return this.transactions.map(t => t.dr_amt).reduce((acc, value) => acc + value, 0);
-  // }
-
-
-
-    printContent() {
-      window.print();
-    }
-
     
   }
 
