@@ -19,19 +19,19 @@
 }
 
 .main-container{
-  padding: 20px;
+  padding: 5px;
   height: calc(100vh - 64px);
   background-color: lightgrey;
 }
 
 #printableContent{
-  padding: 30px;
+  padding: 5px;
 }
 
 
 
 .example-container {
-  max-height: 170px;
+  height: 270px;
   overflow: auto;
 }
 
