@@ -24,7 +24,7 @@ interface AccountList {
 export class PartyLedgerComponent implements OnInit {
 
   //------------------------------------------Date Properties/------------------------------------------
-  SBSDate:string= '2080/04/01';
+  SBSDate!:string;
   EBSDate!: string;
   date!: string;
   datenep!: string;
@@ -156,17 +156,19 @@ export class PartyLedgerComponent implements OnInit {
 
     const nepalTime = this.getNepalTime();
     this.currentDate = nepalTime;
-    // const SBSDate = this.SBSDate;
-    // const EBSDate = this.EBSDate;
+     const SBSDate = this.SBSDate;
+     const EBSDate = this.EBSDate;
 
-    const SBSDate = this.SBSDate;
-    const EBSDate = '2080/07/01';
+    //const SBSDate = this.SBSDate;
+    //const EBSDate = '2080/08/01';
 
     const SADDate = this._nepaliDatepickerService.BSToAD(SBSDate, 'yyyy/mm/dd');
     const EADDate = this._nepaliDatepickerService.BSToAD(EBSDate, 'yyyy/mm/dd');
-    // const ac_key = this.accountKey;
+     const ac_key = this.accountKey;
 
-    const ac_key = 1;
+    console.log(SADDate,EADDate)
+
+    //const ac_key = 1;
 
     const SFormattedADDate = this.datePipe.transform(SADDate, 'yyyy-MM-dd');
     const EFormattedADDate = this.datePipe.transform(EADDate, 'yyyy-MM-dd');
@@ -306,8 +308,8 @@ export class PartyLedgerComponent implements OnInit {
   endDate($event: string) {
     this.EBSDate = $event;
   }
-  startingDate($event: any) {
-    this.SBSDate = '';
+  startingDate($event: string) {
+    this.SBSDate = $event;
     console.log($event);
   }
   accountSeletd(option: any) {
